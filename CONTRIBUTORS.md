@@ -7,6 +7,7 @@ Add yourself as a contributor to this project as a Markdown link that links your
 ## Cohort Participants
 
 - [Jessica Hsiang](https://github.com/hsiangj) 🙃
+- [Karen Du](https://github.com/piecanoe) 🛹
 
 ## Mentors
 
