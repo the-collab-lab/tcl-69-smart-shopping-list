@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import { useAuth, SignInButton, SignOutButton } from '../api/useAuth.jsx';
 
 import './Layout.css';
 import { auth } from '../api/config.js';
@@ -12,6 +13,7 @@ import { auth } from '../api/config.js';
  */
 
 export function Layout() {
+	console.log(useAuth());
 	return (
 		<>
 			<div className="Layout">
@@ -19,6 +21,7 @@ export function Layout() {
 					<h1>Smart shopping list</h1>
 				</header>
 				<main className="Layout-main">
+					{useAuth()?.user ? <SignOutButton /> : <SignInButton />}
 					<Outlet />
 				</main>
 				<nav className="Nav">
