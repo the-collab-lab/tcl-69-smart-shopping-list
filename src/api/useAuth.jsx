@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 import { auth } from './config.js';
-import {
-	GoogleAuthProvider,
-	signInWithPopup,
-	signInWithRedirect,
-} from 'firebase/auth';
+import { GoogleAuthProvider, signInWithRedirect } from 'firebase/auth';
 import { addUserToDatabase } from './firebase.js';
 
 /**
