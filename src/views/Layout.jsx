@@ -13,7 +13,6 @@ import { auth } from '../api/config.js';
  */
 
 export function Layout() {
-	console.log(useAuth());
 	return (
 		<>
 			<div className="Layout">
