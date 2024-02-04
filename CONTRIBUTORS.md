@@ -12,5 +12,5 @@ Add yourself as a contributor to this project as a Markdown link that links your
 ## Mentors
 
 - [EJ Mason](https://github.com/mxmason) 🐧
-
+- [Louie Knolle](https://github.com/louieknolle) 🏔️
 ## Code of Conduct Contacts
