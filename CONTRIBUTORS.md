@@ -14,4 +14,8 @@ Add yourself as a contributor to this project as a Markdown link that links your
 
 - [EJ Mason](https://github.com/mxmason) 🐧
 - [Louie Knolle](https://github.com/louieknolle) 🏔️
+- [Radhika Morabia](https://github.com/rmorabia) 🌈
+
 ## Code of Conduct Contacts
+
+- [Stacie Taylor](https://github.com/stacietaylorcima) 🎉
