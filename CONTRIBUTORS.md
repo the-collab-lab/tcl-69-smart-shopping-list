@@ -9,7 +9,7 @@ Add yourself as a contributor to this project as a Markdown link that links your
 - [Jessica Hsiang](https://github.com/hsiangj) 🙃
 - [Karen Du](https://github.com/piecanoe) 🛹
 - [Martin Fitzpatrick](https://github.com/krsnamara) 👨‍👧‍👧
-- [Amalya Megerman](https://github.com/amalyam)🐙
+- [Amalya Megerman](https://github.com/amalyam) 🐙
 
 ## Mentors
 
