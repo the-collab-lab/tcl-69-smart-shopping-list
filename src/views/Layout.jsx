@@ -13,14 +13,23 @@ import { auth } from '../api/config.js';
  */
 
 export function Layout() {
+	const { user } = useAuth();
+
 	return (
 		<>
 			<div className="Layout">
 				<header className="Layout-header">
 					<h1>Smart shopping list</h1>
+					{!!user ? (
+						<div>
+							<span>Signed in as {auth.currentUser.displayName}</span> (
+							<SignOutButton />)
+						</div>
+					) : (
+						<SignInButton />
+					)}
 				</header>
 				<main className="Layout-main">
-					{useAuth()?.user ? <SignOutButton /> : <SignInButton />}
 					<Outlet />
 				</main>
 				<nav className="Nav">
