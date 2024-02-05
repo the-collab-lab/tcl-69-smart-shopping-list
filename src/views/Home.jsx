@@ -9,22 +9,16 @@ export function Home({ data, setListPath }) {
 			</p>
 			<ul>
 				{data ? (
-					data.map((list) => (
+					<h1>You have no Lists!</h1>
+				) : (
+					data.map((list, index) => (
 						<SingleList
-							key={list.id}
-							name={list.name}
+							key={index}
+							name={list.listName}
 							setListPath={setListPath}
 						/>
 					))
-				) : (
-					<h1>You have no Lists!</h1>
 				)}
-				{/* 
-				 	chk if data is not null and then if (!data) render nothing
-					if data is recieved then 
-					map over the list names in the data array and render them as list items
-					render list names as links to ListItem component
-				 */}
 			</ul>
 		</div>
 	);
