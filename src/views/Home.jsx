@@ -2,7 +2,6 @@ import './Home.css';
 import { SingleList } from '../components';
 
 export function Home({ data, setListPath }) {
-	console.log(data);
 	return (
 		<div className="Home">
 			<p>
