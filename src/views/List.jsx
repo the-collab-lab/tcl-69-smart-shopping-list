@@ -7,7 +7,7 @@ export function List({ data }) {
 				Hello from the <code>/list</code> page!
 			</p>
 			<ul>
-				{data ? (
+				{data && data.length > 0 ? (
 					data.map((item) =>
 						item.items.map((name, id) => <ListItem key={id} name={name} />),
 					)

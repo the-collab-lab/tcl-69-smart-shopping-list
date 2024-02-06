@@ -2,13 +2,14 @@ import './Home.css';
 import { SingleList } from '../components';
 
 export function Home({ data, setListPath }) {
+	console.log(data);
 	return (
 		<div className="Home">
 			<p>
 				Hello from the home (<code>/</code>) page!
 			</p>
 			<ul>
-				{data ? (
+				{data && data.length > 0 ? (
 					data.map((list) => (
 						<SingleList
 							key={list.name}
