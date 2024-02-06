@@ -1,7 +1,6 @@
 import { ListItem } from '../components';
 
 export function List({ data }) {
-	console.log(data);
 	return (
 		<>
 			<p>
