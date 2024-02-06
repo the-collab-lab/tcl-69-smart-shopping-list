@@ -2,6 +2,7 @@ import './Home.css';
 import { SingleList } from '../components';
 
 export function Home({ data, setListPath }) {
+	console.log(data);
 	return (
 		<div className="Home">
 			<p>
@@ -9,15 +10,16 @@ export function Home({ data, setListPath }) {
 			</p>
 			<ul>
 				{data ? (
-					<h1>You have no Lists!</h1>
-				) : (
-					data.map((list, index) => (
+					data.map((list) => (
 						<SingleList
-							key={index}
-							name={list.listName}
+							key={list.name}
+							name={list.name}
 							setListPath={setListPath}
+							path={list.path}
 						/>
 					))
+				) : (
+					<h1>You have no Lists!</h1>
 				)}
 			</ul>
 		</div>

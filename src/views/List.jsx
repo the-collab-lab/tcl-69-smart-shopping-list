@@ -1,6 +1,7 @@
 import { ListItem } from '../components';
 
 export function List({ data }) {
+	console.log(data);
 	return (
 		<>
 			<p>
@@ -8,11 +9,11 @@ export function List({ data }) {
 			</p>
 			<ul>
 				{data ? (
-					<h1>You have no items in your list!</h1>
+					data.map((item) =>
+						item.items.map((name, id) => <ListItem key={id} name={name} />),
+					)
 				) : (
-					data.map((item, index) => (
-						<ListItem key={index} name={item.itemName} />
-					))
+					<h1>You have no items in your list!</h1>
 				)}
 			</ul>
 		</>
