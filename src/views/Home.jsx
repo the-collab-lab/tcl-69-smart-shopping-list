@@ -2,7 +2,11 @@ import './Home.css';
 import { SingleList } from '../components';
 
 export function Home({ data, setListPath }) {
-	console.log(data);
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		console.log('you submitted');
+	};
+
 	return (
 		<div className="Home">
 			<p>
@@ -22,6 +26,12 @@ export function Home({ data, setListPath }) {
 					<h1>You have no Lists!</h1>
 				)}
 			</ul>
+			<form onSubmit={handleSubmit}>
+				<label for="shopping-list">
+					Shopping List:
+					<input type="text" name="name" id="shopping-list"></input>
+				</label>
+			</form>
 		</div>
 	);
 }
