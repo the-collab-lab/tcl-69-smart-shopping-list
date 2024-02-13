@@ -1,10 +1,27 @@
 import './Home.css';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { SingleList } from '../components';
+import { createList } from '../api/firebase';
 
-export function Home({ data, setListPath }) {
-	const handleSubmit = (e) => {
+export function Home({ data, setListPath, user }) {
+	const [shoppingListName, setShoppingListName] = useState('');
+	const navigate = useNavigate(); // useNavigate doc suggests using redirect
+
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log('you submitted');
+		try {
+			const newListPath = await createList(
+				user.uid,
+				user.email,
+				shoppingListName,
+			);
+			setListPath(newListPath);
+			alert('You have created a new shopping list: ' + shoppingListName);
+			navigate('/list');
+		} catch (error) {
+			alert(`Your list was not created, please try again. Error: ${error}`);
+		}
 	};
 
 	return (
@@ -27,10 +44,16 @@ export function Home({ data, setListPath }) {
 				)}
 			</ul>
 			<form onSubmit={handleSubmit}>
-				<label for="shopping-list">
+				<label>
 					Shopping List:
-					<input type="text" name="name" id="shopping-list"></input>
+					<input
+						type="text"
+						value={shoppingListName}
+						id="shopping-list"
+						onChange={(e) => setShoppingListName(e.target.value)}
+					></input>
 				</label>
+				<input type="submit" />
 			</form>
 		</div>
 	);
