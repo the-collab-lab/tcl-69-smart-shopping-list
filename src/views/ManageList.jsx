@@ -4,24 +4,27 @@ import { addItem } from '../api';
 export function ManageList({ listPath }) {
 	const INITIAL_DATA = {
 		itemName: '',
-		daysUntilNextPurchase: Number('7'),
+		daysUntilNextPurchase: '7',
 	};
 
 	const [formData, setFormData] = useState(INITIAL_DATA);
 
 	function handleChange(e) {
 		const { name, value } = e.target;
-		console.log('name clicked:', name, 'value clicked:', value);
 		setFormData((data) => ({ ...data, [name]: value }));
-		console.log('formData', formData);
 	}
 
 	//Enter key also submits the form as long as user is on one of the input field
 	async function handleSubmit(e) {
 		e.preventDefault();
-		alert('form submitted');
-		await addItem(listPath, formData);
-		setFormData(INITIAL_DATA);
+		formData.daysUntilNextPurchase = +formData.daysUntilNextPurchase;
+		let result = await addItem(listPath, formData);
+		if (result.success) {
+			setFormData(INITIAL_DATA);
+			alert('Item saved!');
+		} else {
+			alert('Item not saved to database, please try again');
+		}
 	}
 
 	return (
