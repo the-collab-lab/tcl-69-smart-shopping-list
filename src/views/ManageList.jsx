@@ -1,9 +1,10 @@
 import { useState } from 'react';
+import { addItem } from '../api';
 
-export function ManageList() {
+export function ManageList({ listPath }) {
 	const INITIAL_DATA = {
 		itemName: '',
-		timeEstimate: 'soon',
+		daysUntilNextPurchase: Number('7'),
 	};
 
 	const [formData, setFormData] = useState(INITIAL_DATA);
@@ -19,6 +20,7 @@ export function ManageList() {
 	async function handleSubmit(e) {
 		e.preventDefault();
 		alert('form submitted');
+		await addItem(listPath, formData);
 		setFormData(INITIAL_DATA);
 	}
 
@@ -46,8 +48,8 @@ export function ManageList() {
 					<input
 						type="radio"
 						id="soon"
-						name="timeEstimate"
-						value="soon"
+						name="daysUntilNextPurchase"
+						value="7"
 						onChange={handleChange}
 						defaultChecked
 					></input>
@@ -58,8 +60,8 @@ export function ManageList() {
 					<input
 						type="radio"
 						id="kind-of-soon"
-						name="timeEstimate"
-						value="kind-of-soon"
+						name="daysUntilNextPurchase"
+						value="14"
 						onChange={handleChange}
 					></input>
 				</label>
@@ -69,8 +71,8 @@ export function ManageList() {
 					<input
 						type="radio"
 						id="not-soon"
-						name="timeEstimate"
-						value="not-soon"
+						name="daysUntilNextPurchase"
+						value="30"
 						onChange={handleChange}
 					></input>
 				</label>
