@@ -8,9 +8,10 @@ export function List({ data }) {
 			</p>
 			<ul>
 				{data && data.length > 0 ? (
-					data.map((item) =>
-						item.items.map((name, id) => <ListItem key={id} name={name} />),
-					)
+					data.map((item, id) => (
+						// Removed double map to reflect current Firestore data model
+						<ListItem key={id} name={item.name} />
+					))
 				) : (
 					<h1>You have no items in your list!</h1>
 				)}
