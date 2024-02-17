@@ -1,5 +1,6 @@
 import {
 	arrayUnion,
+	addDoc,
 	getDoc,
 	setDoc,
 	collection,
@@ -165,17 +166,23 @@ export async function shareList(listPath, currentUserId, recipientEmail) {
  */
 export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 	const listCollectionRef = collection(db, listPath, 'items');
-	// TODO: Replace this call to console.log with the appropriate
-	// Firebase function, so this information is sent to your database!
-	return console.log(listCollectionRef, {
-		dateCreated: new Date(),
-		// NOTE: This is null because the item has just been created.
-		// We'll use updateItem to put a Date here when the item is purchased!
-		dateLastPurchased: null,
-		dateNextPurchased: getFutureDate(daysUntilNextPurchase),
-		name: itemName,
-		totalPurchases: 0,
-	});
+
+	try {
+		const newDoc = await addDoc(listCollectionRef, {
+			dateCreated: new Date(),
+			// NOTE: This is null because the item has just been created.
+			// We'll use updateItem to put a Date here when the item is purchased!
+			dateLastPurchased: null,
+			dateNextPurchased: getFutureDate(daysUntilNextPurchase),
+			name: itemName,
+			totalPurchases: 0,
+		});
+
+		return { success: true, newDoc };
+	} catch (err) {
+		console.error('Error adding new item:', err);
+		return { success: false };
+	}
 }
 
 export async function updateItem() {
