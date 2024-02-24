@@ -8,9 +8,7 @@ export function ManageList({ listPath, currentUserId }) {
 	};
 
 	const [formData, setFormData] = useState(INITIAL_DATA);
-	const [inviteEmail, setInviteEmail] = useState('');
-
-	console.log('currentUserId', currentUserId);
+	const [recipientEmail, setRecipientEmail] = useState('');
 
 	function handleChange(e) {
 		const { name, value } = e.target;
@@ -18,8 +16,8 @@ export function ManageList({ listPath, currentUserId }) {
 	}
 
 	function handleInviteChange(e) {
-		const { name, value } = e.target;
-		setInviteEmail((data) => ({ ...data, [name]: value }));
+		const { value } = e.target;
+		setRecipientEmail(value);
 	}
 
 	//Enter key also submits the form as long as user is on one of the input field
@@ -37,15 +35,12 @@ export function ManageList({ listPath, currentUserId }) {
 
 	async function handleInviteSubmit(e) {
 		e.preventDefault();
-		let shareResult = await shareList(listPath, currentUserId, inviteEmail);
+		let shareResult = await shareList(listPath, currentUserId, recipientEmail);
 
+		// provide an alert confirming that list was shared, or error
 		if (shareResult) {
 			alert(shareResult);
-		} else {
-			// check that shared list appears in the invited user's lists
-			// provide an alert confirming that list was shared, or error
 		}
-		console.log('shareResult', shareResult);
 	}
 
 	return (
