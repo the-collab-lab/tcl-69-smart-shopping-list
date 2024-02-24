@@ -147,8 +147,9 @@ export async function shareList(listPath, currentUserId, recipientEmail) {
 	const recipientDoc = await getDoc(doc(usersCollectionRef, recipientEmail));
 	// If the recipient user doesn't exist, we can't share the list.
 	if (!recipientDoc.exists()) {
-		return;
+		return 'The user you are trying to invite does not exist.';
 	}
+
 	// Add the list to the recipient user's sharedLists array.
 	const listDocumentRef = doc(db, listPath);
 	const userDocumentRef = doc(db, 'users', recipientEmail);
