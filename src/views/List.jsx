@@ -35,7 +35,9 @@ export function List({ data }) {
 			<ul>
 				{data && data.length > 0 ? (
 					data
-						.filter((d) => d.name.includes(searchString))
+						.filter((d) =>
+							d.name.toLowerCase().includes(searchString.toLowerCase()),
+						)
 						.map((item, id) => <ListItem key={id} name={item.name} />)
 				) : (
 					<h1>You have no items in your list!</h1>
