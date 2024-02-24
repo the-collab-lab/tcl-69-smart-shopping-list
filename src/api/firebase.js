@@ -140,7 +140,7 @@ export async function createList(userId, userEmail, listName) {
 export async function shareList(listPath, currentUserId, recipientEmail) {
 	// Check if current user is owner.
 	if (!listPath.includes(currentUserId)) {
-		return;
+		return 'You are not the owner of this list, you cannot share this list.';
 	}
 	// Get the document for the recipient user.
 	const usersCollectionRef = collection(db, 'users');
