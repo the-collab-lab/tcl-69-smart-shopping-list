@@ -181,6 +181,19 @@ export async function shareList(listPath, currentUserId, recipientEmail) {
 		}
 	}
 
+	return 'Failed to share list';
+}
+
+/**
+ * Add a new item to the user's list in Firestore.
+ * @param {string} listPath The path of the list we're adding to.
+ * @param {Object} itemData Information about the new item.
+ * @param {string} itemData.itemName The name of the item.
+ * @param {number} itemData.daysUntilNextPurchase The number of days until the user thinks they'll need to buy the item again.
+ */
+export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
+	const listCollectionRef = collection(db, listPath, 'items');
+
 	try {
 		const newDoc = await addDoc(listCollectionRef, {
 			dateCreated: new Date(),
