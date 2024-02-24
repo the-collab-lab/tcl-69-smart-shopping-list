@@ -165,21 +165,9 @@ export async function shareList(listPath, currentUserId, recipientEmail) {
 
 	// Add the list to the recipient user's sharedLists array.
 	const listDocumentRef = doc(db, listPath);
-	const userDocumentRef = doc(db, 'users', recipientEmail);
-	updateDoc(userDocumentRef, {
+	await updateDoc(userDocumentRef, {
 		sharedLists: arrayUnion(listDocumentRef),
 	});
-}
-
-/**
- * Add a new item to the user's list in Firestore.
- * @param {string} listPath The path of the list we're adding to.
- * @param {Object} itemData Information about the new item.
- * @param {string} itemData.itemName The name of the item.
- * @param {number} itemData.daysUntilNextPurchase The number of days until the user thinks they'll need to buy the item again.
- */
-export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
-	const listCollectionRef = collection(db, listPath, 'items');
 
 	try {
 		const newDoc = await addDoc(listCollectionRef, {
