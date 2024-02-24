@@ -150,6 +150,19 @@ export async function shareList(listPath, currentUserId, recipientEmail) {
 		return 'The user you are trying to invite does not exist.';
 	}
 
+	// Check if list has already been shared with invited user
+	const userDocumentRef = doc(db, 'users', recipientEmail);
+	const userDoc = await getDoc(userDocumentRef);
+	if (userDoc.exists()) {
+		const userData = userDoc.data();
+		if (
+			userData.sharedLists &&
+			userData.sharedLists.some((ref) => ref.path === listPath)
+		) {
+			return 'This user has already been invited to the current list.';
+		}
+	}
+
 	// Add the list to the recipient user's sharedLists array.
 	const listDocumentRef = doc(db, listPath);
 	const userDocumentRef = doc(db, 'users', recipientEmail);
