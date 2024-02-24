@@ -169,6 +169,18 @@ export async function shareList(listPath, currentUserId, recipientEmail) {
 		sharedLists: arrayUnion(listDocumentRef),
 	});
 
+	// check that shared list appears in the invited user's lists
+	const userDocAfterUpdate = await getDoc(userDocumentRef);
+	if (userDocAfterUpdate.exists()) {
+		const userDataAfterUpdate = userDocAfterUpdate.data();
+		if (
+			userDataAfterUpdate.sharedLists &&
+			userDataAfterUpdate.sharedLists.some((ref) => ref.path === listPath)
+		) {
+			return 'List successfully shared';
+		}
+	}
+
 	try {
 		const newDoc = await addDoc(listCollectionRef, {
 			dateCreated: new Date(),
