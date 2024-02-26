@@ -36,7 +36,7 @@ export function List({ data }) {
 				{data && data.length > 0 ? (
 					data
 						.filter((d) =>
-							d.name.toLowerCase().includes(searchString.toLowerCase()),
+							d.name?.toLowerCase().includes(searchString.toLowerCase()),
 						)
 						.map((item, id) => <ListItem key={id} name={item.name} />)
 				) : (
