@@ -1,17 +1,23 @@
 import { useState } from 'react';
-import { addItem } from '../api';
+import { addItem, shareList } from '../api';
 
-export function ManageList({ listPath }) {
+export function ManageList({ listPath, currentUserId }) {
 	const INITIAL_DATA = {
 		itemName: '',
 		daysUntilNextPurchase: '7',
 	};
 
 	const [formData, setFormData] = useState(INITIAL_DATA);
+	const [recipientEmail, setRecipientEmail] = useState('');
 
 	function handleChange(e) {
 		const { name, value } = e.target;
 		setFormData((data) => ({ ...data, [name]: value }));
+	}
+
+	function handleInviteChange(e) {
+		const { value } = e.target;
+		setRecipientEmail(value);
 	}
 
 	//Enter key also submits the form as long as user is on one of the input field
@@ -24,6 +30,16 @@ export function ManageList({ listPath }) {
 			alert('Item saved!');
 		} else {
 			alert('Item not saved to database, please try again');
+		}
+	}
+
+	async function handleInviteSubmit(e) {
+		e.preventDefault();
+		let shareResult = await shareList(listPath, currentUserId, recipientEmail);
+
+		// provide an alert confirming that list was shared, or error
+		if (shareResult) {
+			alert(shareResult);
 		}
 	}
 
@@ -81,6 +97,21 @@ export function ManageList({ listPath }) {
 				</label>
 				<br />
 				<button type="submit">Submit</button>
+			</form>
+			<form onSubmit={handleInviteSubmit}>
+				<br />
+				<label htmlFor="invite-to-list">
+					Enter email:
+					<input
+						type="email"
+						id="invite-to-list"
+						name="inviteToList"
+						onChange={handleInviteChange}
+					/>
+				</label>
+				<small> "Please enter email using lowercase letters only."</small>
+				<br />
+				<button type="submit">Invite User</button>
 			</form>
 		</>
 	);

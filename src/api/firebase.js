@@ -140,21 +140,48 @@ export async function createList(userId, userEmail, listName) {
 export async function shareList(listPath, currentUserId, recipientEmail) {
 	// Check if current user is owner.
 	if (!listPath.includes(currentUserId)) {
-		return;
+		return 'You are not the owner of this list, you cannot share this list.';
 	}
 	// Get the document for the recipient user.
 	const usersCollectionRef = collection(db, 'users');
 	const recipientDoc = await getDoc(doc(usersCollectionRef, recipientEmail));
 	// If the recipient user doesn't exist, we can't share the list.
 	if (!recipientDoc.exists()) {
-		return;
+		return 'The user you are trying to invite does not exist.';
 	}
+
+	// Check if list has already been shared with invited user
+	const userDocumentRef = doc(db, 'users', recipientEmail);
+	const userDoc = await getDoc(userDocumentRef);
+	if (userDoc.exists()) {
+		const userData = userDoc.data();
+		if (
+			userData.sharedLists &&
+			userData.sharedLists.some((ref) => ref.path === listPath)
+		) {
+			return 'This user has already been invited to the current list.';
+		}
+	}
+
 	// Add the list to the recipient user's sharedLists array.
 	const listDocumentRef = doc(db, listPath);
-	const userDocumentRef = doc(db, 'users', recipientEmail);
-	updateDoc(userDocumentRef, {
+	await updateDoc(userDocumentRef, {
 		sharedLists: arrayUnion(listDocumentRef),
 	});
+
+	// check that shared list appears in the invited user's lists
+	const userDocAfterUpdate = await getDoc(userDocumentRef);
+	if (userDocAfterUpdate.exists()) {
+		const userDataAfterUpdate = userDocAfterUpdate.data();
+		if (
+			userDataAfterUpdate.sharedLists &&
+			userDataAfterUpdate.sharedLists.some((ref) => ref.path === listPath)
+		) {
+			return 'List successfully shared';
+		}
+	}
+
+	return 'Failed to share list';
 }
 
 /**
