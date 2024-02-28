@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ListItem } from '../components';
 import { Link } from 'react-router-dom';
 
-export function List({ data }) {
+export function List({ data, listPath }) {
 	const [searchString, setSearchString] = useState('');
 
 	const handleChange = (e) => {
@@ -13,6 +13,8 @@ export function List({ data }) {
 		e.preventDefault();
 		setSearchString('');
 	};
+
+	const listName = listPath.split('/')[1];
 
 	return (
 		<>
@@ -44,7 +46,8 @@ export function List({ data }) {
 						.map((item, id) => <ListItem key={id} name={item.name} />)
 				) : (
 					<>
-						<h1>You have no items in your list!</h1>
+						<h1>Welcome to your "{listName}" list. </h1>
+						<h2>You have no items in your list!</h2>
 						<Link to="/manage-list">
 							<button>Add your first item!</button>
 						</Link>
