@@ -38,7 +38,9 @@ export function List({ data, listPath }) {
 						.filter((d) =>
 							d.name?.toLowerCase().includes(searchString.toLowerCase()),
 						)
-						.map((item, id) => <ListItem key={id} name={item.name} />)
+						.map((item, id) => (
+							<ListItem key={id} item={item} listPath={listPath} />
+						))
 				) : (
 					<h1>You have no items in your list!</h1>
 				)}
