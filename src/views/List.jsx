@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ListItem } from '../components';
+import { Link } from 'react-router-dom';
 
 export function List({ data }) {
 	const [searchString, setSearchString] = useState('');
@@ -18,19 +19,21 @@ export function List({ data }) {
 			<p>
 				Hello from the <code>/list</code> page!
 			</p>
-			<form>
-				<label htmlFor="searchString">
-					Search:
-					<input
-						type="text"
-						id="searchString"
-						name="searchString"
-						value={searchString}
-						onChange={handleChange}
-					/>
-				</label>
-				{searchString ? <button onClick={handleClick}>x</button> : ''}
-			</form>
+			{data && data.length > 0 && (
+				<form>
+					<label htmlFor="searchString">
+						Search:
+						<input
+							type="text"
+							id="searchString"
+							name="searchString"
+							value={searchString}
+							onChange={handleChange}
+						/>
+					</label>
+					{searchString ? <button onClick={handleClick}>x</button> : ''}
+				</form>
+			)}
 
 			<ul>
 				{data && data.length > 0 ? (
@@ -40,7 +43,12 @@ export function List({ data }) {
 						)
 						.map((item, id) => <ListItem key={id} name={item.name} />)
 				) : (
-					<h1>You have no items in your list!</h1>
+					<>
+						<h1>You have no items in your list!</h1>
+						<Link to="/manage-list">
+							<button>Add your first item!</button>
+						</Link>
+					</>
 				)}
 			</ul>
 		</>
