@@ -52,7 +52,10 @@ export function App() {
 							<Home data={lists} setListPath={setListPath} user={user} />
 						}
 					/>
-					<Route path="/list" element={<List data={data} />} />
+					<Route
+						path="/list"
+						element={<List data={data} listPath={listPath} />}
+					/>
 					<Route
 						path="/manage-list"
 						element={<ManageList listPath={listPath} currentUserId={userId} />}
