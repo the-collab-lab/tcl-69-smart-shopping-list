@@ -11,16 +11,19 @@ export function ListItem({ item, listPath }) {
 		: 0;
 	const timeDiff = currentDate - lastPurchasedDate; //milliseconds
 	const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
-	const [isChecked, setIsChecked] = useState(timeDiff < oneDayInMilliseconds);
+	const [isChecked, setIsChecked] = useState(false);
 
 	useEffect(() => {
-		let timeoutId;
-		if (isChecked && timeDiff < oneDayInMilliseconds) {
-			const timeLeft = oneDayInMilliseconds - timeDiff;
-			timeoutId = setTimeout(() => {
-				setIsChecked(false);
-			}, timeLeft);
+		if (timeDiff < oneDayInMilliseconds) {
+			setIsChecked(true);
 		}
+
+		let timeoutId;
+
+		const timeLeft = oneDayInMilliseconds - timeDiff;
+		timeoutId = setTimeout(() => {
+			setIsChecked(false);
+		}, timeLeft);
 
 		return () => clearTimeout(timeoutId);
 	}, [isChecked, timeDiff, oneDayInMilliseconds]);
@@ -44,7 +47,7 @@ export function ListItem({ item, listPath }) {
 			if (e.target.checked) {
 				const result = await updateItem(listPath, id);
 				if (result.success) {
-					alert('Item successfully updated');
+					alert('Item purchased');
 				} else {
 					alert('Error: item not updated');
 				}
