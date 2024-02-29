@@ -18,10 +18,8 @@ export function ListItem({ item, listPath }) {
 			setIsChecked(true);
 		}
 
-		let timeoutId;
-
 		const timeLeft = oneDayInMilliseconds - timeDiff;
-		timeoutId = setTimeout(() => {
+		const timeoutId = setTimeout(() => {
 			setIsChecked(false);
 		}, timeLeft);
 
