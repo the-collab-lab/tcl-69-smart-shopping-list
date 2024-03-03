@@ -21,6 +21,7 @@ export function List({ data, listPath }) {
 			<p>
 				Hello from the <code>/list</code> page!
 			</p>
+			<h1>Welcome to your "{listName}" list. </h1>
 			{data && data.length > 0 && (
 				<form>
 					<label htmlFor="searchString">
@@ -46,10 +47,11 @@ export function List({ data, listPath }) {
 						.map((item, id) => <ListItem key={id} name={item.name} />)
 				) : (
 					<>
-						<h1>Welcome to your "{listName}" list. </h1>
 						<h2>You have no items in your list!</h2>
 						<Link to="/manage-list">
-							<button>Add your first item!</button>
+							<button type="button" id="add-first-item">
+								Add your first item!
+							</button>
 						</Link>
 					</>
 				)}
