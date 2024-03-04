@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ListItem } from '../components';
 
-export function List({ data }) {
+export function List({ data, listPath }) {
 	const [searchString, setSearchString] = useState('');
 
 	const handleChange = (e) => {
@@ -38,7 +38,9 @@ export function List({ data }) {
 						.filter((d) =>
 							d.name?.toLowerCase().includes(searchString.toLowerCase()),
 						)
-						.map((item, id) => <ListItem key={id} name={item.name} />)
+						.map((item, id) => (
+							<ListItem key={id} item={item} listPath={listPath} />
+						))
 				) : (
 					<h1>You have no items in your list!</h1>
 				)}
