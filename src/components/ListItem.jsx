@@ -54,7 +54,7 @@ export function ListItem({ item, listPath }) {
 	}
 
 	return (
-		<div>
+		<li>
 			<label htmlFor={name} className="ListItem">
 				<input
 					type="checkbox"
@@ -65,6 +65,6 @@ export function ListItem({ item, listPath }) {
 				/>
 				{name}
 			</label>
-		</div>
+		</li>
 	);
 }
