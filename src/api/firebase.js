@@ -194,22 +194,41 @@ export async function shareList(listPath, currentUserId, recipientEmail) {
  */
 export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 	const listCollectionRef = collection(db, listPath, 'items');
+	const itemsSnapshot = await getDoc(listCollectionRef);
+	// use doc.data() to get data of the doc, doc.data().name to access each item by name
+	// loop through itemsSnapshot, check
+	// use [^\w\s]+ to match any char that is not a word char or whitespace
+	const removeFormattingRegex = /[^\w]/gi;
+	const itemExists = itemsSnapshot.docs.some((doc) => {
+		const unformattedItemName = itemName.replace(removeFormattingRegex, '');
+		const unformattedDocItemName = doc
+			.data()
+			.name?.replace(removeFormattingRegex, '');
 
-	try {
-		const newDoc = await addDoc(listCollectionRef, {
-			dateCreated: new Date(),
-			// NOTE: This is null because the item has just been created.
-			// We'll use updateItem to put a Date here when the item is purchased!
-			dateLastPurchased: null,
-			dateNextPurchased: getFutureDate(daysUntilNextPurchase),
-			name: itemName,
-			totalPurchases: 0,
-		});
+		return (
+			unformattedItemName.toLowerCase() === unformattedDocItemName.toLowerCase()
+		);
+	});
 
-		return { success: true, newDoc };
-	} catch (err) {
-		console.error('Error adding new item:', err);
-		return { success: false };
+	if (!itemExists) {
+		try {
+			const newDoc = await addDoc(listCollectionRef, {
+				dateCreated: new Date(),
+				// NOTE: This is null because the item has just been created.
+				// We'll use updateItem to put a Date here when the item is purchased!
+				dateLastPurchased: null,
+				dateNextPurchased: getFutureDate(daysUntilNextPurchase),
+				name: itemName,
+				totalPurchases: 0,
+			});
+
+			return { success: true, newDoc };
+		} catch (err) {
+			console.error('Error adding new item:', err);
+			return { success: false };
+		}
+	} else {
+		alert('This item is already in your list.');
 	}
 }
 
