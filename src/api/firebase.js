@@ -194,6 +194,11 @@ export async function shareList(listPath, currentUserId, recipientEmail) {
  * @param {number} itemData.daysUntilNextPurchase The number of days until the user thinks they'll need to buy the item again.
  */
 export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
+	// validate if itemName is not empty
+	if (itemName.trim() === '') {
+		return { success: false, error: 'Item cannot be empty.' };
+	}
+
 	const listCollectionRef = collection(db, listPath, 'items');
 	const itemsSnapshot = await getDoc(listCollectionRef);
 	// use doc.data() to get data of the doc, doc.data().name to access each item by name
