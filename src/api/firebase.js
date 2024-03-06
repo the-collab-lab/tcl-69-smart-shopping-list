@@ -194,29 +194,30 @@ export async function shareList(listPath, currentUserId, recipientEmail) {
  * @param {number} itemData.daysUntilNextPurchase The number of days until the user thinks they'll need to buy the item again.
  */
 export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
-	// validate if itemName is not empty
 	if (itemName.trim() === '') {
 		return { success: false, error: 'Item cannot be empty.' };
 	}
 
 	const listCollectionRef = collection(db, listPath, 'items');
-	const itemsSnapshot = await getDoc(listCollectionRef);
-	// use doc.data() to get data of the doc, doc.data().name to access each item by name
-	// loop through itemsSnapshot, check
-	// use [^\w\s]+ to match any char that is not a word char or whitespace
-	const removeFormattingRegex = /[^\w]/gi;
-	const itemExists = itemsSnapshot.docs.some((doc) => {
-		const unformattedItemName = itemName.replace(removeFormattingRegex, '');
-		const unformattedDocItemName = doc
-			.data()
-			.name?.replace(removeFormattingRegex, '');
+	const itemsSnapshot = await getDocs(listCollectionRef);
 
-		return (
-			unformattedItemName.toLowerCase() === unformattedDocItemName.toLowerCase()
+	// loop through existing items in Firestore doc,
+	// removing whitespace and non-word chars from itemName and
+	// each existing doc item, and make both lowercase for comparison
+	const itemExists = itemsSnapshot.docs.some((doc) => {
+		const normalizeString = (str) =>
+			str ? str.replace(/[^\w]/g, '').toLowerCase() : '';
+		const unformattedItemName = normalizeString(itemName);
+		const unformattedDocItemName = normalizeString(
+			doc.data() ? doc.data().name : '',
 		);
+
+		return unformattedItemName === unformattedDocItemName;
 	});
 
-	if (!itemExists) {
+	if (itemExists) {
+		return { success: false, error: 'This item already exists in the list.' };
+	} else
 		try {
 			const newDoc = await addDoc(listCollectionRef, {
 				dateCreated: new Date(),
@@ -233,9 +234,6 @@ export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 			console.error('Error adding new item:', err);
 			return { success: false };
 		}
-	} else {
-		alert('This item is already in your list.');
-	}
 }
 
 export async function updateItem(listPath, itemId) {
