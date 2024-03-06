@@ -2,6 +2,7 @@ import {
 	arrayUnion,
 	addDoc,
 	getDoc,
+	getDocs,
 	setDoc,
 	collection,
 	doc,
