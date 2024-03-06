@@ -3,8 +3,14 @@ import { updateItem } from '../api';
 import { useState, useEffect } from 'react';
 
 export function ListItem({ item, listPath }) {
-	const { id, name, dateLastPurchased, totalPurchases, dateNextPurchased } =
-		item;
+	const {
+		id,
+		name,
+		dateLastPurchased,
+		totalPurchases,
+		dateNextPurchased,
+		dateCreated,
+	} = item;
 
 	const currentDate = new Date();
 	const lastPurchasedDate = dateLastPurchased
@@ -50,6 +56,7 @@ export function ListItem({ item, listPath }) {
 					dateLastPurchased,
 					totalPurchases,
 					dateNextPurchased,
+					dateCreated,
 				);
 				if (result.success) {
 					alert('Item purchased');
