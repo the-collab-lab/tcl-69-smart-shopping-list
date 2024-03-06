@@ -23,19 +23,16 @@ export function ManageList({ listPath, currentUserId }) {
 	//Enter key also submits the form as long as user is on one of the input field
 	async function handleSubmit(e) {
 		e.preventDefault();
-		// const { value } = e.target;
-		// if (value.trim() === '') {
-		// 	alert('Item name cannot be empty');
-		// 	return;
-		// }
 
 		formData.daysUntilNextPurchase = +formData.daysUntilNextPurchase;
 		let result = await addItem(listPath, formData);
-		if (result.success) {
+		if (result && result.success) {
 			setFormData(INITIAL_DATA);
 			alert('Item saved!');
+		} else if (result && result.error) {
+			alert(result.error);
 		} else {
-			alert('Item not saved to database, please try again');
+			alert('Item cannot be saved to database, please try again.');
 		}
 	}
 
