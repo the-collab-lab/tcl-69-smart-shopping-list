@@ -13,5 +13,5 @@ export function getFutureDate(offset) {
 
 export function getDaysBetweenDates(date1, date2) {
 	if (!date1 || !date2) return 0;
-	return Math.floor((date1 - date2) / ONE_DAY_IN_MILLISECONDS);
+	return Math.floor(Math.abs(date1 - date2) / ONE_DAY_IN_MILLISECONDS);
 }
