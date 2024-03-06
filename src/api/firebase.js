@@ -219,30 +219,30 @@ export async function updateItem(
 	dateLastPurchased,
 	totalPurchases,
 	dateNextPurchased,
+	dateCreated,
 ) {
+	const dateNextPurchasedJS = dateNextPurchased.toDate();
+	const dateLastPurchasedJS = dateLastPurchased?.toDate();
+	const dateCreatedJS = dateCreated.toDate();
+
 	const docRef = doc(db, listPath, 'items', itemId);
-	const lastPurchaseDate = dateLastPurchased ? dateLastPurchased.toDate() : 0;
+	const lastPurchaseDate = dateLastPurchased
+		? dateLastPurchasedJS
+		: dateCreatedJS;
 	const daysSinceLastPurchase = getDaysBetweenDates(
 		new Date(),
 		lastPurchaseDate,
 	);
 
-	// ** TODO ** //
-	// intial previous estimate can be calculated from dateNextPurchased - dateCreated if totalPurchases is 0
-	// if (dayLastPurchased === null) as a check vs totalPurchases === 0 what would be better?
-	// the mystery is previousEstimate for item that has been purchased.
-	// dateLastPurchased minus dateNextPurchased
-	// there is a chance this would return a negative but we can make the helper function absolute so we dont have to worry about that
-
-	const previousEstimate = dateNextPurchased;
+	const previousEstimate = dateLastPurchased
+		? getDaysBetweenDates(dateNextPurchasedJS, dateLastPurchasedJS)
+		: getDaysBetweenDates(dateNextPurchasedJS, dateCreatedJS);
 
 	const daysUntilNextPurchase = calculateEstimate(
 		previousEstimate,
 		daysSinceLastPurchase,
 		totalPurchases,
 	);
-
-	console.log('daysUntilNextPurchase', daysUntilNextPurchase);
 
 	try {
 		await updateDoc(docRef, {
