@@ -9,9 +9,10 @@ import {
 	updateDoc,
 	increment,
 } from 'firebase/firestore';
+import { calculateEstimate } from '@the-collab-lab/shopping-list-utils';
 import { useEffect, useState } from 'react';
 import { db } from './config';
-import { getFutureDate } from '../utils';
+import { getFutureDate, getDaysBetweenDates } from '../utils';
 
 /**
  * A custom hook that subscribes to the user's shopping lists in our Firestore
@@ -194,7 +195,6 @@ export async function shareList(listPath, currentUserId, recipientEmail) {
  */
 export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 	const listCollectionRef = collection(db, listPath, 'items');
-
 	try {
 		const newDoc = await addDoc(listCollectionRef, {
 			dateCreated: new Date(),
@@ -213,12 +213,42 @@ export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 	}
 }
 
-export async function updateItem(listPath, itemId) {
+export async function updateItem(
+	listPath,
+	itemId,
+	dateLastPurchased,
+	totalPurchases,
+	dateNextPurchased,
+) {
 	const docRef = doc(db, listPath, 'items', itemId);
+	const lastPurchaseDate = dateLastPurchased ? dateLastPurchased.toDate() : 0;
+	const daysSinceLastPurchase = getDaysBetweenDates(
+		new Date(),
+		lastPurchaseDate,
+	);
+
+	// ** TODO ** //
+	// intial previous estimate can be calculated from dateNextPurchased - dateCreated if totalPurchases is 0
+	// if (dayLastPurchased === null) as a check vs totalPurchases === 0 what would be better?
+	// the mystery is previousEstimate for item that has been purchased.
+	// dateLastPurchased minus dateNextPurchased
+	// there is a chance this would return a negative but we can make the helper function absolute so we dont have to worry about that
+
+	const previousEstimate = dateNextPurchased;
+
+	const daysUntilNextPurchase = calculateEstimate(
+		previousEstimate,
+		daysSinceLastPurchase,
+		totalPurchases,
+	);
+
+	console.log('daysUntilNextPurchase', daysUntilNextPurchase);
+
 	try {
 		await updateDoc(docRef, {
 			totalPurchases: increment(1),
 			dateLastPurchased: new Date(),
+			dateNextPurchased: getFutureDate(daysUntilNextPurchase),
 		});
 		return { success: true };
 	} catch (e) {
