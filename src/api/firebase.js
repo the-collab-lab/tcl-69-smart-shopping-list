@@ -203,25 +203,26 @@ export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 
 	const itemExistsResult = itemExists(itemName, itemsSnapshot);
 
-	if (itemExists) {
+	if (itemExistsResult) {
 		return { success: false, error: 'This item already exists in the list.' };
-	} else
-		try {
-			const newDoc = await addDoc(listCollectionRef, {
-				dateCreated: new Date(),
-				// NOTE: This is null because the item has just been created.
-				// We'll use updateItem to put a Date here when the item is purchased!
-				dateLastPurchased: null,
-				dateNextPurchased: getFutureDate(daysUntilNextPurchase),
-				name: itemName,
-				totalPurchases: 0,
-			});
+	}
 
-			return { success: true, newDoc };
-		} catch (err) {
-			console.error('Error adding new item:', err);
-			return { success: false };
-		}
+	try {
+		const newDoc = await addDoc(listCollectionRef, {
+			dateCreated: new Date(),
+			// NOTE: This is null because the item has just been created.
+			// We'll use updateItem to put a Date here when the item is purchased!
+			dateLastPurchased: null,
+			dateNextPurchased: getFutureDate(daysUntilNextPurchase),
+			name: itemName,
+			totalPurchases: 0,
+		});
+
+		return { success: true, newDoc };
+	} catch (err) {
+		console.error('Error adding new item:', err);
+		return { success: false };
+	}
 }
 
 /*
