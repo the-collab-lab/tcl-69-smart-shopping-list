@@ -201,19 +201,7 @@ export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 	const listCollectionRef = collection(db, listPath, 'items');
 	const itemsSnapshot = await getDocs(listCollectionRef);
 
-	// loop through existing items in Firestore doc,
-	// removing whitespace and non-word chars from itemName and
-	// each existing doc item, and make both lowercase for comparison
-	const itemExists = itemsSnapshot.docs.some((doc) => {
-		const normalizeString = (str) =>
-			str ? str.replace(/[^\w]/g, '').toLowerCase() : '';
-		const unformattedItemName = normalizeString(itemName);
-		const unformattedDocItemName = normalizeString(
-			doc.data() ? doc.data().name : '',
-		);
-
-		return unformattedItemName === unformattedDocItemName;
-	});
+	const itemExistsResult = itemExists(itemName, itemsSnapshot);
 
 	if (itemExists) {
 		return { success: false, error: 'This item already exists in the list.' };
