@@ -2,6 +2,7 @@ import {
 	arrayUnion,
 	addDoc,
 	getDoc,
+	getDocs,
 	setDoc,
 	collection,
 	doc,
@@ -194,7 +195,19 @@ export async function shareList(listPath, currentUserId, recipientEmail) {
  * @param {number} itemData.daysUntilNextPurchase The number of days until the user thinks they'll need to buy the item again.
  */
 export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
+	if (itemName.trim() === '') {
+		return { success: false, error: 'Item cannot be empty.' };
+	}
+
 	const listCollectionRef = collection(db, listPath, 'items');
+	const itemsSnapshot = await getDocs(listCollectionRef);
+
+	const itemExistsResult = itemExists(itemName, itemsSnapshot);
+
+	if (itemExistsResult) {
+		return { success: false, error: 'This item already exists in the list.' };
+	}
+
 	try {
 		const newDoc = await addDoc(listCollectionRef, {
 			dateCreated: new Date(),
@@ -211,6 +224,32 @@ export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 		console.error('Error adding new item:', err);
 		return { success: false };
 	}
+}
+
+/*
+ * Helper function for checking if a particular item
+ * already exists inside of user's current list
+ */
+function itemExists(itemName, itemsSnapshot) {
+	// function to remove whitespace and non-word chars from str
+	const normalizeString = (str) =>
+		str ? str.replace(/[^\w]/g, '').toLowerCase() : '';
+
+	// create unformatted, "normalized" version of itemName
+	const unformattedItemName = normalizeString(itemName);
+
+	// loop through existing items in itemsSnapshot,
+	// applying normalizeString to each item and checking
+	// if it matches the unformattedItemName
+	const result = itemsSnapshot.docs.some((doc) => {
+		const unformattedDocItemName = normalizeString(
+			doc.data() ? doc.data().name : '',
+		);
+
+		return unformattedItemName === unformattedDocItemName;
+	});
+
+	return result;
 }
 
 export async function updateItem(
