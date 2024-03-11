@@ -236,6 +236,32 @@ export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 		}
 }
 
+/*
+ * Helper function for checking if a particular item
+ * already exists inside of user's current list
+ */
+function itemExists(itemName, itemsSnapshot) {
+	// function to remove whitespace and non-word chars from str
+	const normalizeString = (str) =>
+		str ? str.replace(/[^\w]/g, '').toLowerCase() : '';
+
+	// create unformatted, "normalized" version of itemName
+	const unformattedItemName = normalizeString(itemName);
+
+	// loop through existing items in itemsSnapshot,
+	// applying normalizeString to each item and checking
+	// if it matches the unformattedItemName
+	const result = itemsSnapshot.docs.some((doc) => {
+		const unformattedDocItemName = normalizeString(
+			doc.data() ? doc.data().name : '',
+		);
+
+		return unformattedItemName === unformattedDocItemName;
+	});
+
+	return result;
+}
+
 export async function updateItem(listPath, itemId) {
 	const docRef = doc(db, listPath, 'items', itemId);
 	try {
