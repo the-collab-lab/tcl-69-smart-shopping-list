@@ -3,7 +3,14 @@ import { updateItem } from '../api';
 import { useState, useEffect } from 'react';
 
 export function ListItem({ item, listPath }) {
-	const { id, name, dateLastPurchased } = item;
+	const {
+		id,
+		name,
+		dateLastPurchased,
+		totalPurchases,
+		dateNextPurchased,
+		dateCreated,
+	} = item;
 
 	const currentDate = new Date();
 	const lastPurchasedDate = dateLastPurchased
@@ -43,7 +50,14 @@ export function ListItem({ item, listPath }) {
 		} else {
 			setIsChecked(e.target.checked);
 			if (e.target.checked) {
-				const result = await updateItem(listPath, id);
+				const result = await updateItem(
+					listPath,
+					id,
+					dateLastPurchased,
+					totalPurchases,
+					dateNextPurchased,
+					dateCreated,
+				);
 				if (result.success) {
 					alert('Item purchased');
 				} else {
