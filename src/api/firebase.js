@@ -303,3 +303,36 @@ export async function deleteItem() {
 	 * this function must accept!
 	 */
 }
+
+export function comparePurchaseUrgency(data) {
+	// find days until next purchase => urgency general
+	const updatedData = data.map((item) => {
+		const currentDate = new Date();
+		const daysUntilNextPurchase = getDaysBetweenDates(
+			currentDate,
+			item.dateNextPurchased.toDate(),
+		);
+		const daysSinceLastPurchase = item.dateLastPurchased
+			? getDaysBetweenDates(item.dateLastPurchased.toDate(), currentDate)
+			: null;
+
+		return { ...item, daysUntilNextPurchase, daysSinceLastPurchase };
+	});
+
+	return updatedData.sort((itemA, itemB) => {
+		//sort by inactivity > 60 days since last purchase
+		//assumption: no item's daysUntilNextPurchase would be greater than 60
+		if (itemA.daysSinceLastPurchase > 60) {
+			if (itemA.daysSinceLastPurchase < itemB.daysSinceLastPurchase) return -1;
+			if (itemA.daysSinceLastPurchase > itemB.daysSinceLastPurchase) return 1;
+		}
+
+		//sort by days until last purchase
+		if (itemA.daysUntilNextPurchase > itemB.daysUntilNextPurchase) return 1;
+		if (itemA.daysUntilNextPurchase < itemB.daysUntilNextPurchase) return -1;
+
+		//sort by name alphabetically
+		if (itemA.name > itemB.name) return 1;
+		if (itemA.name < itemB.name) return -1;
+	});
+}
