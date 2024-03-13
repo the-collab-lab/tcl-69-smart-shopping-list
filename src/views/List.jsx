@@ -17,24 +17,37 @@ export function List({ data, listPath }) {
 
 	const listName = listPath.split('/')[1];
 
-	const sortedData = comparePurchaseUrgency(data);
+	const filteredData = data.filter((d) =>
+		d.name?.toLowerCase().includes(searchString.toLowerCase()),
+	);
+
+	const sortedData = comparePurchaseUrgency(filteredData);
 	// console.log('sorted data', sortedData)
 
 	//soon <= 7 next purchase
-	const buySoon = sortedData.filter((item) => item.daysUntilNextPurchase <= 7);
+	const buySoon = sortedData.filter(
+		(item) =>
+			item.daysUntilNextPurchase <= 7 && item.daysSinceLastPurchase < 60,
+	);
+
 	//kind of soon 8 to 29 next purchase
 	const buyKindOfSoon = sortedData.filter(
-		(item) => item.daysUntilNextPurchase > 7 && item.daysUntilNextPurchase < 15,
+		(item) =>
+			item.daysUntilNextPurchase > 7 &&
+			item.daysUntilNextPurchase < 15 &&
+			item.daysSinceLastPurchase < 60,
 	);
 	//not soon >= 30 next purchase
 	const buyNotSoon = sortedData.filter(
 		(item) =>
 			item.daysUntilNextPurchase >= 15 && item.daysSinceLastPurchase < 60,
 	);
+
 	//inactive -- last purchase
 	const inactive = sortedData.filter(
 		(item) => item.daysSinceLastPurchase >= 60,
 	);
+
 	console.log('soon', buySoon);
 	console.log('kind of soon', buyKindOfSoon);
 	console.log('not soon', buyNotSoon);
@@ -64,13 +77,24 @@ export function List({ data, listPath }) {
 
 			<ul>
 				{sortedData && sortedData.length > 0 ? (
-					sortedData
-						.filter((d) =>
-							d.name?.toLowerCase().includes(searchString.toLowerCase()),
-						)
-						.map((item, id) => (
+					<>
+						<h5>Soon</h5>
+						{buySoon.map((item, id) => (
 							<ListItem key={id} item={item} listPath={listPath} />
-						))
+						))}
+						<h5>Kind of soon</h5>
+						{buyKindOfSoon.map((item, id) => (
+							<ListItem key={id} item={item} listPath={listPath} />
+						))}
+						<h5>Not soon</h5>
+						{buyNotSoon.map((item, id) => (
+							<ListItem key={id} item={item} listPath={listPath} />
+						))}
+						<h5>Inactive</h5>
+						{inactive.map((item, id) => (
+							<ListItem key={id} item={item} listPath={listPath} />
+						))}
+					</>
 				) : (
 					<>
 						<h2>You have no items in your list!</h2>
