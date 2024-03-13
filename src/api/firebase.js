@@ -305,33 +305,39 @@ export async function deleteItem() {
 }
 
 export function comparePurchaseUrgency(data) {
-	// find days until next purchase => urgency general
+	const currentDate = new Date();
+
 	const updatedData = data.map((item) => {
-		const currentDate = new Date();
-		const daysUntilNextPurchase = getDaysBetweenDates(
-			currentDate,
-			item.dateNextPurchased.toDate(),
+		// calculate time difference directly without using the absolute value built into getDaysBetweenDates function
+		const daysUntilNextPurchase = Math.floor(
+			(item.dateNextPurchased.toDate() - currentDate) / 86400000,
 		);
+
 		const daysSinceLastPurchase = item.dateLastPurchased
 			? getDaysBetweenDates(item.dateLastPurchased.toDate(), currentDate)
 			: null;
 
-		return { ...item, daysUntilNextPurchase, daysSinceLastPurchase };
+		const isOverdue =
+			daysUntilNextPurchase < 0 &&
+			(daysSinceLastPurchase === null || daysSinceLastPurchase < 60);
+
+		return { ...item, daysUntilNextPurchase, daysSinceLastPurchase, isOverdue };
 	});
 
 	return updatedData.sort((itemA, itemB) => {
-		//sort by inactivity > 60 days since last purchase
-		//assumption: no item's daysUntilNextPurchase would be greater than 60
-		if (itemA.daysSinceLastPurchase > 60) {
-			if (itemA.daysSinceLastPurchase < itemB.daysSinceLastPurchase) return -1;
-			if (itemA.daysSinceLastPurchase > itemB.daysSinceLastPurchase) return 1;
-		}
+		//prioritize overdue items
+		if (itemA.isOverdue && !itemB.isOverdue) return -1;
+		if (!itemA.isOverdue && itemB.isOverdue) return 1;
 
-		//sort by days until last purchase
+		//prioritize active items (items with less days since last purchase, the more active)
+		if (itemA.daysSinceLastPurchase < itemB.daysSinceLastPurchase) return -1;
+		if (itemA.daysSinceLastPurchase > itemB.daysSinceLastPurchase) return 1;
+
+		//sort by days until next purchase (sooner purchases come first)
 		if (itemA.daysUntilNextPurchase > itemB.daysUntilNextPurchase) return 1;
 		if (itemA.daysUntilNextPurchase < itemB.daysUntilNextPurchase) return -1;
 
-		//sort by name alphabetically
+		//sort alphabetically by name for items with the same urgency
 		if (itemA.name > itemB.name) return 1;
 		if (itemA.name < itemB.name) return -1;
 	});

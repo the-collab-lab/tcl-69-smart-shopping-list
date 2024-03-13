@@ -22,36 +22,29 @@ export function List({ data, listPath }) {
 	);
 
 	const sortedData = comparePurchaseUrgency(filteredData);
-	// console.log('sorted data', sortedData)
 
-	//soon <= 7 next purchase
-	const buySoon = sortedData.filter(
-		(item) =>
-			item.daysUntilNextPurchase <= 7 && item.daysSinceLastPurchase < 60,
-	);
+	const overdue = [],
+		buySoon = [],
+		buyKindOfSoon = [],
+		buyNotSoon = [],
+		inactive = [];
 
-	//kind of soon 8 to 29 next purchase
-	const buyKindOfSoon = sortedData.filter(
-		(item) =>
+	sortedData.forEach((item) => {
+		if (item.isOverdue) {
+			overdue.push(item);
+		} else if (item.daysSinceLastPurchase >= 60) {
+			inactive.push(item);
+		} else if (item.daysUntilNextPurchase <= 7) {
+			buySoon.push(item);
+		} else if (
 			item.daysUntilNextPurchase > 7 &&
-			item.daysUntilNextPurchase < 15 &&
-			item.daysSinceLastPurchase < 60,
-	);
-	//not soon >= 30 next purchase
-	const buyNotSoon = sortedData.filter(
-		(item) =>
-			item.daysUntilNextPurchase >= 15 && item.daysSinceLastPurchase < 60,
-	);
-
-	//inactive -- last purchase
-	const inactive = sortedData.filter(
-		(item) => item.daysSinceLastPurchase >= 60,
-	);
-
-	console.log('soon', buySoon);
-	console.log('kind of soon', buyKindOfSoon);
-	console.log('not soon', buyNotSoon);
-	console.log('inactive', inactive);
+			item.daysUntilNextPurchase < 15
+		) {
+			buyKindOfSoon.push(item);
+		} else if (item.daysUntilNextPurchase >= 15) {
+			buyNotSoon.push(item);
+		}
+	});
 
 	return (
 		<>
@@ -78,21 +71,25 @@ export function List({ data, listPath }) {
 			<ul>
 				{sortedData && sortedData.length > 0 ? (
 					<>
+						<h5>Overdue</h5>
+						{overdue.map((item) => (
+							<ListItem key={item.id} item={item} listPath={listPath} />
+						))}
 						<h5>Soon</h5>
-						{buySoon.map((item, id) => (
-							<ListItem key={id} item={item} listPath={listPath} />
+						{buySoon.map((item) => (
+							<ListItem key={item.id} item={item} listPath={listPath} />
 						))}
 						<h5>Kind of soon</h5>
-						{buyKindOfSoon.map((item, id) => (
-							<ListItem key={id} item={item} listPath={listPath} />
+						{buyKindOfSoon.map((item) => (
+							<ListItem key={item.id} item={item} listPath={listPath} />
 						))}
 						<h5>Not soon</h5>
-						{buyNotSoon.map((item, id) => (
-							<ListItem key={id} item={item} listPath={listPath} />
+						{buyNotSoon.map((item) => (
+							<ListItem key={item.id} item={item} listPath={listPath} />
 						))}
 						<h5>Inactive</h5>
-						{inactive.map((item, id) => (
-							<ListItem key={id} item={item} listPath={listPath} />
+						{inactive.map((item) => (
+							<ListItem key={item.id} item={item} listPath={listPath} />
 						))}
 					</>
 				) : (
