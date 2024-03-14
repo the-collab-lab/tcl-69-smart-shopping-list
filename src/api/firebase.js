@@ -9,6 +9,7 @@ import {
 	onSnapshot,
 	updateDoc,
 	increment,
+	deleteDoc,
 } from 'firebase/firestore';
 import { calculateEstimate } from '@the-collab-lab/shopping-list-utils';
 import { useEffect, useState } from 'react';
@@ -296,10 +297,13 @@ export async function updateItem(
 	}
 }
 
-export async function deleteItem() {
-	/**
-	 * TODO: Fill this out so that it uses the correct Firestore function
-	 * to delete an existing item. You'll need to figure out what arguments
-	 * this function must accept!
-	 */
+export async function deleteItem(itemId, listPath) {
+	const docRef = doc(db, listPath, 'items', itemId);
+	try {
+		await deleteDoc(docRef);
+		return { success: true };
+	} catch (e) {
+		console.error(e);
+		return { success: false, error: e };
+	}
 }
