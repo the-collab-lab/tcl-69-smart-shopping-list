@@ -1,5 +1,5 @@
 import './ListItem.css';
-import { updateItem } from '../api';
+import { updateItem, deleteItem } from '../api';
 import { useState, useEffect } from 'react';
 
 export function ListItem({ item, listPath }) {
@@ -67,6 +67,24 @@ export function ListItem({ item, listPath }) {
 		}
 	}
 
+	async function handleDelete() {
+		if (
+			window.confirm(`Do you want to delete ${name} from this list?`) === true
+		) {
+			const result = await deleteItem(id, listPath);
+			if (result.success) {
+				alert(`${name} has been successfully deleted.`);
+			} else {
+				alert(
+					'An error has occurred. Item not deleted. Please try again. Error: ',
+					result.error,
+				);
+			}
+		} else {
+			alert('Item not deleted.');
+		}
+	}
+
 	return (
 		<li>
 			<label htmlFor={name} className="ListItem">
@@ -78,6 +96,15 @@ export function ListItem({ item, listPath }) {
 					checked={isChecked}
 				/>
 				{name}
+				<button
+					type="button"
+					id={name}
+					name={name}
+					onClick={handleDelete}
+					aria-label={`delete ${name}`}
+				>
+					X
+				</button>
 			</label>
 		</li>
 	);
