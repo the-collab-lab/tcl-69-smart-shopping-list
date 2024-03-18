@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ListItem } from '../components';
 import { Link } from 'react-router-dom';
+import { comparePurchaseUrgency } from '../api';
 
 export function List({ data, listPath }) {
 	const [searchString, setSearchString] = useState('');
@@ -16,13 +17,42 @@ export function List({ data, listPath }) {
 
 	const listName = listPath.split('/')[1];
 
+	const filteredData = data.filter((d) =>
+		d.name?.toLowerCase().includes(searchString.toLowerCase()),
+	);
+
+	const sortedData = comparePurchaseUrgency(filteredData);
+
+	const overdue = [],
+		buySoon = [],
+		buyKindOfSoon = [],
+		buyNotSoon = [],
+		inactive = [];
+
+	sortedData.forEach((item) => {
+		if (item.isOverdue) {
+			overdue.push(item);
+		} else if (item.daysSinceLastPurchase >= 60) {
+			inactive.push(item);
+		} else if (item.daysUntilNextPurchase <= 7) {
+			buySoon.push(item);
+		} else if (
+			item.daysUntilNextPurchase > 7 &&
+			item.daysUntilNextPurchase < 15
+		) {
+			buyKindOfSoon.push(item);
+		} else if (item.daysUntilNextPurchase >= 15) {
+			buyNotSoon.push(item);
+		}
+	});
+
 	return (
 		<>
 			<p>
 				Hello from the <code>/list</code> page!
 			</p>
-			<h1>Welcome to your "{listName}" list. </h1>
-			{data && data.length > 0 && (
+			<h5>Welcome to your "{listName}" list. </h5>
+			{sortedData && sortedData.length > 0 && (
 				<form>
 					<label htmlFor="searchString">
 						Search:
@@ -39,14 +69,29 @@ export function List({ data, listPath }) {
 			)}
 
 			<ul>
-				{data && data.length > 0 ? (
-					data
-						.filter((d) =>
-							d.name?.toLowerCase().includes(searchString.toLowerCase()),
-						)
-						.map((item, id) => (
-							<ListItem key={id} item={item} listPath={listPath} />
-						))
+				{sortedData && sortedData.length > 0 ? (
+					<>
+						<h5>Overdue</h5>
+						{overdue.map((item) => (
+							<ListItem key={item.id} item={item} listPath={listPath} />
+						))}
+						<h5>Soon</h5>
+						{buySoon.map((item) => (
+							<ListItem key={item.id} item={item} listPath={listPath} />
+						))}
+						<h5>Kind of soon</h5>
+						{buyKindOfSoon.map((item) => (
+							<ListItem key={item.id} item={item} listPath={listPath} />
+						))}
+						<h5>Not soon</h5>
+						{buyNotSoon.map((item) => (
+							<ListItem key={item.id} item={item} listPath={listPath} />
+						))}
+						<h5>Inactive</h5>
+						{inactive.map((item) => (
+							<ListItem key={item.id} item={item} listPath={listPath} />
+						))}
+					</>
 				) : (
 					<>
 						<h2>You have no items in your list!</h2>
