@@ -306,11 +306,12 @@ export async function deleteItem() {
 
 export function comparePurchaseUrgency(data) {
 	const currentDate = new Date();
+	const ONE_DAY_IN_MILLISECONDS = 86400000;
 
 	const updatedData = data.map((item) => {
 		// calculate time difference directly without using the absolute value built into getDaysBetweenDates function
 		const daysUntilNextPurchase = Math.floor(
-			(item.dateNextPurchased.toDate() - currentDate) / 86400000,
+			(item.dateNextPurchased.toDate() - currentDate) / ONE_DAY_IN_MILLISECONDS,
 		);
 
 		const daysSinceLastPurchase = item.dateLastPurchased
