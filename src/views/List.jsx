@@ -1,10 +1,16 @@
 import { useState } from 'react';
 import { ListItem } from '../components';
 import { Link } from 'react-router-dom';
-import { comparePurchaseUrgency } from '../api';
+import { comparePurchaseUrgency, shareList } from '../api';
+import { ShareListDialog } from '../components/ShareListDialog';
 
-export function List({ data, listPath }) {
+import './List.css';
+import ShareEmailInput from '../components/ShareEmailInput';
+
+export function List({ data, listPath, currentUserId }) {
 	const [searchString, setSearchString] = useState('');
+	const [recipientEmail, setRecipientEmail] = useState('');
+	const [isDialogOpen, setIsDialogOpen] = useState(false);
 
 	const handleChange = (e) => {
 		setSearchString(e.target.value);
@@ -46,11 +52,56 @@ export function List({ data, listPath }) {
 		}
 	});
 
+	async function handleShareList() {
+		setIsDialogOpen(true);
+	}
+
+	function handleCancelClick() {
+		setIsDialogOpen(false);
+	}
+
+	async function handleConfirmClick() {
+		let shareResult = await shareList(listPath, currentUserId, recipientEmail);
+		// provide an alert confirming that list was shared, or error
+		if (shareResult) {
+			alert(shareResult);
+		}
+		setIsDialogOpen(false);
+	}
+
 	return (
 		<>
-			<p>
-				Hello from the <code>/list</code> page!
-			</p>
+			<div className="list-inner-menu">
+				<p>
+					Hello from the <code>/list</code> page!
+				</p>
+				<button className="share-list-button" onClick={handleShareList}>
+					Share List
+				</button>
+			</div>
+			<ShareListDialog
+				open={isDialogOpen}
+				onConfirm={handleConfirmClick}
+				onCancel={handleCancelClick}
+			>
+				<h2>Who would you like to share this list with?</h2>
+				<ShareEmailInput setRecipientEmail={setRecipientEmail} />
+				<p>Are you sure?</p>
+				<div className="Dialog--button-group">
+					<button className="c-button" onClick={handleCancelClick}>
+						No
+					</button>
+					<button
+						className="c-button c-button__danger"
+						onClick={() =>
+							handleConfirmClick(listPath, currentUserId, recipientEmail)
+						}
+					>
+						Yes
+					</button>
+				</div>
+			</ShareListDialog>
+
 			<h5>Welcome to your "{listName}" list. </h5>
 			{sortedData && sortedData.length > 0 && (
 				<form>
