@@ -10,7 +10,7 @@ import ShareEmailInput from '../components/ShareEmailInput';
 export function List({ data, listPath, currentUserId }) {
 	const [searchString, setSearchString] = useState('');
 	const [recipientEmail, setRecipientEmail] = useState('');
-	const [isDialogOpen, setIsDialogOpen] = useState(false);
+	const [isDialogOpen, setIsDialogOpen] = useState(true);
 
 	const handleChange = (e) => {
 		setSearchString(e.target.value);
@@ -84,21 +84,25 @@ export function List({ data, listPath, currentUserId }) {
 				onConfirm={handleConfirmClick}
 				onCancel={handleCancelClick}
 			>
-				<h2>Who would you like to share this list with?</h2>
-				<ShareEmailInput setRecipientEmail={setRecipientEmail} />
-				<p>Are you sure?</p>
-				<div className="Dialog--button-group">
-					<button className="c-button" onClick={handleCancelClick}>
-						No
-					</button>
-					<button
-						className="c-button c-button__danger"
-						onClick={() =>
-							handleConfirmClick(listPath, currentUserId, recipientEmail)
-						}
-					>
-						Yes
-					</button>
+				<h2>Who are you sharing this list with?</h2>
+				<div className="share-email-dialog-container">
+					<ShareEmailInput setRecipientEmail={setRecipientEmail} />
+					<div className="Dialog--button-group">
+						<button
+							className="c-button c-button-cancel"
+							onClick={handleCancelClick}
+						>
+							Cancel
+						</button>
+						<button
+							className="c-button c-button-confirm"
+							onClick={() =>
+								handleConfirmClick(listPath, currentUserId, recipientEmail)
+							}
+						>
+							Confirm
+						</button>
+					</div>
 				</div>
 			</ShareListDialog>
 
