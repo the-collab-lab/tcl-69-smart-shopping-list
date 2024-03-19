@@ -1,0 +1,45 @@
+.Dialog {
+	--button-alignment: 'center';
+
+	border-radius: 8px;
+	max-width: min(68ch, 95vw);
+	padding: 0;
+}
+
+.Dialog::backdrop {
+	background: rgba(0, 0, 0, 0.3);
+	cursor: pointer;
+}
+
+.Dialog h2 {
+	font-size: 1.6em;
+	margin: 0;
+}
+
+.Dialog--container {
+	display: flex;
+	flex-direction: column;
+	padding: 1.6em;
+}
+
+.Dialog--button-group {
+	align-self: var(--button-alignment);
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.8rem;
+	margin-block-start: 1.2rem;
+}
+
+@media only screen and (min-width: 700px) {
+	.Dialog {
+		--button-alignment: flex-start;
+	}
+}
+
+.Dialog .c-button {
+	min-width: 10ch;
+}
+
+.Dialog--button-group > * {
+	flex: 1 1 0;
+}
