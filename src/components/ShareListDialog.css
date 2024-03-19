@@ -4,6 +4,9 @@
 	border-radius: 8px;
 	max-width: min(68ch, 95vw);
 	padding: 0;
+	animation:
+		slideInFromRight 0.8s ease-out,
+		slideOutToRight 0.8s ease-in forwards;
 }
 
 .Dialog::backdrop {
@@ -25,7 +28,7 @@
 .Dialog--button-group {
 	align-self: var(--button-alignment);
 	display: flex;
-	flex-wrap: wrap;
+	flex-direction: column;
 	gap: 0.8rem;
 	margin-block-start: 1.2rem;
 }
@@ -37,9 +40,39 @@
 }
 
 .Dialog .c-button {
-	min-width: 10ch;
+	min-width: 25ch;
+	min-height: 5ch;
+	cursor: pointer;
+	font-size: 1em;
+	font-weight: 500;
+	border-radius: 8px;
+	border: 1px solid #aaa;
+	padding: 0.8em 1.6em;
+}
+
+c-button-cancel:hover {
+	background-color: #918f8f;
+}
+
+.c-button-confirm {
+	background-color: #4caf50;
+	border-radius: 8px;
+	border: 1px solid #0f0f0f;
+}
+
+.c-button-confirm:hover {
+	background-color: rgb(69, 167, 72);
 }
 
 .Dialog--button-group > * {
 	flex: 1 1 0;
+}
+
+@keyframes slideInFromRight {
+	from {
+		transform: translateX(100%);
+	}
+	to {
+		transform: translateX(0);
+	}
 }
