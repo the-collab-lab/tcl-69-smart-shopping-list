@@ -10,7 +10,7 @@ import ShareEmailInput from '../components/ShareEmailInput';
 export function List({ data, listPath, currentUserId }) {
 	const [searchString, setSearchString] = useState('');
 	const [recipientEmail, setRecipientEmail] = useState('');
-	const [isDialogOpen, setIsDialogOpen] = useState(true);
+	const [isDialogOpen, setIsDialogOpen] = useState(false);
 
 	const handleChange = (e) => {
 		setSearchString(e.target.value);
