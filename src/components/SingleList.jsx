@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './SingleList.css';
 
 export function SingleList({ name, path, setListPath }) {
@@ -7,7 +8,9 @@ export function SingleList({ name, path, setListPath }) {
 
 	return (
 		<li className="SingleList">
-			<button onClick={handleClick}>{name}</button>
+			<Link to="/list">
+				<button onClick={handleClick}>{name}</button>
+			</Link>
 		</li>
 	);
 }
