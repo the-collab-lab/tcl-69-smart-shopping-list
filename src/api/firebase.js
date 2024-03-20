@@ -346,6 +346,6 @@ export function comparePurchaseUrgency(data) {
 		if (itemA.name > itemB.name) return 1;
 		if (itemA.name < itemB.name) return -1;
 
-		return 1;
+		return 0;
 	});
 }
