@@ -97,10 +97,6 @@ code {
 	padding: 0.15em 0.15em;
 }
 
-.list-items-section {
-	list-style-type: none;
-}
-
 @media screen and (prefers-color-scheme: light) {
 	code {
 		--color-bg: var(--color-gray-light);
