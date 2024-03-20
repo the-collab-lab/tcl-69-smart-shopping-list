@@ -15,7 +15,7 @@ export function List({ data, listPath }) {
 		setSearchString('');
 	};
 
-	const listName = listPath.split('/')[1];
+	const listName = listPath?.split('/')[1];
 
 	const filteredData = data.filter((d) =>
 		d.name?.toLowerCase().includes(searchString.toLowerCase()),
