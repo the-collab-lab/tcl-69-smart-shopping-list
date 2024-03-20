@@ -63,18 +63,20 @@ export function List({ data, listPath, currentUserId }) {
 	async function handleConfirmClick() {
 		let shareResult = await shareList(listPath, currentUserId, recipientEmail);
 		// provide an alert confirming that list was shared, or error
-		if (shareResult) {
-			alert(shareResult);
+		if (shareResult.status === 200) {
+			alert(shareResult.message);
+			setIsDialogOpen(false);
+		} else {
+			alert(shareResult.message);
+			setRecipientEmail('');
+			setIsDialogOpen(true);
 		}
-		setIsDialogOpen(false);
 	}
 
 	return (
 		<>
 			<div className="list-inner-menu">
-				<p>
-					Hello from the <code>/list</code> page!
-				</p>
+				<h3>Welcome to your "{listName}" list. </h3>
 				<button className="share-list-button" onClick={handleShareList}>
 					Share List
 				</button>
@@ -96,9 +98,7 @@ export function List({ data, listPath, currentUserId }) {
 						</button>
 						<button
 							className="c-button c-button-confirm"
-							onClick={() =>
-								handleConfirmClick(listPath, currentUserId, recipientEmail)
-							}
+							onClick={handleConfirmClick} // Remove arguments here
 						>
 							Confirm
 						</button>
@@ -106,7 +106,6 @@ export function List({ data, listPath, currentUserId }) {
 				</div>
 			</ShareListDialog>
 
-			<h5>Welcome to your "{listName}" list. </h5>
 			{sortedData && sortedData.length > 0 && (
 				<form>
 					<label htmlFor="searchString">
