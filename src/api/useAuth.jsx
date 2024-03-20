@@ -20,8 +20,19 @@ export const SignInButton = () => (
 /**
  * A button that signs the user out of the app using Firebase Auth.
  */
+async function handleSignOut() {
+	await auth.signOut();
+	try {
+		localStorage.clear();
+		console.log('User signed out');
+		window.location.href = '/';
+	} catch (e) {
+		console.error('Error signing out:', e);
+	}
+}
+
 export const SignOutButton = () => (
-	<button type="button" onClick={() => auth.signOut()}>
+	<button type="button" onClick={() => handleSignOut()}>
 		Sign Out
 	</button>
 );
