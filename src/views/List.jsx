@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ListItem } from '../components';
 import { Link } from 'react-router-dom';
 import { comparePurchaseUrgency } from '../api';
+import './List.css';
 
 export function List({ data, listPath }) {
 	const [searchString, setSearchString] = useState('');
@@ -68,7 +69,7 @@ export function List({ data, listPath }) {
 				</form>
 			)}
 
-			<ul>
+			<ul className="List-items-section">
 				{sortedData && sortedData.length > 0 ? (
 					<>
 						<h5>Overdue</h5>
