@@ -68,7 +68,7 @@ export function List({ data, listPath }) {
 				</form>
 			)}
 
-			<ul>
+			<ul className="list-items-section">
 				{sortedData && sortedData.length > 0 ? (
 					<>
 						<h5>Overdue</h5>
