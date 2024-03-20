@@ -1,6 +1,6 @@
 .ListItem {
 	align-items: baseline;
-	display: inline;
+	display: inline-flex;
 	flex-direction: row;
 	font-size: 1.2em;
 	cursor: pointer;
