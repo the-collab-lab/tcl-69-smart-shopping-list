@@ -345,5 +345,7 @@ export function comparePurchaseUrgency(data) {
 		//sort alphabetically by name for items with the same urgency
 		if (itemA.name > itemB.name) return 1;
 		if (itemA.name < itemB.name) return -1;
+
+		return 1;
 	});
 }
