@@ -39,7 +39,11 @@ export function Layout() {
 				</nav>
 				<footer className="Layout-footer">
 					<p className="Layout-footer-attribution">
-						Created by{' '}
+						Crafted with care{' '}
+						<span role="img" aria-label="heart">
+							❤️
+						</span>
+						by{' '}
 						<a
 							className="Layout-footer-link"
 							href="#"
@@ -75,7 +79,7 @@ export function Layout() {
 						>
 							Marty
 						</a>{' '}
-						(aka the Box Makers) in partnership with{' '}
+						in partnership with{' '}
 						<a
 							className="Layout-footer-link"
 							href="https://the-collab-lab.codes/"
