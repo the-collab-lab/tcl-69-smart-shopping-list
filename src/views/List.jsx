@@ -1,11 +1,13 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { ListItem } from '../components';
 import { Link } from 'react-router-dom';
-import { comparePurchaseUrgency } from '../api';
+import { comparePurchaseUrgency, addItem } from '../api';
 import './List.css';
 
 export function List({ data, listPath }) {
 	const [searchString, setSearchString] = useState('');
+	const [showModal, setShowModal] = useState(false);
 
 	const handleChange = (e) => {
 		setSearchString(e.target.value);
@@ -47,8 +49,96 @@ export function List({ data, listPath }) {
 		}
 	});
 
+	const INITIAL_DATA = {
+		itemName: '',
+		daysUntilNextPurchase: '7',
+	};
+
+	const [formData, setFormData] = useState(INITIAL_DATA);
+
+	function ModalContent({ onClose }) {
+		function handleInputChange(e) {
+			const { name, value } = e.target;
+			setFormData((prevFormData) => ({
+				...prevFormData,
+				[name]: value,
+			}));
+		}
+
+		async function handleSubmit(e) {
+			e.preventDefault();
+			formData.daysUntilNextPurchase = Number(formData.daysUntilNextPurchase);
+			let result = await addItem(listPath, formData);
+			if (result.success) {
+				setFormData(INITIAL_DATA);
+				alert(result.message);
+				onClose();
+			} else {
+				alert(result.error);
+			}
+		}
+		return (
+			<div className="List-modal-container">
+				<div className="List-modal-inner">
+					<div>Enter item</div>
+					<form onSubmit={handleSubmit}>
+						<label htmlFor="itemName">
+							Item Name:
+							<input
+								type="text"
+								id="itemName"
+								name="itemName"
+								value={formData.itemName}
+								onChange={handleInputChange}
+								required
+							></input>
+						</label>
+						<br />
+						<p>Buy again?</p>
+						<label htmlFor="soon">
+							Soon:
+							<input
+								type="radio"
+								id="soon"
+								name="daysUntilNextPurchase"
+								value="7"
+								onChange={handleInputChange}
+								defaultChecked
+							></input>
+						</label>
+						<br />
+						<label htmlFor="kind-of-soon">
+							Kind of soon:
+							<input
+								type="radio"
+								id="kind-of-soon"
+								name="daysUntilNextPurchase"
+								value="14"
+								onChange={handleInputChange}
+							></input>
+						</label>
+						<br />
+						<label htmlFor="not-soon">
+							Not soon:
+							<input
+								type="radio"
+								id="not-soon"
+								name="daysUntilNextPurchase"
+								value="30"
+								onChange={handleInputChange}
+							></input>
+						</label>
+						<br />
+						<button type="submit">Submit</button>
+					</form>
+					<button onClick={onClose}>Cancel</button>
+				</div>
+			</div>
+		);
+	}
+
 	return (
-		<>
+		<div className="List">
 			<p>
 				Hello from the <code>/list</code> page!
 			</p>
@@ -104,6 +194,20 @@ export function List({ data, listPath }) {
 					</>
 				)}
 			</ul>
-		</>
+			<button
+				className="List-add-item-button"
+				onClick={() => setShowModal(true)}
+			>
+				<img src="/img/add-green.svg" alt="add item" />
+			</button>
+			{showModal &&
+				createPortal(
+					<ModalContent
+						onClose={() => setShowModal(false)}
+						setFormData={{ setFormData }}
+					/>,
+					document.body,
+				)}
+		</div>
 	);
 }
