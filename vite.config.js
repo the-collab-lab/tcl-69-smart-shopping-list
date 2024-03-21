@@ -67,5 +67,10 @@ export default defineConfig({
 		globals: true,
 		environment: 'jsdom',
 		setupFiles: './tests/setup.js',
+		server: {
+			// Prevents Vitest from crashing when it
+			// encounters a module that exports CSS.
+			deps: { inline: true },
+		},
 	},
 });
