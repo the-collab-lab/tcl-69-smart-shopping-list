@@ -41,7 +41,7 @@ export function Layout() {
 					<p className="Layout-footer-attribution">
 						Crafted with care{' '}
 						<span role="img" aria-label="heart">
-							❤️
+							❤️{' '}
 						</span>
 						by{' '}
 						<a
