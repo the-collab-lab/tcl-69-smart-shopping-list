@@ -6,7 +6,12 @@ const NO_OP = () => {};
 /**
  * @param {React.DialogHTMLAttributes<HTMLDialogElement> & { onCancel: (evt: Event) => void } } props
  */
-export function ShareListDialog({ children, open = false, onCancel = NO_OP }) {
+export function ShareListDialog({
+	children,
+	open = false,
+	onCancel = NO_OP,
+	// onConfirm = NO_OP,
+}) {
 	const ref = useRef(/** @type {HTMLDialogElement} */ (null));
 
 	/**
@@ -43,7 +48,14 @@ export function ShareListDialog({ children, open = false, onCancel = NO_OP }) {
 			onCancel={onCancel}
 			onClickCapture={handleBackdropClick}
 		>
-			<form method="dialog" className="Dialog--container">
+			<form
+				// onSubmit={(e) => {
+				// 	e.preventDefault();
+				// 	onConfirm(e); // Call onConfirm function
+				// }}
+				method="dialog"
+				className="Dialog--container"
+			>
 				<div className="Dialog--content">{children}</div>
 			</form>
 		</dialog>

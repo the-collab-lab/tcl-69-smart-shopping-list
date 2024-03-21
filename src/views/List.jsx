@@ -61,14 +61,18 @@ export function List({ data, listPath, currentUserId }) {
 	}
 
 	async function handleConfirmClick() {
+		// // Validate recipientEmail
+		// if (!validateEmail(recipientEmail)) {
+		// 	alert('Please enter a valid email address.');
+		// 	return; // Stop further execution if email is invalid
+		// }
 		let shareResult = await shareList(listPath, currentUserId, recipientEmail);
 		// provide an alert confirming that list was shared, or error
 		if (shareResult.status === 200) {
 			alert(shareResult.message);
 			setIsDialogOpen(false);
 		} else {
-			alert(shareResult.message);
-			setRecipientEmail('');
+			alert(shareResult.message || 'Error sharing list, please try again.');
 			setIsDialogOpen(true);
 		}
 	}
@@ -98,7 +102,7 @@ export function List({ data, listPath, currentUserId }) {
 						</button>
 						<button
 							className="c-button c-button-confirm"
-							onClick={handleConfirmClick} // Remove arguments here
+							onClick={handleConfirmClick}
 						>
 							Confirm
 						</button>
