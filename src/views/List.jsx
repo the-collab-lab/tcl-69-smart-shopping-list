@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { ListItem } from '../components';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { comparePurchaseUrgency } from '../api';
 import './List.css';
 
-export function List({ data, listPath }) {
+export function List({ data, listPath, currentUserId }) {
 	const [searchString, setSearchString] = useState('');
 
 	const handleChange = (e) => {
@@ -46,6 +46,10 @@ export function List({ data, listPath }) {
 			buyNotSoon.push(item);
 		}
 	});
+
+	if (!currentUserId) {
+		return <Navigate to="/" replace={true} />;
+	}
 
 	return (
 		<>
