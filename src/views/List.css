@@ -1,3 +1,55 @@
+.List {
+	margin-bottom: 150px;
+}
+
 .List-items-section {
 	list-style-type: none;
 }
+
+.List-add-item-button {
+	border: none;
+	background: none;
+	z-index: 3;
+	position: fixed;
+	left: 50%;
+	top: 80%;
+	transform: translate(-50%, -50%);
+	cursor: pointer;
+}
+.Dialog::backdrop {
+	background-color: aquamarine;
+}
+
+.List-add-item-button img {
+	width: 100%;
+	max-width: 100px;
+}
+
+.List-modal-container {
+	background-color: rgba(128, 128, 128, 0.5);
+}
+
+.List-modal-inner {
+	background-color: white;
+	border-radius: 10px;
+	border: solid 3px rgb(60, 242, 190);
+	padding: 20px;
+	position: fixed;
+	top: 30%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 4;
+}
+
+@media (min-width: 600px) {
+	.List-add-item-button {
+		left: 75%;
+		top: 50%;
+		max-width: 200px;
+	}
+}
+
+/* for large screens */
+/* @media (min-width: 1200px) {
+	
+} */
