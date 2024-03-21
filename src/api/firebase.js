@@ -220,7 +220,7 @@ export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 			totalPurchases: 0,
 		});
 
-		return { success: true, newDoc };
+		return { success: true, newDoc, message: 'Item added successfully.' };
 	} catch (err) {
 		console.error('Error adding new item:', err);
 		return { success: false };
