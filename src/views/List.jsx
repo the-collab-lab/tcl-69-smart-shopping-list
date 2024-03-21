@@ -74,12 +74,10 @@ export function List({ data, listPath, currentUserId }) {
 	}
 
 	return (
-		<>
-			<div className="list-inner-menu">
+		<div className="List">
+			<div>
 				<h3>Welcome to your "{listName}" list. </h3>
-				<button className="share-list-button" onClick={handleShareList}>
-					Share List
-				</button>
+				<button onClick={handleShareList}>Share List</button>
 			</div>
 			<ShareListDialog
 				open={isDialogOpen}
@@ -87,7 +85,7 @@ export function List({ data, listPath, currentUserId }) {
 				onCancel={handleCancelClick}
 			>
 				<h2>Who are you sharing this list with?</h2>
-				<div className="share-email-dialog-container">
+				<div className="List-share-email-dialog-container">
 					<ShareEmailInput setRecipientEmail={setRecipientEmail} />
 					<div className="Dialog--button-group">
 						<button
@@ -157,6 +155,6 @@ export function List({ data, listPath, currentUserId }) {
 					</>
 				)}
 			</ul>
-		</>
+		</div>
 	);
 }
