@@ -21,7 +21,7 @@ export function List({ data, listPath, currentUserId }) {
 		setSearchString('');
 	};
 
-	const listName = listPath.split('/')[1];
+	const listName = listPath?.split('/')[1];
 
 	const filteredData = data.filter((d) =>
 		d.name?.toLowerCase().includes(searchString.toLowerCase()),
@@ -122,7 +122,7 @@ export function List({ data, listPath, currentUserId }) {
 				</form>
 			)}
 
-			<ul>
+			<ul className="List-items-section">
 				{sortedData && sortedData.length > 0 ? (
 					<>
 						<h5>Overdue</h5>

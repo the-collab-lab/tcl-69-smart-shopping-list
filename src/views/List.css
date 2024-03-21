@@ -27,3 +27,6 @@
 	place-items: 'center';
 	cursor: pointer;
 }
+.List-items-section {
+	list-style-type: none;
+}
