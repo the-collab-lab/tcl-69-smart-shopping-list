@@ -46,7 +46,7 @@ export function Layout() {
 						by{' '}
 						<a
 							className="Layout-footer-link"
-							href="#"
+							href="https://github.com/amalyam"
 							target="_blank"
 							rel="noreferrer"
 						>
@@ -55,7 +55,7 @@ export function Layout() {
 						,{' '}
 						<a
 							className="Layout-footer-link"
-							href="#"
+							href="https://github.com/hsiangj"
 							rel="noreferrer"
 							target="_blank"
 						>
@@ -64,7 +64,7 @@ export function Layout() {
 						,{' '}
 						<a
 							className="Layout-footer-link"
-							href="#"
+							href="https://github.com/piecanoe"
 							rel="noreferrer"
 							target="_blank"
 						>
@@ -73,7 +73,7 @@ export function Layout() {
 						, &{' '}
 						<a
 							className="Layout-footer-link"
-							href="#"
+							href="https://github.com/krsnamara"
 							rel="noreferrer"
 							target="_blank"
 						>
