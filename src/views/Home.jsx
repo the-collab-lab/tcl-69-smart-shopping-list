@@ -20,7 +20,7 @@ export function Home() {
 					</h3>
 					{!!user ? (
 						<div>
-							<span>Signed in as {auth.currentUser.displayName}</span> (
+							<span>Welcome back {auth.currentUser.displayName}!</span> (
 							<SignOutButton />)
 							<br />
 							<span>
