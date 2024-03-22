@@ -40,6 +40,17 @@ export function ShareListDialog({
 	}
 
 	/**
+	 * Allow the dialog to be closed by pressing the Escape key.
+	 * @param {KeyboardEvent} evt
+	 */
+	function handleKeydownCapture(evt) {
+		if (evt.key === 'Escape') {
+			ref.current.close();
+			onCancel.call(ref.current, evt);
+		}
+	}
+
+	/**
 	 * The <dialog> element has `showModal()` and `close()`
 	 * methods that we can call when our `open` prop changes.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog
@@ -60,6 +71,7 @@ export function ShareListDialog({
 			ref={ref}
 			onCancel={onCancel}
 			onClickCapture={handleBackdropClick}
+			onKeyDownCapture={handleKeydownCapture}
 		>
 			<form method="dialog" className={classNames.form} onSubmit={onSubmit}>
 				<div className={classNames.content}>{children}</div>
