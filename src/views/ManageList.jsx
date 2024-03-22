@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { addItem, shareList } from '../api';
 
 export function ManageList({ listPath, currentUserId }) {
@@ -44,6 +45,10 @@ export function ManageList({ listPath, currentUserId }) {
 		if (shareResult) {
 			alert(shareResult);
 		}
+	}
+
+	if (!currentUserId) {
+		return <Navigate to="/" replace={true} />;
 	}
 
 	return (

@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { ListItem } from '../components';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { comparePurchaseUrgency, shareList } from '../api';
 import { Dialog } from '../components/Dialog';
-import './List.css';
+import ShareEmailInput from '../components/ShareEmailInput';
 
 import './List.css';
-import ShareEmailInput from '../components/ShareEmailInput';
 
 export function List({ data, listPath, currentUserId }) {
 	const [searchString, setSearchString] = useState('');
@@ -52,6 +51,10 @@ export function List({ data, listPath, currentUserId }) {
 			buyNotSoon.push(item);
 		}
 	});
+
+	if (!currentUserId) {
+		return <Navigate to="/" replace={true} />;
+	}
 
 	async function handleShareList() {
 		setIsDialogOpen(true);
