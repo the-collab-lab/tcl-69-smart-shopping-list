@@ -1,11 +1,11 @@
 {
-	"extends": [
-		"plugin:jsx-a11y/recommended",
-		"prettier",
-		"react-app",
-		"react-app/jest"
-	],
+	"extends": ["plugin:jsx-a11y/recommended", "prettier"],
+	"plugins": ["react"],
+	"parserOptions": {
+		"ecmaVersion": "latest",
+		"sourceType": "module"
+	},
 	"rules": {
-		"react/jsx-filename-extension": "error"
+		"react/jsx-filename-extension": [1, { "allow": "as-needed" }]
 	}
 }

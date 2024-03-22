@@ -13,6 +13,12 @@ export function ListItem({ item, listPath }) {
 	} = item;
 
 	const currentDate = new Date();
+
+	const nextPurchasedDateArr = new Date(dateNextPurchased.seconds * 1000)
+		.toString()
+		.split(' ');
+	const nextPurchasedDate = nextPurchasedDateArr.slice(0, 4).join(' ');
+
 	const lastPurchasedDate = dateLastPurchased
 		? new Date(dateLastPurchased.seconds * 1000)
 		: 0;
@@ -106,6 +112,7 @@ export function ListItem({ item, listPath }) {
 					X
 				</button>
 			</label>
+			<small>Buy Next: {nextPurchasedDate}</small>
 		</li>
 	);
 }
