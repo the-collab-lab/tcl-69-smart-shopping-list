@@ -3,6 +3,7 @@ import { ListItem } from '../components';
 import { Link } from 'react-router-dom';
 import { comparePurchaseUrgency, shareList } from '../api';
 import { ShareListDialog } from '../components/ShareListDialog';
+import './List.css';
 
 import './List.css';
 import ShareEmailInput from '../components/ShareEmailInput';
@@ -21,7 +22,7 @@ export function List({ data, listPath, currentUserId }) {
 		setSearchString('');
 	};
 
-	const listName = listPath.split('/')[1];
+	const listName = listPath?.split('/')[1];
 
 	const filteredData = data.filter((d) =>
 		d.name?.toLowerCase().includes(searchString.toLowerCase()),
@@ -121,7 +122,7 @@ export function List({ data, listPath, currentUserId }) {
 				</form>
 			)}
 
-			<ul>
+			<ul className="List-items-section">
 				{sortedData && sortedData.length > 0 ? (
 					<>
 						<h5>Overdue</h5>

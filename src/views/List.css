@@ -27,4 +27,7 @@
 	justify-content: space-between;
 	align-items: center;
 	gap: 1em;
-}
+
+.List-items-section {
+	list-style-type: none;
+

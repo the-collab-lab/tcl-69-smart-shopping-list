@@ -40,7 +40,6 @@ export default defineConfig({
 	build: {
 		outDir: './build',
 		target: 'esnext',
-		commonjsOptions: { include: [] },
 		rollupOptions: {
 			output: {
 				manualChunks: (id) => {
@@ -57,7 +56,6 @@ export default defineConfig({
 			},
 		},
 	},
-	optimizeDeps: { disabled: false },
 	plugins: [
 		eslint({ cache: false, formatter: 'stylish' }),
 		react(),
@@ -69,5 +67,10 @@ export default defineConfig({
 		globals: true,
 		environment: 'jsdom',
 		setupFiles: './tests/setup.js',
+		server: {
+			// Prevents Vitest from crashing when it
+			// encounters a module that exports CSS.
+			deps: { inline: true },
+		},
 	},
 });
