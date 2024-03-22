@@ -37,6 +37,60 @@ export function Layout() {
 						</NavLink>
 					</div>
 				</nav>
+				<footer className="Layout-footer">
+					<p className="Layout-footer-attribution">
+						Crafted with care{' '}
+						<span role="img" aria-label="heart">
+							❤️{' '}
+						</span>
+						by{' '}
+						<a
+							className="Layout-footer-link"
+							href="https://github.com/amalyam"
+							target="_blank"
+							rel="noreferrer"
+						>
+							Amalya
+						</a>
+						,{' '}
+						<a
+							className="Layout-footer-link"
+							href="https://github.com/hsiangj"
+							rel="noreferrer"
+							target="_blank"
+						>
+							Jessica
+						</a>
+						,{' '}
+						<a
+							className="Layout-footer-link"
+							href="https://github.com/piecanoe"
+							rel="noreferrer"
+							target="_blank"
+						>
+							Karen
+						</a>
+						, &{' '}
+						<a
+							className="Layout-footer-link"
+							href="https://github.com/krsnamara"
+							rel="noreferrer"
+							target="_blank"
+						>
+							Marty
+						</a>{' '}
+						in partnership with{' '}
+						<a
+							className="Layout-footer-link"
+							href="https://the-collab-lab.codes/"
+							rel="noreferrer"
+							target="_blank"
+						>
+							The Collab Lab
+						</a>
+						.
+					</p>
+				</footer>
 			</div>
 		</>
 	);
