@@ -6,7 +6,7 @@ export function About() {
 			<main className="About-main">
 				<h1 className="About-title">How It Works</h1>
 				<section className="About-section">
-					<img width="250px" alt="green add button" src="../img/phone.png" />
+					<img width="250px" alt="phone screenshot" src="../img/phone.png" />
 					<div className="About-section-text">
 						<h2>Make some lists</h2>
 						<p>
@@ -16,7 +16,7 @@ export function About() {
 					</div>
 				</section>
 				<section className="About-section">
-					<img width="250px" alt="green add button" src="../img/phone.png" />
+					<img width="250px" alt="phone screenshot" src="../img/phone.png" />
 					<div className="About-section-text">
 						<h2>Add some items</h2>
 						<p>
@@ -26,7 +26,7 @@ export function About() {
 					</div>
 				</section>
 				<section className="About-section">
-					<img width="250px" alt="green add button" src="../img/phone.png" />
+					<img width="250px" alt="phone screenshot" src="../img/phone.png" />
 					<div className="About-section-text">
 						<h2>Check stuff off when you buy them</h2>
 						<p>
@@ -38,7 +38,7 @@ export function About() {
 					</div>
 				</section>
 				<section className="About-section">
-					<img width="250px" alt="green add button" src="../img/phone.png" />
+					<img width="250px" alt="phone screenshot" src="../img/phone.png" />
 					<div className="About-section-text">
 						<h2>Box Makers predicts when you'll need the item again</h2>
 						<p>
@@ -49,7 +49,7 @@ export function About() {
 					</div>
 				</section>
 				<section className="About-section">
-					<img width="250px" alt="green add button" src="../img/phone.png" />
+					<img width="250px" alt="phone screenshot" src="../img/phone.png" />
 					<div className="About-section-text">
 						<h2>Share with your family and friends</h2>
 						<p>
