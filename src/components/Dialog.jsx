@@ -1,16 +1,16 @@
 import { useEffect, useRef } from 'react';
-import './ShareListDialog.css';
+import './Dialog.css';
 
 const NO_OP = () => {};
 
 /**
  * @param {React.DialogHTMLAttributes<HTMLDialogElement> & { onCancel: (evt: Event) => void } } props
  */
-export function ShareListDialog({
+export function Dialog({
 	children,
 	open = false,
 	onCancel = NO_OP,
-	// onConfirm = NO_OP,
+	onConfirm = NO_OP,
 }) {
 	const ref = useRef(/** @type {HTMLDialogElement} */ (null));
 
@@ -46,6 +46,7 @@ export function ShareListDialog({
 			className="Dialog"
 			ref={ref}
 			onCancel={onCancel}
+			onSubmit={onConfirm}
 			onClickCapture={handleBackdropClick}
 		>
 			<form

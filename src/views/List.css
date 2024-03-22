@@ -17,14 +17,6 @@
 .share-list-button {
 	height: 25px;
 	width: 100px;
-	border: '1px solid tomato';
-	border-radius: '8px';
-	display: 'flex';
-	flex-direction: 'column';
-	gap: '.25em';
-	margin-top: '.5em';
-	padding: '.5em';
-	place-items: 'center';
 	cursor: pointer;
 }
 .List-items-section {

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ListItem } from '../components';
 import { Link } from 'react-router-dom';
 import { comparePurchaseUrgency, shareList } from '../api';
-import { ShareListDialog } from '../components/ShareListDialog';
+import { Dialog } from '../components/Dialog';
 
 import './List.css';
 import ShareEmailInput from '../components/ShareEmailInput';
@@ -52,6 +52,11 @@ export function List({ data, listPath, currentUserId }) {
 		}
 	});
 
+	function handleInviteChange(e) {
+		const { value } = e.target;
+		setRecipientEmail(value.toLowerCase());
+	}
+
 	async function handleShareList() {
 		setIsDialogOpen(true);
 	}
@@ -61,11 +66,6 @@ export function List({ data, listPath, currentUserId }) {
 	}
 
 	async function handleConfirmClick() {
-		// // Validate recipientEmail
-		// if (!validateEmail(recipientEmail)) {
-		// 	alert('Please enter a valid email address.');
-		// 	return; // Stop further execution if email is invalid
-		// }
 		let shareResult = await shareList(listPath, currentUserId, recipientEmail);
 		// provide an alert confirming that list was shared, or error
 		if (shareResult.status === 200) {
@@ -85,14 +85,24 @@ export function List({ data, listPath, currentUserId }) {
 					Share List
 				</button>
 			</div>
-			<ShareListDialog
+			<Dialog
 				open={isDialogOpen}
 				onConfirm={handleConfirmClick}
 				onCancel={handleCancelClick}
+				className="ShareListDialog"
 			>
 				<h2>Who are you sharing this list with?</h2>
 				<div className="share-email-dialog-container">
-					<ShareEmailInput setRecipientEmail={setRecipientEmail} />
+					<br />
+					<label htmlFor="invite-to-list">
+						Enter email:
+						<input
+							type="email"
+							id="invite-to-list"
+							name="inviteToList"
+							onChange={handleInviteChange}
+						/>
+					</label>
 					<div className="Dialog--button-group">
 						<button
 							className="c-button c-button-cancel"
@@ -100,15 +110,12 @@ export function List({ data, listPath, currentUserId }) {
 						>
 							Cancel
 						</button>
-						<button
-							className="c-button c-button-confirm"
-							onClick={handleConfirmClick}
-						>
+						<button className="c-button c-button-confirm" type="submit">
 							Confirm
 						</button>
 					</div>
 				</div>
-			</ShareListDialog>
+			</Dialog>
 
 			{sortedData && sortedData.length > 0 && (
 				<form>
