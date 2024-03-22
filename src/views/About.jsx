@@ -51,10 +51,10 @@ export function About() {
 				<section className="About-section">
 					<img width="250px" alt="phone screenshot" src="../img/phone.png" />
 					<div className="About-section-text">
-						<h2>Share with your family and friends</h2>
+						<h2>Share lists with family and friends</h2>
 						<p>
-							Anyone you share a list with will be able to contribute to the
-							list
+							When you share your lists, your friends and family can add and
+							contribute to your list!
 						</p>
 					</div>
 				</section>

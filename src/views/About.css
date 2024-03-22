@@ -4,6 +4,7 @@
 	justify-content: center;
 	max-width: 1200px;
 	padding: 0;
+	margin: 0;
 }
 
 .About-title {
@@ -13,14 +14,14 @@
 .About-section {
 	display: flex;
 	align-items: center;
-	justify-content: space-evenly;
+	justify-content: space-between;
 	padding: 25px 0;
 	gap: 50px;
 }
 
 .About-section h2 {
 	font-weight: 500;
-	font-size: 2.5rem;
+	font-size: 2.4rem;
 	margin: 16px 0;
 }
 
