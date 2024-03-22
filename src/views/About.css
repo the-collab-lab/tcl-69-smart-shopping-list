@@ -1,0 +1,40 @@
+.About-main {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	max-width: 1200px;
+	padding: 0;
+}
+
+.About-title {
+	text-align: center;
+}
+
+.About-section {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	padding: 25px 0;
+	gap: 30px;
+}
+
+.About-section h2 {
+	font-weight: 500;
+	font-size: 2.5rem;
+	margin: 16px 0;
+}
+
+.About-section-text p {
+	font-size: 1.5rem;
+}
+
+@media only screen and (max-width: 900px) {
+	.About-main {
+		max-width: 600px;
+	}
+
+	.About-section {
+		flex-direction: column;
+		text-align: center;
+	}
+}
