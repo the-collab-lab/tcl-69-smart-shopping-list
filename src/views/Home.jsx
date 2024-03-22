@@ -28,7 +28,10 @@ export function Home() {
 							</span>
 						</div>
 					) : (
-						<SignInButton />
+						<div>
+							<span>Click 'Sign In' to register and get started: </span>
+							<SignInButton />
+						</div>
 					)}
 				</header>
 			</div>
