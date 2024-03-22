@@ -28,7 +28,7 @@ export function About() {
 				<section className="About-section">
 					<img width="250px" alt="phone screenshot" src="../img/phone.png" />
 					<div className="About-section-text">
-						<h2>Check stuff off when you buy them</h2>
+						<h2>Check items off as you shop</h2>
 						<p>
 							As you purchase items, mark them off your list. By doing so,
 							you're not just staying organized, but you're also teaching Box
