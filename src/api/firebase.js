@@ -192,7 +192,7 @@ export async function shareList(listPath, currentUserId, recipientEmail) {
 			userDataAfterUpdate.sharedLists &&
 			userDataAfterUpdate.sharedLists.some((ref) => ref.path === listPath)
 		) {
-			return { status: 200, message: 'OK: List successfully shared' };
+			return { status: 200, message: 'List successfully shared' };
 		}
 	}
 
