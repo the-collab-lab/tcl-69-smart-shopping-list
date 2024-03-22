@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import './ShareListDialog.css';
+import './Dialog.css';
 
 const NO_OP = () => {};
 
@@ -12,7 +12,7 @@ const DEFAULT_CLASSNAMES = {
 /**
  * @param {Omit<React.DialogHTMLAttributes<HTMLDialogElement>, 'className'> & {classNames: Partial<typeof DEFAULT_CLASSNAMES>}} props
  */
-export function ShareListDialog({
+export function Dialog({
 	children,
 	classNames,
 	open = false,

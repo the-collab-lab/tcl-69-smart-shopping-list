@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ListItem } from '../components';
 import { Link } from 'react-router-dom';
 import { comparePurchaseUrgency, shareList } from '../api';
-import { ShareListDialog } from '../components/ShareListDialog';
+import { Dialog } from '../components/Dialog';
 import './List.css';
 
 import './List.css';
@@ -81,7 +81,7 @@ export function List({ data, listPath, currentUserId }) {
 				<h3>Welcome to your "{listName}" list. </h3>
 				<button onClick={handleShareList}>Share List</button>
 			</div>
-			<ShareListDialog
+			<Dialog
 				open={isDialogOpen}
 				onCancel={() => setIsDialogOpen(false)}
 				onSubmit={handleConfirmClick}
@@ -104,7 +104,7 @@ export function List({ data, listPath, currentUserId }) {
 						</button>
 					</div>
 				</div>
-			</ShareListDialog>
+			</Dialog>
 
 			{sortedData && sortedData.length > 0 && (
 				<form>
