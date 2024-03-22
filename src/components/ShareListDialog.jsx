@@ -1,18 +1,31 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './ShareListDialog.css';
 
 const NO_OP = () => {};
 
+const DEFAULT_CLASSNAMES = {
+	content: 'Dialog--content',
+	form: 'Dialog--container',
+	root: 'Dialog',
+};
+
 /**
- * @param {React.DialogHTMLAttributes<HTMLDialogElement> & { onCancel: (evt: Event) => void } } props
+ * @param {Omit<React.DialogHTMLAttributes<HTMLDialogElement>, 'className'> & {classNames: Partial<typeof DEFAULT_CLASSNAMES>}} props
  */
 export function ShareListDialog({
 	children,
+	classNames,
 	open = false,
 	onCancel = NO_OP,
 	onSubmit = NO_OP,
 }) {
-	const ref = useRef(/** @type {HTMLDialogElement} */ (null));
+	// Merge the default classNames with the user-provided ones.
+	classNames = React.useMemo(
+		() => ({ ...DEFAULT_CLASSNAMES, ...classNames }),
+		[classNames],
+	);
+
+	const ref = useRef(/** @type {?HTMLDialogElement} */ (null));
 
 	/**
 	 * When the backdrop element is clicked, close the dialog
@@ -43,13 +56,13 @@ export function ShareListDialog({
 
 	return (
 		<dialog
-			className="Dialog"
+			className={classNames.root}
 			ref={ref}
 			onCancel={onCancel}
 			onClickCapture={handleBackdropClick}
 		>
-			<form method="dialog" className="Dialog--container" onSubmit={onSubmit}>
-				<div className="Dialog--content">{children}</div>
+			<form method="dialog" className={classNames.form} onSubmit={onSubmit}>
+				<div className={classNames.content}>{children}</div>
 			</form>
 		</dialog>
 	);
