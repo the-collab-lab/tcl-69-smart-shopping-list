@@ -21,9 +21,6 @@ export function Layout() {
 						<SignInButton />
 					)}
 				</header>
-				<main className="Layout-main">
-					<Outlet />
-				</main>
 				<nav className="Nav">
 					<div className="Nav-container">
 						<NavLink to="/" className="Nav-link">
@@ -35,8 +32,14 @@ export function Layout() {
 						<NavLink to="/manage-list" className="Nav-link">
 							Manage List
 						</NavLink>
+						<NavLink to="/about" className="Nav-link">
+							About
+						</NavLink>
 					</div>
 				</nav>
+				<main className="Layout-main">
+					<Outlet />
+				</main>
 				<footer className="Layout-footer">
 					<p className="Layout-footer-attribution">
 						Crafted with care{' '}
