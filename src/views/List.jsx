@@ -60,7 +60,8 @@ export function List({ data, listPath, currentUserId }) {
 		setIsDialogOpen(false);
 	}
 
-	async function handleConfirmClick() {
+	async function handleConfirmClick(e) {
+		e.preventDefault();
 		let shareResult = await shareList(listPath, currentUserId, recipientEmail);
 		// provide an alert confirming that list was shared, or error
 		if (shareResult.status === 200) {
@@ -79,11 +80,7 @@ export function List({ data, listPath, currentUserId }) {
 				<h3>Welcome to your "{listName}" list. </h3>
 				<button onClick={handleShareList}>Share List</button>
 			</div>
-			<ShareListDialog
-				open={isDialogOpen}
-				onConfirm={handleConfirmClick}
-				onCancel={handleCancelClick}
-			>
+			<ShareListDialog open={isDialogOpen} onSubmit={handleConfirmClick}>
 				<h2>Who are you sharing this list with?</h2>
 				<div className="List-share-email-dialog-container">
 					<ShareEmailInput setRecipientEmail={setRecipientEmail} />
