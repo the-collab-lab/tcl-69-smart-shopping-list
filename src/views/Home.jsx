@@ -22,6 +22,10 @@ export function Home() {
 						<div>
 							<span>Signed in as {auth.currentUser.displayName}</span> (
 							<SignOutButton />)
+							<br />
+							<span>
+								View your lists <Link to="/list">here</Link>
+							</span>
 						</div>
 					) : (
 						<SignInButton />
