@@ -80,7 +80,11 @@ export function List({ data, listPath, currentUserId }) {
 				<h3>Welcome to your "{listName}" list. </h3>
 				<button onClick={handleShareList}>Share List</button>
 			</div>
-			<ShareListDialog open={isDialogOpen} onSubmit={handleConfirmClick}>
+			<ShareListDialog
+				open={isDialogOpen}
+				onCancel={() => setIsDialogOpen(false)}
+				onSubmit={handleConfirmClick}
+			>
 				<h2>Who are you sharing this list with?</h2>
 				<div className="List-share-email-dialog-container">
 					<ShareEmailInput setRecipientEmail={setRecipientEmail} />
