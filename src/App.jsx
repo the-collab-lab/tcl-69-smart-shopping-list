@@ -45,8 +45,8 @@ export function App() {
 	return (
 		<Router>
 			<Routes>
+				<Route index element={<Home />} />
 				<Route path="/" element={<Layout />}>
-					<Route index element={<Home />} />
 					<Route
 						path="/list"
 						element={
