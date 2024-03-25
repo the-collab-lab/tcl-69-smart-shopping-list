@@ -9,7 +9,14 @@ import ShareEmailInput from '../components/ShareEmailInput';
 
 import './List.css';
 
-export function List({ data, listPath, setListPath, currentUserId }) {
+export function List({
+	user,
+	data,
+	lists,
+	listPath,
+	setListPath,
+	currentUserId,
+}) {
 	const [searchString, setSearchString] = useState('');
 	const [recipientEmail, setRecipientEmail] = useState('');
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -101,9 +108,22 @@ export function List({ data, listPath, setListPath, currentUserId }) {
 	return (
 		<>
 			<div className="List">
+				<h3>Select a list or create a new one</h3>
+				<form onSubmit={handleSubmit}>
+					<label>
+						New list name:{' '}
+						<input
+							type="text"
+							value={shoppingListName}
+							id="shopping-list"
+							onChange={(e) => setShoppingListName(e.target.value)}
+						></input>
+					</label>{' '}
+					<input type="submit" value="Create!" />
+				</form>
 				<ul>
-					{data && data.length > 0 ? (
-						data.map((list) => (
+					{lists && lists.length > 0 ? (
+						lists.map((list) => (
 							<SingleList
 								key={list.name}
 								name={list.name}
@@ -115,18 +135,6 @@ export function List({ data, listPath, setListPath, currentUserId }) {
 						<h1>You have no Lists!</h1>
 					)}
 				</ul>
-				<form onSubmit={handleSubmit}>
-					<label>
-						Shopping List:
-						<input
-							type="text"
-							value={shoppingListName}
-							id="shopping-list"
-							onChange={(e) => setShoppingListName(e.target.value)}
-						></input>
-					</label>
-					<input type="submit" />
-				</form>
 				<div>
 					<h3>Welcome to your "{listName}" list. </h3>
 					<button onClick={handleShareList}>Share List</button>
@@ -155,7 +163,7 @@ export function List({ data, listPath, setListPath, currentUserId }) {
 						</div>
 					</div>
 				</Dialog>
-
+				<br />
 				{sortedData && sortedData.length > 0 && (
 					<form>
 						<label htmlFor="searchString">
@@ -208,18 +216,6 @@ export function List({ data, listPath, setListPath, currentUserId }) {
 					)}
 				</ul>
 			</div>
-			<form onSubmit={handleSubmit}>
-				<label>
-					Shopping List:
-					<input
-						type="text"
-						value={shoppingListName}
-						id="shopping-list"
-						onChange={(e) => setShoppingListName(e.target.value)}
-					></input>
-				</label>
-				<input type="submit" />
-			</form>
 		</>
 	);
 }
