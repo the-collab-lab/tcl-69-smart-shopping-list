@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { createPortal } from 'react-dom';
-import { ListItem } from '../components';
 import { Link, Navigate } from 'react-router-dom';
-import { comparePurchaseUrgency, shareList } from '../api';
+import { comparePurchaseUrgency, shareList, addItem } from '../api';
+import { ListItem } from '../components';
 import { Dialog } from '../components/Dialog';
 import ShareEmailInput from '../components/ShareEmailInput';
 
@@ -11,8 +10,8 @@ import './List.css';
 export function List({ data, listPath, currentUserId }) {
 	const [searchString, setSearchString] = useState('');
 	const [recipientEmail, setRecipientEmail] = useState('');
-	const [isDialogOpen, setIsDialogOpen] = useState(false);
-	const [showModal, setShowModal] = useState(false);
+	const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
+	const [isAddItemDialogOpen, setIsAddItemDialogOpen] = useState(false);
 
 	const handleChange = (e) => {
 		setSearchString(e.target.value);
@@ -58,27 +57,32 @@ export function List({ data, listPath, currentUserId }) {
 		return <Navigate to="/" replace={true} />;
 	}
 
+	//** SHARE LIST HANDLERS ***//
+
 	async function handleShareList() {
-		setIsDialogOpen(true);
+		setIsShareDialogOpen(true);
 	}
 
-	function handleCancelClick() {
-		setIsDialogOpen(false);
+	function handleShareCancelClick() {
+		setIsShareDialogOpen(false);
 	}
 
-	async function handleConfirmClick(e) {
+	async function handleShareConfirmClick(e) {
 		e.preventDefault();
+
 		let shareResult = await shareList(listPath, currentUserId, recipientEmail);
 		// provide an alert confirming that list was shared, or error
 		if (shareResult.status === 200) {
 			alert(shareResult.message);
-			setIsDialogOpen(false);
+			setIsShareDialogOpen(false);
 		} else {
 			alert(shareResult.message);
 			setRecipientEmail('');
-			setIsDialogOpen(true);
+			setIsShareDialogOpen(true);
 		}
 	}
+
+	//** ADD ITEM HANDLERS ***//
 
 	const INITIAL_DATA = {
 		itemName: '',
@@ -87,85 +91,34 @@ export function List({ data, listPath, currentUserId }) {
 
 	const [formData, setFormData] = useState(INITIAL_DATA);
 
-	function ModalContent({ onClose }) {
-		function handleInputChange(e) {
-			const { name, value } = e.target;
-			setFormData((prevFormData) => ({
-				...prevFormData,
-				[name]: value,
-			}));
-		}
+	function handleInputChange(e) {
+		const { name, value } = e.target;
+		setFormData((prevFormData) => ({
+			...prevFormData,
+			[name]: value,
+		}));
+	}
 
-		async function handleSubmit(e) {
-			e.preventDefault();
-			formData.daysUntilNextPurchase = Number(formData.daysUntilNextPurchase);
-			let result = await addItem(listPath, formData);
-			if (result.success) {
-				setFormData(INITIAL_DATA);
-				alert(result.message);
-				onClose();
-			} else {
-				alert(result.error);
-			}
+	function handleAddItem() {
+		setIsAddItemDialogOpen(true);
+	}
+
+	function handleAddItemCancelClick() {
+		setIsAddItemDialogOpen(false);
+	}
+
+	async function handleAddItemConfirmClick(e) {
+		e.preventDefault();
+
+		let addItemResult = await addItem(listPath, formData);
+		// provide an alert confirming that list was shared, or error
+		if (addItemResult.status === 201) {
+			alert(addItemResult.message);
+			setIsAddItemDialogOpen(false);
+		} else {
+			alert(addItemResult.error);
+			setIsAddItemDialogOpen(true);
 		}
-		return (
-			<div className="List-modal-container">
-				<div className="List-modal-inner">
-					<div>Enter item</div>
-					<form onSubmit={handleSubmit}>
-						<label htmlFor="itemName">
-							Item Name:
-							<input
-								type="text"
-								id="itemName"
-								name="itemName"
-								value={formData.itemName}
-								onChange={handleInputChange}
-								required
-							></input>
-						</label>
-						<br />
-						<p>Buy again?</p>
-						<label htmlFor="soon">
-							Soon:
-							<input
-								type="radio"
-								id="soon"
-								name="daysUntilNextPurchase"
-								value="7"
-								onChange={handleInputChange}
-								defaultChecked
-							></input>
-						</label>
-						<br />
-						<label htmlFor="kind-of-soon">
-							Kind of soon:
-							<input
-								type="radio"
-								id="kind-of-soon"
-								name="daysUntilNextPurchase"
-								value="14"
-								onChange={handleInputChange}
-							></input>
-						</label>
-						<br />
-						<label htmlFor="not-soon">
-							Not soon:
-							<input
-								type="radio"
-								id="not-soon"
-								name="daysUntilNextPurchase"
-								value="30"
-								onChange={handleInputChange}
-							></input>
-						</label>
-						<br />
-						<button type="submit">Submit</button>
-					</form>
-					<button onClick={onClose}>Cancel</button>
-				</div>
-			</div>
-		);
 	}
 
 	return (
@@ -175,9 +128,9 @@ export function List({ data, listPath, currentUserId }) {
 				<button onClick={handleShareList}>Share List</button>
 			</div>
 			<Dialog
-				open={isDialogOpen}
-				onCancel={() => setIsDialogOpen(false)}
-				onSubmit={handleConfirmClick}
+				open={isShareDialogOpen}
+				onCancel={() => setIsShareDialogOpen(false)}
+				onSubmit={handleShareConfirmClick}
 			>
 				<h2>Who are you sharing this list with?</h2>
 				<div className="List-share-email-dialog-container">
@@ -185,13 +138,13 @@ export function List({ data, listPath, currentUserId }) {
 					<div className="Dialog--button-group">
 						<button
 							className="c-button c-button-cancel"
-							onClick={handleCancelClick}
+							onClick={handleShareCancelClick}
 						>
 							Cancel
 						</button>
 						<button
 							className="c-button c-button-confirm"
-							onClick={handleConfirmClick} // Remove arguments here
+							onClick={handleShareConfirmClick}
 						>
 							Confirm
 						</button>
@@ -250,20 +203,81 @@ export function List({ data, listPath, currentUserId }) {
 					</>
 				)}
 			</ul>
-			<button
-				className="List-add-item-button"
-				onClick={() => setShowModal(true)}
-			>
+			<button className="List-add-item-button" onClick={handleAddItem}>
 				<img src="/img/add-green.svg" alt="add item" />
 			</button>
-			{showModal &&
-				createPortal(
-					<ModalContent
-						onClose={() => setShowModal(false)}
-						setFormData={{ setFormData }}
-					/>,
-					document.body,
-				)}
+			<Dialog
+				open={isAddItemDialogOpen}
+				onCancel={() => setIsAddItemDialogOpen(false)}
+				onSubmit={handleAddItemConfirmClick}
+			>
+				<div className="List-modal-container">
+					<div className="List-modal-inner">
+						<div>Enter item</div>
+						<label htmlFor="itemName">
+							Item Name:
+							<input
+								type="text"
+								id="itemName"
+								name="itemName"
+								value={formData.itemName}
+								onChange={handleInputChange}
+								required
+							></input>
+						</label>
+						<br />
+						<p>Buy again?</p>
+						<label htmlFor="soon">
+							Soon:
+							<input
+								type="radio"
+								id="soon"
+								name="daysUntilNextPurchase"
+								value="7"
+								onChange={handleInputChange}
+								defaultChecked
+							></input>
+						</label>
+						<br />
+						<label htmlFor="kind-of-soon">
+							Kind of soon:
+							<input
+								type="radio"
+								id="kind-of-soon"
+								name="daysUntilNextPurchase"
+								value="14"
+								onChange={handleInputChange}
+							></input>
+						</label>
+						<br />
+						<label htmlFor="not-soon">
+							Not soon:
+							<input
+								type="radio"
+								id="not-soon"
+								name="daysUntilNextPurchase"
+								value="30"
+								onChange={handleInputChange}
+							></input>
+						</label>
+						<br />
+						<div className="Dialog--button-group">
+							<button
+								className="c-button c-button-cancel"
+								onClick={handleAddItemCancelClick}
+							>
+								Cancel
+							</button>
+							<button
+								className="c-button c-button-confirm"
+								onClick={handleAddItemConfirmClick}
+							>
+								Add Item
+							</button>
+						</div>
+					</div>
+				</div>
+			</Dialog>
 		</div>
 	);
 }
