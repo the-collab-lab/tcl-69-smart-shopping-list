@@ -1,61 +1,33 @@
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import { addItem, shareList } from '../api';
+import { addItem } from '../api';
 
-export function ManageList({ listPath, currentUserId }) {
+export function AddItems({ listPath }) {
 	const INITIAL_DATA = {
 		itemName: '',
 		daysUntilNextPurchase: '7',
 	};
 
 	const [formData, setFormData] = useState(INITIAL_DATA);
-	const [recipientEmail, setRecipientEmail] = useState('');
 
 	function handleChange(e) {
 		const { name, value } = e.target;
 		setFormData((data) => ({ ...data, [name]: value }));
 	}
 
-	function handleInviteChange(e) {
-		const { value } = e.target;
-		setRecipientEmail(value);
-	}
-
-	//Enter key also submits the form as long as user is on one of the input field
 	async function handleSubmit(e) {
 		e.preventDefault();
-
 		formData.daysUntilNextPurchase = +formData.daysUntilNextPurchase;
 		let result = await addItem(listPath, formData);
-		if (result && result.success) {
+		if (result.success) {
 			setFormData(INITIAL_DATA);
 			alert('Item saved!');
-		} else if (result && result.error) {
-			alert(result.error);
 		} else {
-			alert('Item cannot be saved to database, please try again.');
+			alert('Item not saved to database, please try again');
 		}
-	}
-
-	async function handleInviteSubmit(e) {
-		e.preventDefault();
-		let shareResult = await shareList(listPath, currentUserId, recipientEmail);
-
-		// provide an alert confirming that list was shared, or error
-		if (shareResult) {
-			alert(shareResult);
-		}
-	}
-
-	if (!currentUserId) {
-		return <Navigate to="/" replace={true} />;
 	}
 
 	return (
 		<>
-			<p>
-				Hello from the <code>/manage-list</code> page!
-			</p>
 			<form onSubmit={handleSubmit}>
 				<label htmlFor="itemName">
 					Item Name:
@@ -105,20 +77,6 @@ export function ManageList({ listPath, currentUserId }) {
 				</label>
 				<br />
 				<button type="submit">Submit</button>
-			</form>
-			<form onSubmit={handleInviteSubmit}>
-				<br />
-				<label htmlFor="invite-to-list">
-					Enter email:
-					<input
-						type="email"
-						id="invite-to-list"
-						name="inviteToList"
-						onChange={handleInviteChange}
-					/>
-				</label>
-				<br />
-				<button type="submit">Invite User</button>
 			</form>
 		</>
 	);
