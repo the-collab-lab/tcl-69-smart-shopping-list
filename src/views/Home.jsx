@@ -1,60 +1,40 @@
 import './Home.css';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { SingleList } from '../components';
-import { createList } from '../api/firebase';
+import { useAuth, SignInButton, SignOutButton } from '../api/useAuth.jsx';
+import { auth } from '../api/config.js';
+import { Link } from 'react-router-dom';
 
-export function Home({ data, setListPath, user }) {
-	const [shoppingListName, setShoppingListName] = useState('');
-	const navigate = useNavigate(); // useNavigate doc suggests using redirect
-
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		try {
-			const newListPath = await createList(
-				user.uid,
-				user.email,
-				shoppingListName,
-			);
-			setListPath(newListPath);
-			alert('You have created a new shopping list: ' + shoppingListName);
-			navigate('/list');
-		} catch (error) {
-			alert(`Your list was not created, please try again. Error: ${error}`);
-		}
-	};
-
+export function Home() {
+	const { user } = useAuth();
 	return (
-		<div className="Home">
-			<p>
-				Hello from the home (<code>/</code>) page!
-			</p>
-			<ul>
-				{data && data.length > 0 ? (
-					data.map((list) => (
-						<SingleList
-							key={list.name}
-							name={list.name}
-							setListPath={setListPath}
-							path={list.path}
-						/>
-					))
-				) : (
-					<h1>You have no Lists!</h1>
-				)}
-			</ul>
-			<form onSubmit={handleSubmit}>
-				<label>
-					Shopping List:
-					<input
-						type="text"
-						value={shoppingListName}
-						id="shopping-list"
-						onChange={(e) => setShoppingListName(e.target.value)}
-					></input>
-				</label>
-				<input type="submit" />
-			</form>
-		</div>
+		<>
+			<div className="Home">
+				<header className="Home-header">
+					<h2>Welcome to Box Makers!</h2>
+					<img
+						className="checkbox"
+						src="img/checkbox.png"
+						alt="black checkbox with green check"
+					/>
+					<h3>
+						New to the app? Click <Link to="/about">here</Link> to learn more!
+					</h3>
+					{!!user ? (
+						<div>
+							<span>Welcome back {auth.currentUser.displayName}!</span> (
+							<SignOutButton />)
+							<br />
+							<span>
+								View your lists <Link to="/list">here</Link>
+							</span>
+						</div>
+					) : (
+						<div>
+							<span>Click 'Sign In' to register and get started: </span>
+							<SignInButton />
+						</div>
+					)}
+				</header>
+			</div>
+		</>
 	);
 }

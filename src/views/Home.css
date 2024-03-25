@@ -1,0 +1,33 @@
+/**
+ * The `env()` function used in this block of code
+ * allows us to reference special variables that might be defined
+ * by certain browsers. In this case, we are making sure that
+ * the app stays within the 'safe' viewable area of a mobile phone,
+ * and isn't covered up by the phone's UI.
+ *
+ * @see: https://developer.mozilla.org/en-US/docs/Web/CSS/env
+ */
+.Home {
+	display: flex;
+	flex-direction: column;
+	height: 100dvh;
+}
+
+.Home > * {
+	padding-inline: min(5dvw, 3.2rem);
+}
+
+.Home-header {
+	background-color: var(--color-bg);
+	padding-bottom: 0.5rem;
+	padding-top: max(env(safe-area-inset-top), 1rem);
+	text-align: center;
+}
+
+.Home-header > h1 {
+	margin: 0;
+}
+
+.checkbox {
+	height: 200px;
+}

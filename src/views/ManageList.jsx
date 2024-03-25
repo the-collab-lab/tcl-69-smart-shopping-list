@@ -117,7 +117,6 @@ export function ManageList({ listPath, currentUserId }) {
 						onChange={handleInviteChange}
 					/>
 				</label>
-				<small> "Please enter email using lowercase letters only."</small>
 				<br />
 				<button type="submit">Invite User</button>
 			</form>

@@ -45,22 +45,30 @@ export function App() {
 	return (
 		<Router>
 			<Routes>
+				<Route index element={<Home />} />
 				<Route path="/" element={<Layout />}>
-					<Route
-						index
-						element={
-							<Home data={lists} setListPath={setListPath} user={user} />
-						}
-					/>
 					<Route
 						path="/list"
 						element={
-							<List data={data} listPath={listPath} currentUserId={userId} />
+							<List
+								user={user}
+								data={data}
+								lists={lists}
+								listPath={listPath}
+								setListPath={setListPath}
+								currentUserId={userId}
+							/>
 						}
 					/>
 					<Route
 						path="/manage-list"
-						element={<ManageList listPath={listPath} currentUserId={userId} />}
+						element={
+							<ManageList
+								data={data}
+								listPath={listPath}
+								currentUserId={userId}
+							/>
+						}
 					/>
 					<Route path="/about" element={<About />} />
 				</Route>
