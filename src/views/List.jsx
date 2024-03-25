@@ -80,21 +80,10 @@ export function List({ data, listPath, currentUserId }) {
 		let shareResult = await shareList(listPath, currentUserId, recipientEmail);
 		// provide an alert confirming that list was shared, or error
 		if (shareResult.status === 200) {
-			<AlertDialog
-				message={shareList.message}
-				isDialogOpen={isAlertDialogOpen}
-				setIsDialogOpen={setIsAlertDialogOpen}
-			/>;
 			alert(shareResult.message);
 			setIsShareDialogOpen(false);
 		} else {
-			setIsAlertDialogOpen(true);
-			<AlertDialog
-				message={shareList.message}
-				// isDialogOpen={isAlertDialogOpen}
-				setIsDialogOpen={setIsAlertDialogOpen}
-			/>;
-			// alert(shareResult.message);
+			alert(shareResult.message);
 			setRecipientEmail('');
 			setIsShareDialogOpen(true);
 		}
@@ -129,6 +118,8 @@ export function List({ data, listPath, currentUserId }) {
 		setIsAddItemDialogOpen(false);
 	}
 
+	let addItemResult = '';
+
 	async function handleAddItemConfirmClick(e) {
 		e.preventDefault();
 
@@ -138,9 +129,14 @@ export function List({ data, listPath, currentUserId }) {
 			alert(addItemResult.message);
 			setIsAddItemDialogOpen(false);
 		} else {
-			alert(addItemResult.error);
+			setIsAlertDialogOpen(true);
+			// alert(addItemResult.error);
 			setIsAddItemDialogOpen(true);
 		}
+	}
+
+	function handleAlertConfirmClick() {
+		setIsAlertDialogOpen(false);
 	}
 
 	return (
@@ -181,7 +177,6 @@ export function List({ data, listPath, currentUserId }) {
 					</div>
 				</div>
 			</Dialog>
-
 			{sortedData && sortedData.length > 0 && (
 				<form>
 					<label htmlFor="searchString">
@@ -197,7 +192,6 @@ export function List({ data, listPath, currentUserId }) {
 					{searchString ? <button onClick={handleClick}>x</button> : ''}
 				</form>
 			)}
-
 			<ul className="List-items-section">
 				{sortedData && sortedData.length > 0 ? (
 					<>
@@ -330,6 +324,22 @@ export function List({ data, listPath, currentUserId }) {
 							</button>
 						</div>
 					</div>
+				</div>
+			</Dialog>
+			<Dialog
+				open={isAlertDialogOpen}
+				onConfirm={handleAlertConfirmClick}
+				classNames={Dialog - alert}
+			>
+				<h2>Wait a sec!</h2>
+				<p>{addItemResult.message}</p>
+				<div className="Dialog--button-group">
+					<button
+						className="c-button c-button__danger"
+						onClick={handleAlertConfirmClick}
+					>
+						Yes
+					</button>
 				</div>
 			</Dialog>
 		</div>

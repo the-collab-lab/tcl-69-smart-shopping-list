@@ -7,7 +7,11 @@ function AlertDialog({ message, isAlertDialogOpen, setIsAlertDialogOpen }) {
 
 	return (
 		<>
-			<Dialog open={isAlertDialogOpen} onConfirm={handleConfirmClick}>
+			<Dialog
+				open={isAlertDialogOpen}
+				onConfirm={handleConfirmClick}
+				classNames={Dialog - alert}
+			>
 				<h2>Wait a sec!</h2>
 				<p>{message}</p>
 				<div className="Dialog--button-group">
