@@ -144,14 +144,21 @@ export async function createList(userId, userEmail, listName) {
 export async function shareList(listPath, currentUserId, recipientEmail) {
 	// Check if current user is owner.
 	if (!listPath.includes(currentUserId)) {
-		return 'You are not the owner of this list, you cannot share this list.';
+		return {
+			status: 403,
+			message:
+				'Forbidden: You are not the owner of this list, you cannot share this list.',
+		};
 	}
 	// Get the document for the recipient user.
 	const usersCollectionRef = collection(db, 'users');
 	const recipientDoc = await getDoc(doc(usersCollectionRef, recipientEmail));
 	// If the recipient user doesn't exist, we can't share the list.
 	if (!recipientDoc.exists()) {
-		return 'The user you are trying to invite does not exist.';
+		return {
+			status: 404,
+			message: 'Not Found: The user you are trying to invite does not exist.',
+		};
 	}
 
 	// Check if list has already been shared with invited user
@@ -163,7 +170,11 @@ export async function shareList(listPath, currentUserId, recipientEmail) {
 			userData.sharedLists &&
 			userData.sharedLists.some((ref) => ref.path === listPath)
 		) {
-			return 'This user has already been invited to the current list.';
+			return {
+				status: 409,
+				message:
+					'Conflict: This user has already been invited to the current list.',
+			};
 		}
 	}
 
@@ -173,7 +184,7 @@ export async function shareList(listPath, currentUserId, recipientEmail) {
 		sharedLists: arrayUnion(listDocumentRef),
 	});
 
-	// check that shared list appears in the invited user's lists
+	// Check that shared list appears in the invited user's lists
 	const userDocAfterUpdate = await getDoc(userDocumentRef);
 	if (userDocAfterUpdate.exists()) {
 		const userDataAfterUpdate = userDocAfterUpdate.data();
@@ -181,11 +192,14 @@ export async function shareList(listPath, currentUserId, recipientEmail) {
 			userDataAfterUpdate.sharedLists &&
 			userDataAfterUpdate.sharedLists.some((ref) => ref.path === listPath)
 		) {
-			return 'List successfully shared';
+			return { status: 200, message: 'List successfully shared' };
 		}
 	}
 
-	return 'Failed to share list';
+	return {
+		status: 500,
+		message: 'Internal Server Error: Failed to share list',
+	};
 }
 
 /**
@@ -220,7 +234,7 @@ export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 			totalPurchases: 0,
 		});
 
-		return { success: true, newDoc, message: 'Item added successfully.' };
+		return { success: true, newDoc };
 	} catch (err) {
 		console.error('Error adding new item:', err);
 		return { success: false };
@@ -313,9 +327,15 @@ export function comparePurchaseUrgency(data) {
 	const ONE_DAY_IN_MILLISECONDS = 86400000;
 
 	const updatedData = data.map((item) => {
+		// Check if item.dateNextPurchased is a Date object
+		const dateNextPurchased =
+			item.dateNextPurchased instanceof Date
+				? item.dateNextPurchased
+				: new Date(item.dateNextPurchased.seconds * 1000);
+
 		// calculate time difference directly without using the absolute value built into getDaysBetweenDates function
 		const daysUntilNextPurchase = Math.floor(
-			(item.dateNextPurchased.toDate() - currentDate) / ONE_DAY_IN_MILLISECONDS,
+			(dateNextPurchased - currentDate) / ONE_DAY_IN_MILLISECONDS,
 		);
 
 		const daysSinceLastPurchase = item.dateLastPurchased
@@ -326,7 +346,12 @@ export function comparePurchaseUrgency(data) {
 			daysUntilNextPurchase < 0 &&
 			(daysSinceLastPurchase === null || daysSinceLastPurchase < 60);
 
-		return { ...item, daysUntilNextPurchase, daysSinceLastPurchase, isOverdue };
+		return {
+			...item,
+			daysUntilNextPurchase,
+			daysSinceLastPurchase,
+			isOverdue,
+		};
 	});
 
 	return updatedData.sort((itemA, itemB) => {
@@ -345,7 +370,6 @@ export function comparePurchaseUrgency(data) {
 		//sort alphabetically by name for items with the same urgency
 		if (itemA.name > itemB.name) return 1;
 		if (itemA.name < itemB.name) return -1;
-
 		return 0;
 	});
 }

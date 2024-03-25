@@ -1,12 +1,17 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ListItem } from '../components';
-import { Link } from 'react-router-dom';
-import { comparePurchaseUrgency, addItem } from '../api';
+import { Link, Navigate } from 'react-router-dom';
+import { comparePurchaseUrgency, shareList } from '../api';
+import { Dialog } from '../components/Dialog';
+import ShareEmailInput from '../components/ShareEmailInput';
+
 import './List.css';
 
-export function List({ data, listPath }) {
+export function List({ data, listPath, currentUserId }) {
 	const [searchString, setSearchString] = useState('');
+	const [recipientEmail, setRecipientEmail] = useState('');
+	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 
 	const handleChange = (e) => {
@@ -48,6 +53,32 @@ export function List({ data, listPath }) {
 			buyNotSoon.push(item);
 		}
 	});
+
+	if (!currentUserId) {
+		return <Navigate to="/" replace={true} />;
+	}
+
+	async function handleShareList() {
+		setIsDialogOpen(true);
+	}
+
+	function handleCancelClick() {
+		setIsDialogOpen(false);
+	}
+
+	async function handleConfirmClick(e) {
+		e.preventDefault();
+		let shareResult = await shareList(listPath, currentUserId, recipientEmail);
+		// provide an alert confirming that list was shared, or error
+		if (shareResult.status === 200) {
+			alert(shareResult.message);
+			setIsDialogOpen(false);
+		} else {
+			alert(shareResult.message);
+			setRecipientEmail('');
+			setIsDialogOpen(true);
+		}
+	}
 
 	const INITIAL_DATA = {
 		itemName: '',
@@ -139,10 +170,35 @@ export function List({ data, listPath }) {
 
 	return (
 		<div className="List">
-			<p>
-				Hello from the <code>/list</code> page!
-			</p>
-			<h5>Welcome to your "{listName}" list. </h5>
+			<div>
+				<h3>Welcome to your "{listName}" list. </h3>
+				<button onClick={handleShareList}>Share List</button>
+			</div>
+			<Dialog
+				open={isDialogOpen}
+				onCancel={() => setIsDialogOpen(false)}
+				onSubmit={handleConfirmClick}
+			>
+				<h2>Who are you sharing this list with?</h2>
+				<div className="List-share-email-dialog-container">
+					<ShareEmailInput setRecipientEmail={setRecipientEmail} />
+					<div className="Dialog--button-group">
+						<button
+							className="c-button c-button-cancel"
+							onClick={handleCancelClick}
+						>
+							Cancel
+						</button>
+						<button
+							className="c-button c-button-confirm"
+							onClick={handleConfirmClick} // Remove arguments here
+						>
+							Confirm
+						</button>
+					</div>
+				</div>
+			</Dialog>
+
 			{sortedData && sortedData.length > 0 && (
 				<form>
 					<label htmlFor="searchString">
