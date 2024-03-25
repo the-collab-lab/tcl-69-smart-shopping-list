@@ -59,8 +59,14 @@ export function List({ data, listPath, currentUserId }) {
 
 	//** SHARE LIST HANDLERS ***//
 
+	function handleInviteChange(e) {
+		const { value } = e.target;
+		setRecipientEmail(value.toLowerCase());
+	}
+
 	async function handleShareList() {
 		setIsShareDialogOpen(true);
+		setRecipientEmail('');
 	}
 
 	function handleShareCancelClick() {
@@ -138,7 +144,15 @@ export function List({ data, listPath, currentUserId }) {
 			>
 				<h2>Who are you sharing this list with?</h2>
 				<div className="List-share-email-dialog-container">
-					<ShareEmailInput setRecipientEmail={setRecipientEmail} />
+					<label htmlFor="invite-to-list">
+						Enter email:
+						<input
+							type="email"
+							id="invite-to-list"
+							name="inviteToList"
+							onChange={handleInviteChange}
+						/>
+					</label>
 					<div className="Dialog--button-group">
 						<button
 							className="c-button c-button-cancel"
