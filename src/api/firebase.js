@@ -211,7 +211,7 @@ export async function shareList(listPath, currentUserId, recipientEmail) {
  */
 export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 	if (itemName.trim() === '') {
-		return { success: false, error: 'Item cannot be empty.' };
+		return { success: false, error: 'Item cannot be empty.', status: 400 };
 	}
 
 	const listCollectionRef = collection(db, listPath, 'items');
@@ -220,7 +220,11 @@ export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 	const itemExistsResult = itemExists(itemName, itemsSnapshot);
 
 	if (itemExistsResult) {
-		return { success: false, error: 'This item already exists in the list.' };
+		return {
+			success: false,
+			error: 'This item already exists in the list.',
+			status: 409,
+		};
 	}
 
 	try {
@@ -234,10 +238,18 @@ export async function addItem(listPath, { itemName, daysUntilNextPurchase }) {
 			totalPurchases: 0,
 		});
 
-		return { success: true, newDoc };
+		return {
+			success: true,
+			newDoc,
+			status: 201,
+			message: 'Item added successfully.',
+		};
 	} catch (err) {
-		console.error('Error adding new item:', err);
-		return { success: false };
+		return {
+			success: false,
+			status: 500,
+			error: 'Internal Server Error: Failed to add item.',
+		};
 	}
 }
 
