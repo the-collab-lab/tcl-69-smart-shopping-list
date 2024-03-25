@@ -53,9 +53,10 @@ export function App() {
 							<List
 								user={user}
 								data={data}
+								lists={lists}
 								listPath={listPath}
 								setListPath={setListPath}
-								currentUserId={currentUserId}
+								currentUserId={userId}
 							/>
 						}
 					/>
