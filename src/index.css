@@ -1,4 +1,7 @@
 :root {
+	/* BRANDING IS USED FOR BUTTON AND SVG FILL */
+	--color-branding: orange;
+
 	--color-black: hsla(220, 13%, 18%, 1);
 	--color-gray-dark: hsla(220, 13%, 25%, 1);
 	--color-white: hsla(220, 13%, 98%, 1);
@@ -14,6 +17,13 @@
 	--color-border: hsla(220, 13%, 32%, 1);
 	--color-error: var(--color-red);
 	--color-text: var(--color-white);
+
+	--button-primary: var(--color-branding);
+	--button-primary-hover: rgba(255, 166, 0, 0.809);
+
+	--svg-fill-color: var(--color-branding);
+	--svg-stroke-color: black;
+	--svg-box-fill-color: white;
 }
 
 @media screen and (prefers-color-scheme: light) {

@@ -5,10 +5,12 @@ import { ListItem } from '../components';
 import { Dialog } from '../components/Dialog';
 
 import './List.css';
+import AlertDialog from '../components/AlertDialog';
 
 export function List({ data, listPath, currentUserId }) {
 	const [searchString, setSearchString] = useState('');
 	const [recipientEmail, setRecipientEmail] = useState('');
+	const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false);
 	const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
 	const [isAddItemDialogOpen, setIsAddItemDialogOpen] = useState(false);
 
@@ -78,10 +80,21 @@ export function List({ data, listPath, currentUserId }) {
 		let shareResult = await shareList(listPath, currentUserId, recipientEmail);
 		// provide an alert confirming that list was shared, or error
 		if (shareResult.status === 200) {
+			<AlertDialog
+				message={shareList.message}
+				isDialogOpen={isAlertDialogOpen}
+				setIsDialogOpen={setIsAlertDialogOpen}
+			/>;
 			alert(shareResult.message);
 			setIsShareDialogOpen(false);
 		} else {
-			alert(shareResult.message);
+			setIsAlertDialogOpen(true);
+			<AlertDialog
+				message={shareList.message}
+				// isDialogOpen={isAlertDialogOpen}
+				setIsDialogOpen={setIsAlertDialogOpen}
+			/>;
+			// alert(shareResult.message);
 			setRecipientEmail('');
 			setIsShareDialogOpen(true);
 		}
@@ -221,7 +234,31 @@ export function List({ data, listPath, currentUserId }) {
 				)}
 			</ul>
 			<button className="List-add-item-button" onClick={handleAddItem}>
-				<img src="/img/add-green.svg" alt="add item" />
+				<svg
+					width="133"
+					height="132"
+					viewBox="0 0 163 162"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<g clipPath="url(#clip0_19_85)">
+						<path
+							d="M162.5 81C162.5 114.681 137.681 139.5 105 139.5H58C25.3193 139.5 0.5 114.681 0.5 81C0.5 47.3188 25.3193 22.5 58 22.5H105C137.681 22.5 162.5 47.3188 162.5 81Z"
+							fill="var(--svg-fill-color)"
+							stroke="var(--svg-stroke-color)"
+						/>
+						<rect x="38" y="70" width="86" height="22" rx="5" fill="white" />
+						<rect
+							x="92"
+							y="38"
+							width="86"
+							height="22"
+							rx="5"
+							transform="rotate(90 92 38)"
+							fill="white"
+						/>
+					</g>
+				</svg>
 			</button>
 			<Dialog
 				open={isAddItemDialogOpen}
