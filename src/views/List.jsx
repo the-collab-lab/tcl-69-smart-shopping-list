@@ -101,6 +101,10 @@ export function List({ data, listPath, currentUserId }) {
 
 	function handleAddItem() {
 		setIsAddItemDialogOpen(true);
+		// reset form data
+		setFormData({ itemName: '', daysUntilNextPurchase: '7' });
+		// set default radio button to 'soon'
+		document.getElementById('soon').checked = true;
 	}
 
 	function handleAddItemCancelClick() {
