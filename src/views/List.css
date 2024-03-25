@@ -47,29 +47,10 @@
 	transform: translate(-50%, -50%);
 	cursor: pointer;
 }
-.Dialog::backdrop {
-	background-color: aquamarine;
-}
 
 .List-add-item-button img {
 	width: 100%;
 	max-width: 100px;
-}
-
-.List-modal-container {
-	background-color: rgba(128, 128, 128, 0.5);
-}
-
-.List-modal-inner {
-	background-color: white;
-	border-radius: 10px;
-	border: solid 3px rgb(60, 242, 190);
-	padding: 20px;
-	position: fixed;
-	top: 30%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	z-index: 4;
 }
 
 @media (min-width: 600px) {
@@ -79,8 +60,3 @@
 		max-width: 200px;
 	}
 }
-
-/* for large screens */
-/* @media (min-width: 1200px) {
-	
-} */
