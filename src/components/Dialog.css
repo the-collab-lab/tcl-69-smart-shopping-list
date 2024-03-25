@@ -1,7 +1,7 @@
 .Dialog {
 	--button-alignment: 'center';
 
-	border-radius: 8px;
+	border-radius: 20px;
 	max-width: min(68ch, 95vw);
 	padding: 0;
 	animation:

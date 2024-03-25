@@ -32,3 +32,27 @@
 .List-items-section {
 	list-style-type: none;
 }
+
+.List-add-item-button {
+	border: none;
+	background: none;
+	z-index: 3;
+	position: fixed;
+	left: 50%;
+	top: 80%;
+	transform: translate(-50%, -50%);
+	cursor: pointer;
+}
+
+.List-add-item-button img {
+	width: 100%;
+	max-width: 100px;
+}
+
+@media (min-width: 600px) {
+	.List-add-item-button {
+		left: 75%;
+		top: 50%;
+		max-width: 200px;
+	}
+}
