@@ -339,15 +339,9 @@ export function comparePurchaseUrgency(data) {
 	const ONE_DAY_IN_MILLISECONDS = 86400000;
 
 	const updatedData = data.map((item) => {
-		// Check if item.dateNextPurchased is a Date object
-		const dateNextPurchased =
-			item.dateNextPurchased instanceof Date
-				? item.dateNextPurchased
-				: new Date(item.dateNextPurchased.seconds * 1000);
-
 		// calculate time difference directly without using the absolute value built into getDaysBetweenDates function
 		const daysUntilNextPurchase = Math.floor(
-			(dateNextPurchased - currentDate) / ONE_DAY_IN_MILLISECONDS,
+			(item.dateNextPurchased.toDate() - currentDate) / ONE_DAY_IN_MILLISECONDS,
 		);
 
 		const daysSinceLastPurchase = item.dateLastPurchased
@@ -358,12 +352,7 @@ export function comparePurchaseUrgency(data) {
 			daysUntilNextPurchase < 0 &&
 			(daysSinceLastPurchase === null || daysSinceLastPurchase < 60);
 
-		return {
-			...item,
-			daysUntilNextPurchase,
-			daysSinceLastPurchase,
-			isOverdue,
-		};
+		return { ...item, daysUntilNextPurchase, daysSinceLastPurchase, isOverdue };
 	});
 
 	return updatedData.sort((itemA, itemB) => {
@@ -382,6 +371,7 @@ export function comparePurchaseUrgency(data) {
 		//sort alphabetically by name for items with the same urgency
 		if (itemA.name > itemB.name) return 1;
 		if (itemA.name < itemB.name) return -1;
+
 		return 0;
 	});
 }
