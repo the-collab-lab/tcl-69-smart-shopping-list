@@ -29,9 +29,6 @@ export function Layout() {
 						<NavLink to="/list" className="Nav-link">
 							List
 						</NavLink>
-						<NavLink to="/manage-list" className="Nav-link">
-							Manage List
-						</NavLink>
 						<NavLink to="/about" className="Nav-link">
 							About
 						</NavLink>

@@ -1,0 +1,7 @@
+<svg width="163" height="162" viewBox="0 0 163 162" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g clip-path="url(#clip0_19_85)">
+    <path d="M162.5 81C162.5 114.681 137.681 139.5 105 139.5H58C25.3193 139.5 0.5 114.681 0.5 81C0.5 47.3188 25.3193 22.5 58 22.5H105C137.681 22.5 162.5 47.3188 162.5 81Z" fill="var(--svg-fill-color)" stroke="var(--svg-stroke-color)"/>
+    <rect x="38" y="70" width="86" height="22" rx="5" fill="var(--svg-box-fill-color)"/>
+    <rect x="92" y="38" width="86" height="22" rx="5" transform="rotate(90 92 38)" fill="var(--svg-box-fill-color)"/>
+  </g>
+</svg>

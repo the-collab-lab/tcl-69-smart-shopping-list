@@ -4,6 +4,7 @@
 	border-radius: 20px;
 	max-width: min(68ch, 95vw);
 	padding: 0;
+	z-index: 1;
 	animation:
 		slideInFromRight 0.8s ease-out,
 		slideOutToRight 0.8s ease-in forwards;
@@ -55,17 +56,29 @@ c-button-cancel:hover {
 }
 
 .c-button-confirm {
-	background-color: #4caf50;
+	background-color: var(--button-primary);
 	border-radius: 8px;
 	border: 1px solid #0f0f0f;
 }
 
 .c-button-confirm:hover {
-	background-color: rgb(69, 167, 72);
+	background-color: var(--button-primary-hover);
 }
 
 .Dialog--button-group > * {
 	flex: 1 1 0;
+}
+
+.Dialog-alert {
+	--button-alignment: 'center';
+
+	border-radius: 20px;
+	max-width: min(68ch, 95vw);
+	padding: 0;
+	z-index: 100;
+	/* animation:
+		slideInFromRight 0.8s ease-out,
+		slideOutToRight 0.8s ease-in forwards; */
 }
 
 @keyframes slideInFromRight {
