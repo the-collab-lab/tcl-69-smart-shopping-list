@@ -1,6 +1,6 @@
 :root {
 	/* BRANDING IS USED FOR BUTTON AND SVG FILL */
-	--color-branding: orange;
+	--color-branding: rgb(210, 55, 210);
 
 	--color-black: hsla(220, 13%, 18%, 1);
 	--color-gray-dark: hsla(220, 13%, 25%, 1);
@@ -19,7 +19,7 @@
 	--color-text: var(--color-white);
 
 	--button-primary: var(--color-branding);
-	--button-primary-hover: rgba(255, 166, 0, 0.809);
+	--button-primary-hover: rgb(112, 22, 112);
 
 	--svg-fill-color: var(--color-branding);
 	--svg-stroke-color: black;
