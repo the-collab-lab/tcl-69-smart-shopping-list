@@ -1,0 +1,7 @@
+<svg width="163" height="162" viewBox="0 0 163 162" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_19_85)">
+<path d="M162.5 81C162.5 125.456 126.238 161.5 81.5 161.5C36.762 161.5 0.5 125.456 0.5 81C0.5 36.544 36.762 0.5 81.5 0.5C126.238 0.5 162.5 36.544 162.5 81Z" fill="#01E499" stroke="black"/>
+<rect x="38" y="70" width="86" height="22" rx="5" fill="black"/>
+<rect x="92" y="38" width="86" height="22" rx="5" transform="rotate(90 92 38)" fill="black"/>
+</g>
+</svg>

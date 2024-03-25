@@ -3,9 +3,8 @@ import { ListItem } from '../components';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { SingleList } from '../components';
 import { createList } from '../api/firebase';
-import { comparePurchaseUrgency, shareList } from '../api';
+import { addItem, comparePurchaseUrgency, shareList } from '../api';
 import { Dialog } from '../components/Dialog';
-import ShareEmailInput from '../components/ShareEmailInput';
 
 import './List.css';
 
@@ -21,6 +20,8 @@ export function List({
 	const [recipientEmail, setRecipientEmail] = useState('');
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const [shoppingListName, setShoppingListName] = useState('');
+	const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
+	const [isAddItemDialogOpen, setIsAddItemDialogOpen] = useState(false);
 	const navigate = useNavigate(); // useNavigate doc suggests using redirect
 
 	const handleSubmit = async (e) => {
@@ -83,25 +84,77 @@ export function List({
 		return <Navigate to="/" replace={true} />;
 	}
 
+	//** SHARE LIST HANDLERS ***//
+
+	function handleInviteChange(e) {
+		const { value } = e.target;
+		setRecipientEmail(value.toLowerCase());
+	}
+
 	async function handleShareList() {
-		setIsDialogOpen(true);
+		setIsShareDialogOpen(true);
+		setRecipientEmail('');
 	}
 
-	function handleCancelClick() {
-		setIsDialogOpen(false);
+	function handleShareCancelClick() {
+		setIsShareDialogOpen(false);
 	}
 
-	async function handleConfirmClick(e) {
+	async function handleShareConfirmClick(e) {
 		e.preventDefault();
+
 		let shareResult = await shareList(listPath, currentUserId, recipientEmail);
 		// provide an alert confirming that list was shared, or error
 		if (shareResult.status === 200) {
 			alert(shareResult.message);
-			setIsDialogOpen(false);
+			setIsShareDialogOpen(false);
 		} else {
 			alert(shareResult.message);
 			setRecipientEmail('');
-			setIsDialogOpen(true);
+			setIsShareDialogOpen(true);
+		}
+	}
+
+	//** ADD ITEM HANDLERS ***//
+
+	const INITIAL_DATA = {
+		itemName: '',
+		daysUntilNextPurchase: '7',
+	};
+
+	const [formData, setFormData] = useState(INITIAL_DATA);
+
+	function handleInputChange(e) {
+		const { name, value } = e.target;
+		setFormData((prevFormData) => ({
+			...prevFormData,
+			[name]: value,
+		}));
+	}
+
+	function handleAddItem() {
+		setIsAddItemDialogOpen(true);
+		// reset form data
+		setFormData({ itemName: '', daysUntilNextPurchase: '7' });
+		// set default radio button to 'soon'
+		document.getElementById('soon').checked = true;
+	}
+
+	function handleAddItemCancelClick() {
+		setIsAddItemDialogOpen(false);
+	}
+
+	async function handleAddItemConfirmClick(e) {
+		e.preventDefault();
+
+		let addItemResult = await addItem(listPath, formData);
+		// provide an alert confirming that list was shared, or error
+		if (addItemResult.status === 201) {
+			alert(addItemResult.message);
+			setIsAddItemDialogOpen(false);
+		} else {
+			alert(addItemResult.error);
+			setIsAddItemDialogOpen(true);
 		}
 	}
 
@@ -141,23 +194,31 @@ export function List({
 					<button onClick={handleShareList}>Share List</button>
 				</div>
 				<Dialog
-					open={isDialogOpen}
-					onCancel={() => setIsDialogOpen(false)}
-					onSubmit={handleConfirmClick}
+					open={isShareDialogOpen}
+					onCancel={() => setIsShareDialogOpen(false)}
+					onSubmit={handleShareConfirmClick}
 				>
 					<h2>Who are you sharing this list with?</h2>
 					<div className="List-share-email-dialog-container">
-						<ShareEmailInput setRecipientEmail={setRecipientEmail} />
+						<label htmlFor="invite-to-list">
+							Enter email:
+							<input
+								type="email"
+								id="invite-to-list"
+								name="inviteToList"
+								onChange={handleInviteChange}
+							/>
+						</label>
 						<div className="Dialog--button-group">
 							<button
 								className="c-button c-button-cancel"
-								onClick={handleCancelClick}
+								onClick={handleShareCancelClick}
 							>
 								Cancel
 							</button>
 							<button
 								className="c-button c-button-confirm"
-								onClick={handleConfirmClick} // Remove arguments here
+								onClick={handleShareConfirmClick}
 							>
 								Confirm
 							</button>
@@ -216,6 +277,81 @@ export function List({
 						</>
 					)}
 				</ul>
+				<button className="List-add-item-button" onClick={handleAddItem}>
+					<img src="/img/add-green.svg" alt="add item" />
+				</button>
+				<Dialog
+					open={isAddItemDialogOpen}
+					onCancel={() => setIsAddItemDialogOpen(false)}
+					onSubmit={handleAddItemConfirmClick}
+				>
+					<div className="List-modal-container">
+						<div className="List-modal-inner">
+							<div>Enter item</div>
+							<label htmlFor="itemName">
+								Item Name:
+								<input
+									type="text"
+									id="itemName"
+									name="itemName"
+									value={formData.itemName}
+									onChange={handleInputChange}
+									required
+								></input>
+							</label>
+							<br />
+							<p>Buy again?</p>
+							<label htmlFor="soon">
+								Soon:
+								<input
+									type="radio"
+									id="soon"
+									name="daysUntilNextPurchase"
+									value="7"
+									onChange={handleInputChange}
+									defaultChecked
+								></input>
+							</label>
+							<br />
+							<label htmlFor="kind-of-soon">
+								Kind of soon:
+								<input
+									type="radio"
+									id="kind-of-soon"
+									name="daysUntilNextPurchase"
+									value="14"
+									onChange={handleInputChange}
+								></input>
+							</label>
+							<br />
+							<label htmlFor="not-soon">
+								Not soon:
+								<input
+									type="radio"
+									id="not-soon"
+									name="daysUntilNextPurchase"
+									value="30"
+									onChange={handleInputChange}
+								></input>
+							</label>
+							<br />
+							<div className="Dialog--button-group">
+								<button
+									className="c-button c-button-cancel"
+									onClick={handleAddItemCancelClick}
+								>
+									Cancel
+								</button>
+								<button
+									className="c-button c-button-confirm"
+									onClick={handleAddItemConfirmClick}
+								>
+									Add Item
+								</button>
+							</div>
+						</div>
+					</div>
+				</Dialog>
 			</div>
 		</>
 	);
