@@ -135,6 +135,7 @@ export function List({
 						<h1>You have no Lists!</h1>
 					)}
 				</ul>
+				<hr />
 				<div>
 					<h3>Welcome to your "{listName}" list. </h3>
 					<button onClick={handleShareList}>Share List</button>
