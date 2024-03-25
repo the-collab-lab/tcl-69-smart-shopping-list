@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import { comparePurchaseUrgency, shareList, addItem } from '../api';
+import { addItem, comparePurchaseUrgency, shareList } from '../api';
 import { ListItem } from '../components';
 import { Dialog } from '../components/Dialog';
-import ShareEmailInput from '../components/ShareEmailInput';
 
 import './List.css';
 
