@@ -1,27 +1,26 @@
 import { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { addItem, shareList, createList } from '../api';
+import { addItem, createList, shareList } from '../api';
 import {
-	ShareList,
 	AddItem,
 	Dialog,
-	SingleList,
 	NewListForm,
-	ListItem,
+	ShareList,
+	SingleList,
+	SortedDataMap,
 } from '../components';
 import {
-	handleShareList,
-	handleInviteChange,
-	handleShareCancelClick,
-	handleShareConfirmClick,
 	handleAddItem,
 	handleAddItemCancelClick,
 	handleAddItemConfirmClick,
+	handleInviteChange,
+	handleShareCancelClick,
+	handleShareConfirmClick,
+	handleShareList,
 	renderCancelButton,
 	renderConfirmButton,
-	filteredData,
-	sortedData,
 	sortedItems,
+	filteredData,
 } from '../utils';
 import './List.css';
 
@@ -71,14 +70,11 @@ export function List({
 
 	const listName = listPath?.split('/')[1];
 
-	const filtered = filteredData(data, searchString);
-
-	const { overdue, buySoon, buyKindOfSoon, buyNotSoon, inactive } =
-		sortedItems(filtered);
-
 	if (!currentUserId) {
 		return <Navigate to="/" replace={true} />;
 	}
+
+	const filteredDataResult = filteredData(data, searchString);
 
 	return (
 		<>
@@ -156,7 +152,7 @@ export function List({
 					</div>
 				</Dialog>
 				<br />
-				{!!sortedData && (
+				{!!data && (
 					<form>
 						<label htmlFor="searchString">
 							Search:
@@ -173,29 +169,12 @@ export function List({
 				)}
 
 				<ul className="List-items-section">
-					{!!sortedData ? (
-						<>
-							<h5>Overdue</h5>
-							{overdue.map((item) => (
-								<ListItem key={item.id} item={item} listPath={listPath} />
-							))}
-							<h5>Soon</h5>
-							{buySoon.map((item) => (
-								<ListItem key={item.id} item={item} listPath={listPath} />
-							))}
-							<h5>Kind of soon</h5>
-							{buyKindOfSoon.map((item) => (
-								<ListItem key={item.id} item={item} listPath={listPath} />
-							))}
-							<h5>Not soon</h5>
-							{buyNotSoon.map((item) => (
-								<ListItem key={item.id} item={item} listPath={listPath} />
-							))}
-							<h5>Inactive</h5>
-							{inactive.map((item) => (
-								<ListItem key={item.id} item={item} listPath={listPath} />
-							))}
-						</>
+					{!!data ? (
+						<SortedDataMap
+							listPath={listPath}
+							filteredDataResult={filteredDataResult}
+							// setSortedDataResult={setSortedDataResult}
+						/>
 					) : (
 						<>
 							<h2>You have no items in your list!</h2>
