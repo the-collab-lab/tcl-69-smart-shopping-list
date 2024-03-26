@@ -6,18 +6,18 @@ export function filteredData(data, searchString) {
 	);
 }
 
-export function sortedData(filteredData) {
-	return comparePurchaseUrgency(filteredData);
+export function sortedData(filteredDataResult) {
+	return comparePurchaseUrgency(filteredDataResult);
 }
 
-export function sortedItems(filteredData) {
+export function sortedItems(sortedDataResult) {
 	const overdue = [];
 	const buySoon = [];
 	const buyKindOfSoon = [];
 	const buyNotSoon = [];
 	const inactive = [];
 
-	filteredData.forEach((d) => {
+	sortedDataResult.forEach((d) => {
 		if (d.daysUntilNextPurchase <= 0) {
 			overdue.push(d);
 		} else if (d.daysUntilNextPurchase <= 3) {
