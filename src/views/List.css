@@ -33,26 +33,45 @@
 	list-style-type: none;
 }
 
+.List-btn-wrapper {
+	position: fixed;
+	left: 75%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
 .List-add-item-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	z-index: 2;
 	border: none;
 	background: none;
-	z-index: 3;
-	position: fixed;
-	left: 50%;
-	top: 80%;
-	transform: translate(-50%, -50%);
+
 	cursor: pointer;
 }
 
 .List-add-item-button img {
 	width: 100%;
-	max-width: 100px;
+	max-width: 200px;
 }
 
-@media (min-width: 600px) {
-	.List-add-item-button {
-		left: 75%;
-		top: 50%;
+.List-add-item-button h1 {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	margin: 0;
+	color: white;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 3em;
+}
+
+@media (max-width: 600px) {
+	.List-btn-wrapper {
+		left: 50%;
+		top: 85%;
 		max-width: 200px;
 	}
 }

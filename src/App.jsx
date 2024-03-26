@@ -1,12 +1,7 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-import { Home, Layout, List, ManageList, About } from './views';
-
-import { useAuth } from './api';
-
-import { useShoppingListData, useShoppingLists } from './api';
-
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { useAuth, useShoppingListData, useShoppingLists } from './api';
 import { useStateWithStorage } from './utils';
+import { About, Home, Layout, List, ManageList } from './views';
 
 export function App() {
 	/**
