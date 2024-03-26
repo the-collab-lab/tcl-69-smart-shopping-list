@@ -1,14 +1,29 @@
 import { useState } from 'react';
-import { ListItem } from '../components';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { SingleList, NewListForm } from '../components';
-import { createList } from '../api/firebase';
-import { addItem, comparePurchaseUrgency, shareList } from '../api';
-import { Dialog } from '../components/Dialog';
-
+import { addItem, shareList, createList } from '../api';
+import {
+	ShareList,
+	AddItem,
+	Dialog,
+	SingleList,
+	NewListForm,
+	ListItem,
+} from '../components';
+import {
+	handleShareList,
+	handleInviteChange,
+	handleShareCancelClick,
+	handleShareConfirmClick,
+	handleAddItem,
+	handleAddItemCancelClick,
+	handleAddItemConfirmClick,
+	renderCancelButton,
+	renderConfirmButton,
+	filteredData,
+	sortedData,
+	sortedItems,
+} from '../utils';
 import './List.css';
-import { AddItem } from '../components/dialogs/AddItem';
-import { ShareList } from '../components/dialogs/ShareList';
 
 export function List({
 	user,
@@ -24,6 +39,10 @@ export function List({
 	const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
 	const [isAddItemDialogOpen, setIsAddItemDialogOpen] = useState(false);
 	const navigate = useNavigate(); // useNavigate doc suggests using redirect
+	const [formData, setFormData] = useState({
+		itemName: '',
+		daysUntilNextPurchase: '7',
+	});
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -52,103 +71,13 @@ export function List({
 
 	const listName = listPath?.split('/')[1];
 
-	const filteredData = data.filter((d) =>
-		d.name?.toLowerCase().includes(searchString.toLowerCase()),
-	);
+	const filtered = filteredData(data, searchString);
 
-	const sortedData = comparePurchaseUrgency(filteredData);
-
-	const overdue = [],
-		buySoon = [],
-		buyKindOfSoon = [],
-		buyNotSoon = [],
-		inactive = [];
-
-	sortedData.forEach((item) => {
-		if (item.isOverdue) {
-			overdue.push(item);
-		} else if (item.daysSinceLastPurchase >= 60) {
-			inactive.push(item);
-		} else if (item.daysUntilNextPurchase <= 7) {
-			buySoon.push(item);
-		} else if (
-			item.daysUntilNextPurchase > 7 &&
-			item.daysUntilNextPurchase < 15
-		) {
-			buyKindOfSoon.push(item);
-		} else if (item.daysUntilNextPurchase >= 15) {
-			buyNotSoon.push(item);
-		}
-	});
+	const { overdue, buySoon, buyKindOfSoon, buyNotSoon, inactive } =
+		sortedItems(filtered);
 
 	if (!currentUserId) {
 		return <Navigate to="/" replace={true} />;
-	}
-
-	//** SHARE LIST HANDLERS ***//
-
-	function handleInviteChange(e) {
-		const { value } = e.target;
-		setRecipientEmail(value.toLowerCase());
-	}
-
-	async function handleShareList() {
-		setIsShareDialogOpen(true);
-		setRecipientEmail('');
-	}
-
-	function handleShareCancelClick() {
-		setIsShareDialogOpen(false);
-	}
-
-	async function handleShareConfirmClick(e) {
-		e.preventDefault();
-
-		let shareResult = await shareList(listPath, currentUserId, recipientEmail);
-		// provide an alert confirming that list was shared, or error
-		if (shareResult.status === 200) {
-			alert(shareResult.message);
-			setIsShareDialogOpen(false);
-		} else {
-			alert(shareResult.message);
-			setRecipientEmail('');
-			setIsShareDialogOpen(true);
-		}
-	}
-
-	//** ADD ITEM HANDLERS ***//
-
-	const INITIAL_DATA = {
-		itemName: '',
-		daysUntilNextPurchase: '7',
-	};
-
-	const [formData, setFormData] = useState(INITIAL_DATA);
-
-	function handleAddItem() {
-		setIsAddItemDialogOpen(true);
-		// reset form data
-		setFormData({ itemName: '', daysUntilNextPurchase: '7' });
-		// set default radio button to 'soon'
-		document.getElementById('soon').checked = true;
-	}
-
-	function handleAddItemCancelClick() {
-		setIsAddItemDialogOpen(false);
-	}
-
-	async function handleAddItemConfirmClick(e) {
-		e.preventDefault();
-
-		let addItemResult = await addItem(listPath, formData);
-		// provide an alert confirming that list was shared, or error
-		if (addItemResult.status === 201) {
-			alert(addItemResult.message);
-			setIsAddItemDialogOpen(false);
-		} else {
-			alert(addItemResult.error);
-			setIsAddItemDialogOpen(true);
-		}
 	}
 
 	return (
@@ -177,27 +106,53 @@ export function List({
 				<hr />
 				<div>
 					<h3>Welcome to your "{listName}" list. </h3>
-					<button onClick={handleShareList}>Share List</button>
+					<button
+						onClick={() =>
+							handleShareList(
+								setIsShareDialogOpen,
+								setRecipientEmail,
+								listPath,
+								currentUserId,
+								shareList,
+							)
+						}
+					>
+						Share List
+					</button>
 				</div>
 				<Dialog
 					open={isShareDialogOpen}
-					onCancel={() => setIsShareDialogOpen(false)}
-					onSubmit={handleShareConfirmClick}
+					onCancel={() => handleShareCancelClick(setIsShareDialogOpen)}
+					onSubmit={(e) =>
+						handleShareConfirmClick(
+							e,
+							setIsShareDialogOpen,
+							setRecipientEmail,
+							listPath,
+							currentUserId,
+							recipientEmail,
+							shareList,
+						)
+					}
 				>
-					<ShareList handleInviteChange={handleInviteChange} />
+					<ShareList
+						handleInviteChange={(e) => handleInviteChange(e, setRecipientEmail)}
+					/>
 					<div className="Dialog--button-group">
-						<button
-							className="c-button c-button-cancel"
-							onClick={handleShareCancelClick}
-						>
-							Cancel
-						</button>
-						<button
-							className="c-button c-button-confirm"
-							onClick={handleShareConfirmClick}
-						>
-							Confirm
-						</button>
+						{renderCancelButton(() =>
+							handleShareCancelClick(setIsShareDialogOpen),
+						)}
+						{renderConfirmButton((e) =>
+							handleShareConfirmClick(
+								e,
+								setIsShareDialogOpen,
+								setRecipientEmail,
+								listPath,
+								currentUserId,
+								recipientEmail,
+								shareList,
+							),
+						)}
 					</div>
 				</Dialog>
 				<br />
@@ -253,30 +208,41 @@ export function List({
 					)}
 				</ul>
 				<div className="List-btn-wrapper">
-					<button className="List-add-item-button" onClick={handleAddItem}>
+					<button
+						className="List-add-item-button"
+						onClick={() => handleAddItem(setIsAddItemDialogOpen, setFormData)}
+					>
 						<h1>Add</h1>
 						<img src="/img/add-purple.svg" alt="add item" />
 					</button>
 				</div>
 				<Dialog
 					open={isAddItemDialogOpen}
-					onCancel={() => setIsAddItemDialogOpen(false)}
-					onSubmit={handleAddItemConfirmClick}
+					onCancel={() => handleAddItemCancelClick(setIsAddItemDialogOpen)}
+					onSubmit={(e) =>
+						handleAddItemConfirmClick(
+							e,
+							setIsAddItemDialogOpen,
+							addItem,
+							listPath,
+							formData,
+						)
+					}
 				>
 					<AddItem formData={formData} setFormData={setFormData} />
 					<div className="Dialog--button-group">
-						<button
-							className="c-button c-button-cancel"
-							onClick={handleAddItemCancelClick}
-						>
-							Cancel
-						</button>
-						<button
-							className="c-button c-button-confirm"
-							onClick={handleAddItemConfirmClick}
-						>
-							Add Item
-						</button>
+						{renderCancelButton(() =>
+							handleAddItemCancelClick(setIsAddItemDialogOpen),
+						)}
+						{renderConfirmButton((e) =>
+							handleAddItemConfirmClick(
+								e,
+								setIsAddItemDialogOpen,
+								addItem,
+								listPath,
+								formData,
+							),
+						)}
 					</div>
 				</Dialog>
 			</div>
