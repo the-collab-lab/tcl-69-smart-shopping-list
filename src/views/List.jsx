@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { ListItem } from '../components';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { SingleList } from '../components';
+import { SingleList, NewListForm } from '../components';
 import { createList } from '../api/firebase';
 import { addItem, comparePurchaseUrgency, shareList } from '../api';
 import { Dialog } from '../components/Dialog';
 
 import './List.css';
+import { AddItem } from '../components/dialogs/AddItem';
+import { ShareList } from '../components/dialogs/ShareList';
 
 export function List({
 	user,
@@ -18,7 +20,6 @@ export function List({
 }) {
 	const [searchString, setSearchString] = useState('');
 	const [recipientEmail, setRecipientEmail] = useState('');
-	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const [shoppingListName, setShoppingListName] = useState('');
 	const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
 	const [isAddItemDialogOpen, setIsAddItemDialogOpen] = useState(false);
@@ -124,14 +125,6 @@ export function List({
 
 	const [formData, setFormData] = useState(INITIAL_DATA);
 
-	function handleInputChange(e) {
-		const { name, value } = e.target;
-		setFormData((prevFormData) => ({
-			...prevFormData,
-			[name]: value,
-		}));
-	}
-
 	function handleAddItem() {
 		setIsAddItemDialogOpen(true);
 		// reset form data
@@ -162,20 +155,13 @@ export function List({
 		<>
 			<div className="List">
 				<h3>Select a list or create a new one</h3>
-				<form onSubmit={handleSubmit}>
-					<label>
-						New list name:{' '}
-						<input
-							type="text"
-							value={shoppingListName}
-							id="shopping-list"
-							onChange={(e) => setShoppingListName(e.target.value)}
-						></input>
-					</label>{' '}
-					<input type="submit" value="Create!" />
-				</form>
+				<NewListForm
+					handleSubmit={handleSubmit}
+					shoppingListName={shoppingListName}
+					setShoppingListName={setShoppingListName}
+				/>
 				<ul>
-					{lists && lists.length > 0 ? (
+					{!!lists ? (
 						lists.map((list) => (
 							<SingleList
 								key={list.name}
@@ -198,35 +184,24 @@ export function List({
 					onCancel={() => setIsShareDialogOpen(false)}
 					onSubmit={handleShareConfirmClick}
 				>
-					<h2>Who are you sharing this list with?</h2>
-					<div className="List-share-email-dialog-container">
-						<label htmlFor="invite-to-list">
-							Enter email:
-							<input
-								type="email"
-								id="invite-to-list"
-								name="inviteToList"
-								onChange={handleInviteChange}
-							/>
-						</label>
-						<div className="Dialog--button-group">
-							<button
-								className="c-button c-button-cancel"
-								onClick={handleShareCancelClick}
-							>
-								Cancel
-							</button>
-							<button
-								className="c-button c-button-confirm"
-								onClick={handleShareConfirmClick}
-							>
-								Confirm
-							</button>
-						</div>
+					<ShareList handleInviteChange={handleInviteChange} />
+					<div className="Dialog--button-group">
+						<button
+							className="c-button c-button-cancel"
+							onClick={handleShareCancelClick}
+						>
+							Cancel
+						</button>
+						<button
+							className="c-button c-button-confirm"
+							onClick={handleShareConfirmClick}
+						>
+							Confirm
+						</button>
 					</div>
 				</Dialog>
 				<br />
-				{sortedData && sortedData.length > 0 && (
+				{!!sortedData && (
 					<form>
 						<label htmlFor="searchString">
 							Search:
@@ -243,7 +218,7 @@ export function List({
 				)}
 
 				<ul className="List-items-section">
-					{sortedData && sortedData.length > 0 ? (
+					{!!sortedData ? (
 						<>
 							<h5>Overdue</h5>
 							{overdue.map((item) => (
@@ -277,79 +252,31 @@ export function List({
 						</>
 					)}
 				</ul>
-				<button className="List-add-item-button" onClick={handleAddItem}>
-					<img src="/img/add-green.svg" alt="add item" />
-				</button>
+				<div className="List-btn-wrapper">
+					<button className="List-add-item-button" onClick={handleAddItem}>
+						<h1>Add</h1>
+						<img src="/img/add-purple.svg" alt="add item" />
+					</button>
+				</div>
 				<Dialog
 					open={isAddItemDialogOpen}
 					onCancel={() => setIsAddItemDialogOpen(false)}
 					onSubmit={handleAddItemConfirmClick}
 				>
-					<div className="List-modal-container">
-						<div className="List-modal-inner">
-							<div>Enter item</div>
-							<label htmlFor="itemName">
-								Item Name:
-								<input
-									type="text"
-									id="itemName"
-									name="itemName"
-									value={formData.itemName}
-									onChange={handleInputChange}
-									required
-								></input>
-							</label>
-							<br />
-							<p>Buy again?</p>
-							<label htmlFor="soon">
-								Soon:
-								<input
-									type="radio"
-									id="soon"
-									name="daysUntilNextPurchase"
-									value="7"
-									onChange={handleInputChange}
-									defaultChecked
-								></input>
-							</label>
-							<br />
-							<label htmlFor="kind-of-soon">
-								Kind of soon:
-								<input
-									type="radio"
-									id="kind-of-soon"
-									name="daysUntilNextPurchase"
-									value="14"
-									onChange={handleInputChange}
-								></input>
-							</label>
-							<br />
-							<label htmlFor="not-soon">
-								Not soon:
-								<input
-									type="radio"
-									id="not-soon"
-									name="daysUntilNextPurchase"
-									value="30"
-									onChange={handleInputChange}
-								></input>
-							</label>
-							<br />
-							<div className="Dialog--button-group">
-								<button
-									className="c-button c-button-cancel"
-									onClick={handleAddItemCancelClick}
-								>
-									Cancel
-								</button>
-								<button
-									className="c-button c-button-confirm"
-									onClick={handleAddItemConfirmClick}
-								>
-									Add Item
-								</button>
-							</div>
-						</div>
+					<AddItem formData={formData} setFormData={setFormData} />
+					<div className="Dialog--button-group">
+						<button
+							className="c-button c-button-cancel"
+							onClick={handleAddItemCancelClick}
+						>
+							Cancel
+						</button>
+						<button
+							className="c-button c-button-confirm"
+							onClick={handleAddItemConfirmClick}
+						>
+							Add Item
+						</button>
 					</div>
 				</Dialog>
 			</div>
