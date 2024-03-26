@@ -1,10 +1,4 @@
-export async function handleShareList(
-	setIsShareDialogOpen,
-	setRecipientEmail,
-	listPath,
-	currentUserId,
-	shareList,
-) {
+export async function handleShareList(setIsShareDialogOpen, setRecipientEmail) {
 	setIsShareDialogOpen(true);
 	setRecipientEmail('');
 }
