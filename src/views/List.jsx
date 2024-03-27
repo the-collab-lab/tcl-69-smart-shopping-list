@@ -226,7 +226,7 @@ export function List({
 					</div>
 				</Dialog>
 				<br />
-				{sortedData && sortedData.length > 0 && (
+				{data && data.length > 0 && (
 					<form>
 						<label htmlFor="searchString">
 							Search:
@@ -243,7 +243,7 @@ export function List({
 				)}
 
 				<ul className="List-items-section">
-					{sortedData && sortedData.length > 0 ? (
+					{data && data.length > 0 ? (
 						<>
 							<h5>Overdue</h5>
 							{overdue.map((item) => (
