@@ -121,6 +121,15 @@ export async function addUserToDatabase(user) {
  * @param {string} listName The name of the new list.
  */
 export async function createList(userId, userEmail, listName) {
+	function validateDocName(name) {
+		const invalidCharPattern = /\//;
+		return !invalidCharPattern.test(name);
+	}
+
+	if (!validateDocName(listName)) {
+		throw `List name cannot contain " / "`;
+	}
+
 	const listDocRef = doc(db, userId, listName);
 
 	await setDoc(listDocRef, {
