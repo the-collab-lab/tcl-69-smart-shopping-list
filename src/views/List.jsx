@@ -243,7 +243,7 @@ export function List({
 				)}
 
 				<ul className="List-items-section">
-					{sortedData && sortedData.length > 0 ? (
+					{data ? (
 						<>
 							<h5>Overdue</h5>
 							{overdue.map((item) => (
