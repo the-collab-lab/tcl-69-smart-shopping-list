@@ -120,12 +120,11 @@ export async function addUserToDatabase(user) {
  * @param {string} userEmail The email of the user who owns the list.
  * @param {string} listName The name of the new list.
  */
+function validateDocName(name) {
+	const invalidCharPattern = /\//;
+	return !invalidCharPattern.test(name);
+}
 export async function createList(userId, userEmail, listName) {
-	function validateDocName(name) {
-		const invalidCharPattern = /\//;
-		return !invalidCharPattern.test(name);
-	}
-
 	if (!validateDocName(listName)) {
 		throw `List name cannot contain " / "`;
 	}
