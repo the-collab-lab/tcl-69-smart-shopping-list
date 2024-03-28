@@ -9,7 +9,7 @@ export function Home() {
 		<>
 			<div className="Home">
 				<header className="Home-header">
-					<h2>Welcome to Box Makers!</h2>
+					<h2>Welcome to Aisle Be There!</h2>
 					<img
 						className="checkbox"
 						src="img/checkbox.png"
