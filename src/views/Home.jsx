@@ -10,6 +10,10 @@ export function Home() {
 			<div className="Home">
 				<header className="Home-header">
 					<h2>Welcome to Aisle Be There!</h2>
+					<h3 className="intro-text">
+						The app for making smart shopping lists. Create lists to manage any
+						type of shopping, and mark items by how soon you'll need them again.
+					</h3>
 					<img
 						className="checkbox"
 						src="img/checkbox.png"
