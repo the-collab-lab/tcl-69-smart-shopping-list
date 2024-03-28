@@ -101,7 +101,7 @@ export function ListItem({ item, listPath }) {
 					name={name}
 					checked={isChecked}
 				/>
-				<h5>{name}</h5>
+				<h5 className="item-name">{name}</h5>
 				<button
 					type="button"
 					id={name}
