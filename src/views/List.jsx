@@ -269,11 +269,7 @@ export function List({
 					) : (
 						<>
 							<h2>You have no items in your list!</h2>
-							<Link to="/manage-list">
-								<button type="button" id="add-first-item">
-									Add your first item!
-								</button>
-							</Link>
+							<h4>Click on the purple + button to add items to your list.</h4>
 						</>
 					)}
 				</ul>
