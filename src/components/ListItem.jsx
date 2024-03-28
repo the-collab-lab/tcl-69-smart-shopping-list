@@ -95,6 +95,7 @@ export function ListItem({ item, listPath }) {
 		<li>
 			<label htmlFor={name} className="ListItem">
 				<input
+					className="checkbox"
 					type="checkbox"
 					id={name}
 					onChange={handleCheck}
