@@ -56,3 +56,10 @@
 		max-width: 200px;
 	}
 }
+
+.list-section-divider {
+	margin-top: 30px;
+	width: 80%;
+	display: flex;
+	margin-left: 0;
+}
