@@ -1,6 +1,14 @@
 import './About.css';
 
 export function About() {
+	function Emoji({ children, label }) {
+		return (
+			<span role="img" aria-label={label}>
+				{children}
+			</span>
+		);
+	}
+
 	return (
 		<>
 			<main className="About-main">
@@ -12,9 +20,7 @@ export function About() {
 						<p>
 							Aisle Be There to level up your organization game! Create
 							specialized lists for all your kneads!{' '}
-							<span role="img" aria-label="bread">
-								🍞{' '}
-							</span>
+							<Emoji label="bread">🍞</Emoji>
 						</p>
 					</div>
 				</section>
@@ -25,10 +31,7 @@ export function About() {
 						<p>
 							Inside your list, tap the big 'Add' button to add a new item.
 							Aisle Be There for you, asking when you might need to restock your
-							aisle-ments!{' '}
-							<span role="img" aria-label="coffee">
-								☕{' '}
-							</span>
+							aisle-ments! <Emoji label="coffee">☕</Emoji>
 						</p>
 					</div>
 				</section>
@@ -40,9 +43,7 @@ export function About() {
 							As you check items off your list, you're not just staying
 							organized, you're sharing your shopping habits. Aisle Be There to
 							ensuring smoother, more efficient future trips!{' '}
-							<span role="img" aria-label="purple-checkmark">
-								☑️{' '}
-							</span>
+							<Emoji label="purple-checkmark">☑️</Emoji>
 						</p>
 					</div>
 				</section>
@@ -53,10 +54,7 @@ export function About() {
 						<p>
 							The more you use the app, the more Aisle get to know you! Aisle Be
 							There to prioritize items for your next shopping trip based on
-							your buying history.{' '}
-							<span role="img" aria-label="calendar">
-								📆{' '}
-							</span>
+							your buying history. <Emoji label="calendar">📆</Emoji>
 						</p>
 					</div>
 				</section>
@@ -66,10 +64,7 @@ export function About() {
 						<h2>Aisle Be your community</h2>
 						<p>
 							When you share your lists, your friends and family can collaborate
-							and be there for you, too!{' '}
-							<span role="img" aria-label="purple-heart">
-								💜{' '}
-							</span>
+							and be there for you, too! <Emoji label="purple-heart">💜</Emoji>
 						</p>
 					</div>
 				</section>
