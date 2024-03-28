@@ -111,8 +111,8 @@ export function ListItem({ item, listPath }) {
 				>
 					X
 				</button>
+				<h5>Buy Next: {nextPurchasedDate}</h5>
 			</label>
-			<h5>Buy Next: {nextPurchasedDate}</h5>
 		</li>
 	);
 }
