@@ -40,7 +40,7 @@
 	position: fixed;
 	left: 50%;
 	top: 80%;
-	transform: translate(-50%, -50%);
+	transform: translate(-200%, 230%);
 	cursor: pointer;
 }
 
@@ -55,4 +55,9 @@
 		top: 50%;
 		max-width: 200px;
 	}
+}
+
+.add-first-item-helper-text {
+	width: 260px;
+	margin-left: 50px;
 }

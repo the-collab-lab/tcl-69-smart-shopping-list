@@ -269,7 +269,9 @@ export function List({
 					) : (
 						<>
 							<h2>You have no items in your list!</h2>
-							<h4>Click on the purple + button to add items to your list.</h4>
+							<h4 className="add-first-item-helper-text">
+								Click on the purple (+) button to add items to your list.
+							</h4>
 						</>
 					)}
 				</ul>
