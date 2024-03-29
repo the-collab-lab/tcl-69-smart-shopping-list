@@ -106,3 +106,8 @@ code {
 :root.theme-light code {
 	--color-bg: var(--color-gray-light);
 }
+
+h5 {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
