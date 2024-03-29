@@ -11,7 +11,7 @@ export function Home() {
 				<header className="Home-header">
 					<h2>Welcome to Box Makers!</h2>
 					<img
-						className="checkbox"
+						className="Landing-check"
 						src="img/checkbox.png"
 						alt="black checkbox with green check"
 					/>
