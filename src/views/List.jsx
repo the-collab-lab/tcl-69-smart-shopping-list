@@ -1,12 +1,10 @@
 import { useState } from 'react';
-import { ListItem } from '../components';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { SingleList } from '../components';
+import { SingleList, Dialog, SortedDataMap, AddItem } from '../components';
 import { createList } from '../api/firebase';
-import { addItem, comparePurchaseUrgency, shareList } from '../api';
-import { Dialog } from '../components/Dialog';
-
+import { addItem, shareList } from '../api';
 import './List.css';
+import { filteredData } from '../utils';
 
 export function List({
 	user,
@@ -18,10 +16,13 @@ export function List({
 }) {
 	const [searchString, setSearchString] = useState('');
 	const [recipientEmail, setRecipientEmail] = useState('');
-	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const [shoppingListName, setShoppingListName] = useState('');
 	const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
 	const [isAddItemDialogOpen, setIsAddItemDialogOpen] = useState(false);
+	const [formData, setFormData] = useState({
+		itemName: '',
+		daysUntilNextPurchase: '7',
+	});
 	const navigate = useNavigate(); // useNavigate doc suggests using redirect
 
 	const handleSubmit = async (e) => {
@@ -51,34 +52,9 @@ export function List({
 
 	const listName = listPath?.split('/')[1];
 
-	const filteredData = data.filter((d) =>
-		d.name?.toLowerCase().includes(searchString.toLowerCase()),
-	);
+	// ** SORTING DATA LOGIC ***//
 
-	const sortedData = comparePurchaseUrgency(filteredData);
-
-	const overdue = [],
-		buySoon = [],
-		buyKindOfSoon = [],
-		buyNotSoon = [],
-		inactive = [];
-
-	sortedData.forEach((item) => {
-		if (item.isOverdue) {
-			overdue.push(item);
-		} else if (item.daysSinceLastPurchase >= 60) {
-			inactive.push(item);
-		} else if (item.daysUntilNextPurchase <= 7) {
-			buySoon.push(item);
-		} else if (
-			item.daysUntilNextPurchase > 7 &&
-			item.daysUntilNextPurchase < 15
-		) {
-			buyKindOfSoon.push(item);
-		} else if (item.daysUntilNextPurchase >= 15) {
-			buyNotSoon.push(item);
-		}
-	});
+	const filteredDataResult = filteredData(data, searchString);
 
 	if (!currentUserId) {
 		return <Navigate to="/" replace={true} />;
@@ -116,13 +92,6 @@ export function List({
 	}
 
 	//** ADD ITEM HANDLERS ***//
-
-	const INITIAL_DATA = {
-		itemName: '',
-		daysUntilNextPurchase: '7',
-	};
-
-	const [formData, setFormData] = useState(INITIAL_DATA);
 
 	function handleInputChange(e) {
 		const { name, value } = e.target;
@@ -175,7 +144,7 @@ export function List({
 					<input type="submit" value="Create!" />
 				</form>
 				<ul>
-					{lists && lists.length > 0 ? (
+					{!!lists ? (
 						lists.map((list) => (
 							<SingleList
 								key={list.name}
@@ -226,7 +195,7 @@ export function List({
 					</div>
 				</Dialog>
 				<br />
-				{sortedData && sortedData.length > 0 && (
+				{!!data && (
 					<form>
 						<label htmlFor="searchString">
 							Search:
@@ -243,29 +212,11 @@ export function List({
 				)}
 
 				<ul className="List-items-section">
-					{data ? (
-						<>
-							<h5>Overdue</h5>
-							{overdue.map((item) => (
-								<ListItem key={item.id} item={item} listPath={listPath} />
-							))}
-							<h5>Soon</h5>
-							{buySoon.map((item) => (
-								<ListItem key={item.id} item={item} listPath={listPath} />
-							))}
-							<h5>Kind of soon</h5>
-							{buyKindOfSoon.map((item) => (
-								<ListItem key={item.id} item={item} listPath={listPath} />
-							))}
-							<h5>Not soon</h5>
-							{buyNotSoon.map((item) => (
-								<ListItem key={item.id} item={item} listPath={listPath} />
-							))}
-							<h5>Inactive</h5>
-							{inactive.map((item) => (
-								<ListItem key={item.id} item={item} listPath={listPath} />
-							))}
-						</>
+					{!!data ? (
+						<SortedDataMap
+							listPath={listPath}
+							filteredDataResult={filteredDataResult}
+						/>
 					) : (
 						<>
 							<h2>You have no items in your list!</h2>
@@ -287,54 +238,7 @@ export function List({
 				>
 					<div className="List-modal-container">
 						<div className="List-modal-inner">
-							<div>Enter item</div>
-							<label htmlFor="itemName">
-								Item Name:
-								<input
-									type="text"
-									id="itemName"
-									name="itemName"
-									value={formData.itemName}
-									onChange={handleInputChange}
-									required
-								></input>
-							</label>
-							<br />
-							<p>Buy again?</p>
-							<label htmlFor="soon">
-								Soon:
-								<input
-									type="radio"
-									id="soon"
-									name="daysUntilNextPurchase"
-									value="7"
-									onChange={handleInputChange}
-									defaultChecked
-								></input>
-							</label>
-							<br />
-							<label htmlFor="kind-of-soon">
-								Kind of soon:
-								<input
-									type="radio"
-									id="kind-of-soon"
-									name="daysUntilNextPurchase"
-									value="14"
-									onChange={handleInputChange}
-								></input>
-							</label>
-							<br />
-							<label htmlFor="not-soon">
-								Not soon:
-								<input
-									type="radio"
-									id="not-soon"
-									name="daysUntilNextPurchase"
-									value="30"
-									onChange={handleInputChange}
-								></input>
-							</label>
-							<br />
+							<AddItem formData={formData} setFormData={setFormData} />
 							<div className="Dialog--button-group">
 								<button
 									className="c-button c-button-cancel"
