@@ -22,6 +22,7 @@
 	padding-bottom: 0.5rem;
 	padding-top: max(env(safe-area-inset-top), 1rem);
 	text-align: center;
+	margin-top: 50px;
 }
 
 .Layout-header > h1 {
