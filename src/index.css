@@ -14,6 +14,14 @@
 	--color-border: hsla(220, 13%, 32%, 1);
 	--color-error: var(--color-red);
 	--color-text: var(--color-white);
+
+	--color-branding: #5a23b3;
+	--btn-confirm: var(--color-branding);
+	--btn-confirm-hover: #3f0f7f;
+}
+
+h1 {
+	font-family: 'Righteous', sans-serif;
 }
 
 @media screen and (prefers-color-scheme: light) {
