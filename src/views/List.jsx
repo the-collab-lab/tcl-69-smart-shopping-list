@@ -192,6 +192,9 @@ export function List({
 				<div>
 					<h3>Welcome to your "{listName}" list. </h3>
 					<button onClick={handleShareList}>Share List</button>
+					<button className="add-item-button" onClick={handleAddItem}>
+						Add Item
+					</button>
 				</div>
 				<Dialog
 					open={isShareDialogOpen}
@@ -268,16 +271,14 @@ export function List({
 						</>
 					) : (
 						<>
-							<h2>You have no items in your list!</h2>
-							<h4 className="add-first-item-helper-text">
-								Click on the purple (+) button to add items to your list.
-							</h4>
+							<h2 className="no-items-text">You have no items in your list!</h2>
+							<br />
+							<h3 className="add-item-helper-text">
+								Click the "Add Item" button above to get started
+							</h3>
 						</>
 					)}
 				</ul>
-				<button className="List-add-item-button" onClick={handleAddItem}>
-					<img src="/img/add-green.svg" alt="add item" />
-				</button>
 				<Dialog
 					open={isAddItemDialogOpen}
 					onCancel={() => setIsAddItemDialogOpen(false)}

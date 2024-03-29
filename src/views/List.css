@@ -33,31 +33,15 @@
 	list-style-type: none;
 }
 
-.List-add-item-button {
-	border: none;
-	background: none;
-	z-index: 3;
-	position: fixed;
-	left: 50%;
-	top: 80%;
-	transform: translate(-200%, 230%);
-	cursor: pointer;
+.add-item-button {
+	margin-left: 10px;
 }
 
-.List-add-item-button img {
-	width: 100%;
-	max-width: 100px;
+.no-items-text {
+	margin: 0;
 }
 
-@media (min-width: 600px) {
-	.List-add-item-button {
-		left: 75%;
-		top: 50%;
-		max-width: 200px;
-	}
-}
-
-.add-first-item-helper-text {
-	width: 260px;
-	margin-left: 50px;
+.add-item-helper-text {
+	margin: 0;
+	padding-left: 30px;
 }
