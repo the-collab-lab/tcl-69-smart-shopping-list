@@ -10,6 +10,9 @@ import {
 	updateDoc,
 	increment,
 	deleteDoc,
+	runTransaction,
+	query,
+	where,
 } from 'firebase/firestore';
 import { calculateEstimate } from '@the-collab-lab/shopping-list-utils';
 import { useEffect, useState } from 'react';
@@ -150,14 +153,28 @@ export async function createList(userId, userEmail, listName) {
  * @param {string} listPath The path to the list to share.
  */
 export async function deleteList(listPath) {
-	// console.log('userId:', userId);
-	console.log('listPath:', listPath);
-	// const docRef = doc(db, listPath, 'items', itemId);
 	const listDocRef = doc(db, listPath);
-	console.log('listDocRef:', listDocRef);
-	deleteDoc(listDocRef);
-	try {
+
+	// Find users whose sharedLists array contain this list's reference,
+	// and remove that reference from the array.
+	await runTransaction(db, async (transaction) => {
 		await deleteDoc(listDocRef);
+
+		const q = query(
+			collection(db, 'users'),
+			where('sharedLists', 'array-contains', listDocRef),
+		);
+
+		const docs = await getDocs(q);
+		docs.forEach(async (doc) => {
+			const sharedLists = doc.data().sharedLists;
+			transaction.update(doc.ref, {
+				sharedLists: sharedLists.filter((ref) => ref.path !== listDocRef.path),
+			});
+		});
+	});
+
+	try {
 		return { success: true };
 	} catch (e) {
 		console.error(e);
