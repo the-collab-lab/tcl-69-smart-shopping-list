@@ -95,7 +95,6 @@ export function ListItem({ item, listPath }) {
 		<li>
 			<label htmlFor={name} className="ListItem">
 				<input
-					className="checkbox"
 					type="checkbox"
 					id={name}
 					onChange={handleCheck}
@@ -112,7 +111,7 @@ export function ListItem({ item, listPath }) {
 				>
 					X
 				</button>
-				<h5>Buy Next: {nextPurchasedDate}</h5>
+				<h5 className="buy-next">Buy Next: {nextPurchasedDate}</h5>
 			</label>
 		</li>
 	);
