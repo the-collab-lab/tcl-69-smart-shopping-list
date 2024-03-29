@@ -55,13 +55,14 @@ c-button-cancel:hover {
 }
 
 .c-button-confirm {
-	background-color: #4caf50;
+	background-color: var(--color-branding);
 	border-radius: 8px;
 	border: 1px solid #0f0f0f;
+	color: white;
 }
 
 .c-button-confirm:hover {
-	background-color: rgb(69, 167, 72);
+	background-color: var(--btn-confirm-hover);
 }
 
 .Dialog--button-group > * {
@@ -70,7 +71,7 @@ c-button-cancel:hover {
 
 @keyframes slideInFromRight {
 	from {
-		transform: translateX(100%);
+		transform: translateX(200%);
 	}
 	to {
 		transform: translateX(0);
