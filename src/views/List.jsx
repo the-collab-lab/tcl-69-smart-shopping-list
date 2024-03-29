@@ -245,26 +245,46 @@ export function List({
 				<ul className="List-items-section">
 					{sortedData && sortedData.length > 0 ? (
 						<>
-							<h5>Overdue</h5>
-							{overdue.map((item) => (
-								<ListItem key={item.id} item={item} listPath={listPath} />
-							))}
-							<h5>Soon</h5>
-							{buySoon.map((item) => (
-								<ListItem key={item.id} item={item} listPath={listPath} />
-							))}
-							<h5>Kind of soon</h5>
-							{buyKindOfSoon.map((item) => (
-								<ListItem key={item.id} item={item} listPath={listPath} />
-							))}
-							<h5>Not soon</h5>
-							{buyNotSoon.map((item) => (
-								<ListItem key={item.id} item={item} listPath={listPath} />
-							))}
-							<h5>Inactive</h5>
-							{inactive.map((item) => (
-								<ListItem key={item.id} item={item} listPath={listPath} />
-							))}
+							{!!overdue && !!overdue.length && (
+								<>
+									<h5>Overdue</h5>
+									{overdue.map((item) => (
+										<ListItem key={item.id} item={item} listPath={listPath} />
+									))}
+								</>
+							)}
+							{!!buySoon && !!buySoon.length && (
+								<>
+									<h5>Soon</h5>
+									{buySoon.map((item) => (
+										<ListItem key={item.id} item={item} listPath={listPath} />
+									))}
+								</>
+							)}
+							{!!buyKindOfSoon && !!buyKindOfSoon.length && (
+								<>
+									<h5>Kind of Soon</h5>
+									{buyKindOfSoon.map((item) => (
+										<ListItem key={item.id} item={item} listPath={listPath} />
+									))}
+								</>
+							)}
+							{!!buyNotSoon && !!buyNotSoon.length && (
+								<>
+									<h5>Not soon</h5>
+									{buyNotSoon.map((item) => (
+										<ListItem key={item.id} item={item} listPath={listPath} />
+									))}
+								</>
+							)}
+							{!!inactive && !!buyNotSoon.length && (
+								<>
+									<h5>Inactive</h5>
+									{inactive.map((item) => (
+										<ListItem key={item.id} item={item} listPath={listPath} />
+									))}
+								</>
+							)}
 						</>
 					) : (
 						<>
@@ -278,7 +298,15 @@ export function List({
 					)}
 				</ul>
 				<button className="List-add-item-button" onClick={handleAddItem}>
-					<img src="/img/add-green.svg" alt="add item" />
+					<h1>Add</h1>
+					<svg width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+						<rect
+							width="100%"
+							height="100%"
+							rx="20"
+							fill={{ fill: 'var(--color-branding)' }}
+						/>
+					</svg>
 				</button>
 				<Dialog
 					open={isAddItemDialogOpen}

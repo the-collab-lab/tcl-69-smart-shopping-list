@@ -38,15 +38,31 @@
 	background: none;
 	z-index: 3;
 	position: fixed;
-	left: 50%;
+	left: 75%;
 	top: 80%;
 	transform: translate(-50%, -50%);
 	cursor: pointer;
 }
 
-.List-add-item-button img {
+.List-add-item-button svg {
 	width: 100%;
-	max-width: 100px;
+	height: 100%;
+	max-width: 140px;
+	max-height: 140px;
+	min-width: 150px;
+}
+.List-add-item-button svg rect {
+	fill: var(--color-branding);
+}
+
+.List-add-item-button h1 {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	margin: 0;
+	color: white;
+	font-size: 3.5em;
 }
 
 @media (min-width: 600px) {
