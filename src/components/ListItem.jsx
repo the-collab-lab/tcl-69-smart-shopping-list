@@ -1,6 +1,6 @@
-import './ListItem.css';
-import { updateItem, deleteItem } from '../api';
 import { useState, useEffect } from 'react';
+import { updateItem, deleteItem } from '../api';
+import './ListItem.css';
 
 export function ListItem({ item, listPath }) {
 	const {
@@ -92,7 +92,7 @@ export function ListItem({ item, listPath }) {
 	}
 
 	return (
-		<li>
+		<li className="ListItem-container">
 			<label htmlFor={name} className="ListItem">
 				<input
 					type="checkbox"
