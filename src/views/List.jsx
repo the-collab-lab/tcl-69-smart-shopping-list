@@ -229,7 +229,7 @@ export function List({
 				{data && data.length > 0 && (
 					<form>
 						<label htmlFor="searchString">
-							Search:
+							Search:{' '}
 							<input
 								type="text"
 								id="searchString"
