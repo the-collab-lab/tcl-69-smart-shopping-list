@@ -33,6 +33,8 @@
 	list-style-type: none;
 	display: flex;
 	flex-direction: column;
+	gap: 20px;
+	margin-top: 40px;
 }
 
 .List-add-item-button {
@@ -64,4 +66,8 @@
 	width: 80%;
 	display: flex;
 	margin-left: 0;
+}
+
+.List-section-header {
+	margin: 0px;
 }
