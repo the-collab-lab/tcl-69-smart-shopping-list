@@ -31,6 +31,10 @@
 
 .List-items-section {
 	list-style-type: none;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	margin-top: 40px;
 }
 
 .List-add-item-button {
@@ -55,4 +59,15 @@
 		top: 50%;
 		max-width: 200px;
 	}
+}
+
+.list-section-divider {
+	margin-top: 30px;
+	width: 80%;
+	display: flex;
+	margin-left: 0;
+}
+
+.List-section-header {
+	margin: 0px;
 }

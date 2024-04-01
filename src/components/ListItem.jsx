@@ -101,7 +101,7 @@ export function ListItem({ item, listPath }) {
 					name={name}
 					checked={isChecked}
 				/>
-				{name}
+				<h5 className="item-name">{name}</h5>
 				<button
 					type="button"
 					id={name}
@@ -111,8 +111,8 @@ export function ListItem({ item, listPath }) {
 				>
 					X
 				</button>
+				<h5 className="buy-next">Buy Next: {nextPurchasedDate}</h5>
 			</label>
-			<small>Buy Next: {nextPurchasedDate}</small>
 		</li>
 	);
 }

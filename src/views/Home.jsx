@@ -15,7 +15,7 @@ export function Home() {
 						type of shopping, and mark items by how soon you'll need them again.
 					</h3>
 					<img
-						className="checkbox"
+						className="Landing-check"
 						src="img/checkbox.png"
 						alt="black checkbox with green check"
 					/>

@@ -229,7 +229,7 @@ export function List({
 				{data && data.length > 0 && (
 					<form>
 						<label htmlFor="searchString">
-							Search:
+							Search:{' '}
 							<input
 								type="text"
 								id="searchString"
@@ -245,23 +245,27 @@ export function List({
 				<ul className="List-items-section">
 					{data && data.length > 0 ? (
 						<>
-							<h5>Overdue</h5>
+							<h4 className="List-section-header">Overdue</h4>
 							{overdue.map((item) => (
 								<ListItem key={item.id} item={item} listPath={listPath} />
 							))}
-							<h5>Soon</h5>
+							<hr className="list-section-divider" />
+							<h4 className="List-section-header">Soon</h4>
 							{buySoon.map((item) => (
 								<ListItem key={item.id} item={item} listPath={listPath} />
 							))}
-							<h5>Kind of soon</h5>
+							<hr className="list-section-divider" />
+							<h4 className="List-section-header">Kind of soon</h4>
 							{buyKindOfSoon.map((item) => (
 								<ListItem key={item.id} item={item} listPath={listPath} />
 							))}
-							<h5>Not soon</h5>
+							<hr className="list-section-divider" />
+							<h4 className="List-section-header">Not soon</h4>
 							{buyNotSoon.map((item) => (
 								<ListItem key={item.id} item={item} listPath={listPath} />
 							))}
-							<h5>Inactive</h5>
+							<hr className="list-section-divider" />
+							<h4 className="List-section-header">Inactive</h4>
 							{inactive.map((item) => (
 								<ListItem key={item.id} item={item} listPath={listPath} />
 							))}
