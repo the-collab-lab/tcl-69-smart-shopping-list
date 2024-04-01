@@ -1,6 +1,14 @@
 import './About.css';
 
 export function About() {
+	function Emoji({ children, label }) {
+		return (
+			<span role="img" aria-label={label}>
+				{children}
+			</span>
+		);
+	}
+
 	return (
 		<>
 			<main className="About-main">
@@ -8,53 +16,55 @@ export function About() {
 				<section className="About-section">
 					<img width="250px" alt="phone screenshot" src="../img/phone.png" />
 					<div className="About-section-text">
-						<h2>Make some lists</h2>
+						<h2>Lending a list-ening ear</h2>
 						<p>
-							Level up your organization game by creating specialized lists for
-							all your needs.
+							Aisle Be There to level up your organization game! Create
+							specialized lists for all your kneads!{' '}
+							<Emoji label="bread">🍞</Emoji>
 						</p>
 					</div>
 				</section>
 				<section className="About-section">
 					<img width="250px" alt="phone screenshot" src="../img/phone.png" />
 					<div className="About-section-text">
-						<h2>Add some items</h2>
+						<h2>Before you go down the Aisle</h2>
 						<p>
-							Inside your list, simply tap the big '+' button to add a new item.
-							Box Makers will ask you when you might need to buy the item again.
+							Inside your list, tap the big 'Add' button to add a new item.
+							Aisle Be There for you, asking when you might need to restock your
+							aisle-ments! <Emoji label="coffee">☕</Emoji>
 						</p>
 					</div>
 				</section>
 				<section className="About-section">
 					<img width="250px" alt="phone screenshot" src="../img/phone.png" />
 					<div className="About-section-text">
-						<h2>Check items off as you shop</h2>
+						<h2>Aisle check on you</h2>
 						<p>
-							As you purchase items, mark them off your list. By doing so,
-							you're not just staying organized, but you're also teaching Box
-							Makers your shopping habits, making future trips even more
-							streamlined and efficient.
+							As you check items off your list, you're not just staying
+							organized, you're sharing your shopping habits. Aisle Be There to
+							ensuring smoother, more efficient future trips!{' '}
+							<Emoji label="purple-checkmark">☑️</Emoji>
 						</p>
 					</div>
 				</section>
 				<section className="About-section">
 					<img width="250px" alt="phone screenshot" src="../img/phone.png" />
 					<div className="About-section-text">
-						<h2>Box Makers predicts when you'll need the item again</h2>
+						<h2>Aisle Be There to guide you</h2>
 						<p>
-							The more you use Box Makers, the smarter it gets! Box Makers will
-							help you prioritize items for your next shopping trip using your
-							buying history.
+							The more you use the app, the more Aisle get to know you! Aisle Be
+							There to prioritize items for your next shopping trip based on
+							your buying history. <Emoji label="calendar">📆</Emoji>
 						</p>
 					</div>
 				</section>
 				<section className="About-section">
 					<img width="250px" alt="phone screenshot" src="../img/phone.png" />
 					<div className="About-section-text">
-						<h2>Share lists with family and friends</h2>
+						<h2>Aisle Be your community</h2>
 						<p>
-							When you share your lists, your friends and family can add and
-							contribute to your list!
+							When you share your lists, your friends and family can collaborate
+							and be there for you, too! <Emoji label="purple-heart">💜</Emoji>
 						</p>
 					</div>
 				</section>

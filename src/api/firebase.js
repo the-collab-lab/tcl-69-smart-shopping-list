@@ -10,6 +10,9 @@ import {
 	updateDoc,
 	increment,
 	deleteDoc,
+	runTransaction,
+	query,
+	where,
 } from 'firebase/firestore';
 import { calculateEstimate } from '@the-collab-lab/shopping-list-utils';
 import { useEffect, useState } from 'react';
@@ -120,7 +123,15 @@ export async function addUserToDatabase(user) {
  * @param {string} userEmail The email of the user who owns the list.
  * @param {string} listName The name of the new list.
  */
+function validateDocName(name) {
+	const invalidCharPattern = /\//;
+	return !invalidCharPattern.test(name);
+}
 export async function createList(userId, userEmail, listName) {
+	if (!validateDocName(listName)) {
+		throw `List name cannot contain " / "`;
+	}
+
 	const listDocRef = doc(db, userId, listName);
 
 	await setDoc(listDocRef, {
@@ -134,6 +145,41 @@ export async function createList(userId, userEmail, listName) {
 	});
 
 	return listDocRef.path;
+}
+
+/**
+ * Delete a list and remove it from user's list in Firestore.
+ * @param {string} userId The id of the user who owns the list.
+ * @param {string} listPath The path to the list to share.
+ */
+export async function deleteList(listPath) {
+	const listDocRef = doc(db, listPath);
+
+	// Find users whose sharedLists array contain this list's reference,
+	// and remove that reference from the array.
+	await runTransaction(db, async (transaction) => {
+		await deleteDoc(listDocRef);
+
+		const q = query(
+			collection(db, 'users'),
+			where('sharedLists', 'array-contains', listDocRef),
+		);
+
+		const docs = await getDocs(q);
+		docs.forEach(async (doc) => {
+			const sharedLists = doc.data().sharedLists;
+			transaction.update(doc.ref, {
+				sharedLists: sharedLists.filter((ref) => ref.path !== listDocRef.path),
+			});
+		});
+	});
+
+	try {
+		return { success: true };
+	} catch (e) {
+		console.error(e);
+		return { success: false, error: e };
+	}
 }
 
 /**

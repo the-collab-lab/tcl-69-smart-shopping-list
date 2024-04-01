@@ -1,9 +1,14 @@
 .ListItem {
-	align-items: baseline;
-	display: inline-flex;
+	align-items: center;
+	display: flex;
 	flex-direction: row;
 	font-size: 1.2em;
 	cursor: pointer;
+	height: auto;
+}
+
+.ListItem > * {
+	margin-right: 10px;
 }
 
 .ListItem-checkbox {
