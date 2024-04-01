@@ -17,17 +17,20 @@ export function sortedItems(sortedDataResult) {
 	const buyNotSoon = [];
 	const inactive = [];
 
-	sortedDataResult.forEach((d) => {
-		if (d.daysUntilNextPurchase <= 0) {
-			overdue.push(d);
-		} else if (d.daysUntilNextPurchase <= 3) {
-			buySoon.push(d);
-		} else if (d.daysUntilNextPurchase <= 7) {
-			buyKindOfSoon.push(d);
-		} else if (d.daysUntilNextPurchase <= 14) {
-			buyNotSoon.push(d);
-		} else {
-			inactive.push(d);
+	sortedDataResult.forEach((item) => {
+		if (item.isOverdue) {
+			overdue.push(item);
+		} else if (item.daysSinceLastPurchase >= 60) {
+			inactive.push(item);
+		} else if (item.daysUntilNextPurchase <= 7) {
+			buySoon.push(item);
+		} else if (
+			item.daysUntilNextPurchase > 7 &&
+			item.daysUntilNextPurchase < 15
+		) {
+			buyKindOfSoon.push(item);
+		} else if (item.daysUntilNextPurchase >= 15) {
+			buyNotSoon.push(item);
 		}
 	});
 
