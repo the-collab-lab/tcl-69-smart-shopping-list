@@ -28,6 +28,12 @@
 	margin: 0;
 }
 
+.intro-text {
+	width: 400px;
+	margin: auto;
+	padding-bottom: 20px;
+}
+
 .checkbox {
 	height: 200px;
 }
