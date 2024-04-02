@@ -158,12 +158,29 @@ export function List({
 					)}
 				</ul>
 				<hr />
-				<div>
-					<h3>Welcome to your "{listName}" list. </h3>
-					<button onClick={handleShareList}>Share List</button>
-					<button className="add-item-button" onClick={handleAddItem}>
-						Add Item
-					</button>
+				<h3>Welcome to your "{listName}" list. </h3>
+				<div className="List-share-add-search">
+					{!!data && (
+						<form>
+							<label htmlFor="searchString">
+								Search:{' '}
+								<input
+									type="text"
+									id="searchString"
+									name="searchString"
+									value={searchString}
+									onChange={handleChange}
+								/>
+							</label>
+							{searchString ? <button onClick={handleClick}>x</button> : ''}
+						</form>
+					)}
+					<div className="List-share-add">
+						<button onClick={handleShareList}>Share List</button>
+						<button className="add-item-button" onClick={handleAddItem}>
+							Add Item
+						</button>
+					</div>
 				</div>
 				<Dialog
 					open={isShareDialogOpen}
@@ -197,24 +214,8 @@ export function List({
 						</div>
 					</div>
 				</Dialog>
-				<br />
-				{!!data && (
-					<form>
-						<label htmlFor="searchString">
-							Search:{' '}
-							<input
-								type="text"
-								id="searchString"
-								name="searchString"
-								value={searchString}
-								onChange={handleChange}
-							/>
-						</label>
-						{searchString ? <button onClick={handleClick}>x</button> : ''}
-					</form>
-				)}
 
-				<ul className="List-items-section">
+				<ul className="List-items-ul">
 					{!!data ? (
 						<SortedItemsMap
 							listPath={listPath}
@@ -235,24 +236,20 @@ export function List({
 					onCancel={() => setIsAddItemDialogOpen(false)}
 					onSubmit={handleAddItemConfirmClick}
 				>
-					<div className="List-modal-container">
-						<div className="List-modal-inner">
-							<AddItem formData={formData} setFormData={setFormData} />
-							<div className="Dialog--button-group">
-								<button
-									className="c-button c-button-cancel"
-									onClick={handleAddItemCancelClick}
-								>
-									Cancel
-								</button>
-								<button
-									className="c-button c-button-confirm"
-									onClick={handleAddItemConfirmClick}
-								>
-									Add Item
-								</button>
-							</div>
-						</div>
+					<AddItem formData={formData} setFormData={setFormData} />
+					<div className="Dialog--button-group">
+						<button
+							className="c-button c-button-cancel"
+							onClick={handleAddItemCancelClick}
+						>
+							Cancel
+						</button>
+						<button
+							className="c-button c-button-confirm"
+							onClick={handleAddItemConfirmClick}
+						>
+							Add Item
+						</button>
 					</div>
 				</Dialog>
 			</div>
