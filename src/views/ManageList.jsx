@@ -82,7 +82,7 @@ export function ManageList({ data, listPath, currentUserId }) {
 			)}
 
 			<ul className="List-items-section">
-				{!!data ? (
+				{data.length ? (
 					<SortedItemsMap
 						listPath={listPath}
 						filteredDataResult={filteredDataResult}
