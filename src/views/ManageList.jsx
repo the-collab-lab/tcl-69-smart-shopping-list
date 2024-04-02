@@ -15,7 +15,7 @@ export function ManageList({ data, listPath, currentUserId }) {
 		itemName: '',
 		daysUntilNextPurchase: '7',
 	});
-	console.log('recipient email:', recipientEmail);
+
 	const listName = listPath?.split('/')[1];
 
 	// ** SEARCH STRING HANDLERS ***//
@@ -147,6 +147,7 @@ export function ManageList({ data, listPath, currentUserId }) {
 							type="email"
 							id="invite-to-list"
 							name="inviteToList"
+							value={recipientEmail}
 							onChange={handleInviteChange}
 						/>
 					</label>
