@@ -132,8 +132,11 @@ export function List({
 			<div className="List">
 				<h3>Select a list or create a new one</h3>
 				<form onSubmit={handleSubmit}>
-					<label htmlFor="shopping-list-input">
-						Enter a new list name:
+					<label
+						htmlFor="shopping-list-input"
+						className="create-list-container"
+					>
+						<span class="new-list">search</span>
 						<input
 							type="text"
 							value={shoppingListName}
@@ -143,7 +146,7 @@ export function List({
 							onChange={(e) => setShoppingListName(e.target.value)}
 						/>
 					</label>
-					<input type="submit" value="Create!" />
+					<input type="submit" value="Create!" className="create-list-btn" />
 				</form>
 
 				<ul>

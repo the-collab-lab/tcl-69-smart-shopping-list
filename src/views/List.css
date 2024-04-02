@@ -93,3 +93,24 @@
 .search-icon {
 	color: #c2c2c2;
 }
+
+.new-list {
+	display: none;
+}
+
+#shopping-list-input {
+	/* Your styles for shopping-list-input */
+	padding: 0.5em 1em;
+	margin: 0.5em 0;
+	border-radius: 15px 0px 0px 15px;
+	height: 38px;
+	width: 300px;
+}
+
+.create-list-btn {
+	font-size: 1.6rem;
+	padding: 0.5em 1em;
+	margin: 0.5em 0;
+	min-height: 38px !important;
+	border-radius: 0px 15px 15px 0px !important;
+}
