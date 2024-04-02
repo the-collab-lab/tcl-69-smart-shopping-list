@@ -2,4 +2,4 @@ export * from './ListItem';
 export * from './SingleList';
 export * from './Dialog';
 export * from './AddItem';
-export * from './SortedDataMap';
+export * from './SortedItemsMap';
