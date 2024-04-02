@@ -2,19 +2,23 @@ import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Dialog, SortedItemsMap, AddItem } from '../components';
 
-import { addItem } from '../api';
+import { addItem, shareList } from '../api';
 import './List.css';
 import { filteredData } from '../utils';
 
 export function ManageList({ data, listPath, currentUserId }) {
 	const [searchString, setSearchString] = useState('');
+	const [recipientEmail, setRecipientEmail] = useState('');
+	const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
 	const [isAddItemDialogOpen, setIsAddItemDialogOpen] = useState(false);
 	const [formData, setFormData] = useState({
 		itemName: '',
 		daysUntilNextPurchase: '7',
 	});
-
+	console.log('recipient email:', recipientEmail);
 	const listName = listPath?.split('/')[1];
+
+	// ** SEARCH STRING HANDLERS ***//
 
 	const handleChange = (e) => {
 		setSearchString(e.target.value);
@@ -29,6 +33,36 @@ export function ManageList({ data, listPath, currentUserId }) {
 
 	const filteredDataResult = filteredData(data, searchString);
 
+	//** SHARE LIST HANDLERS ***//
+
+	function handleInviteChange(e) {
+		const { value } = e.target;
+		setRecipientEmail(value.toLowerCase());
+	}
+
+	async function handleShareList() {
+		setIsShareDialogOpen(true);
+		setRecipientEmail('');
+	}
+
+	function handleShareCancelClick() {
+		setIsShareDialogOpen(false);
+	}
+
+	async function handleShareConfirmClick(e) {
+		e.preventDefault();
+
+		let shareResult = await shareList(listPath, currentUserId, recipientEmail);
+		// provide an alert confirming that list was shared, or error
+		if (shareResult.status === 200) {
+			alert(shareResult.message);
+			setIsShareDialogOpen(false);
+		} else {
+			alert(shareResult.message);
+			setRecipientEmail('');
+			setIsShareDialogOpen(true);
+		}
+	}
 	//** ADD ITEM HANDLERS ***//
 
 	function handleAddItem() {
@@ -61,9 +95,12 @@ export function ManageList({ data, listPath, currentUserId }) {
 		<div>
 			<div>
 				<h3>Welcome to your "{listName}" list. </h3>
-				<button className="add-item-button" onClick={handleAddItem}>
-					Add Item
-				</button>
+				<div>
+					<button onClick={handleShareList}>Share List</button>
+					<button className="add-item-button" onClick={handleAddItem}>
+						Add Item
+					</button>
+				</div>
 			</div>
 			{!!data && (
 				<form>
@@ -97,6 +134,39 @@ export function ManageList({ data, listPath, currentUserId }) {
 					</>
 				)}
 			</ul>
+			<Dialog
+				open={isShareDialogOpen}
+				onCancel={() => setIsShareDialogOpen(false)}
+				onSubmit={handleShareConfirmClick}
+			>
+				<h2>Who are you sharing this list with?</h2>
+				<div className="List-share-email-dialog-container">
+					<label htmlFor="invite-to-list">
+						Enter email:
+						<input
+							type="email"
+							id="invite-to-list"
+							name="inviteToList"
+							onChange={handleInviteChange}
+						/>
+					</label>
+					<div className="Dialog--button-group">
+						<button
+							className="c-button c-button-cancel"
+							onClick={handleShareCancelClick}
+						>
+							Cancel
+						</button>
+						<button
+							className="c-button c-button-confirm"
+							onClick={handleShareConfirmClick}
+						>
+							Confirm
+						</button>
+					</div>
+				</div>
+			</Dialog>
+
 			<Dialog
 				open={isAddItemDialogOpen}
 				onCancel={() => setIsAddItemDialogOpen(false)}
