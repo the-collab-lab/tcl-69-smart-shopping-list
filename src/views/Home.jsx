@@ -24,7 +24,13 @@ export function Home() {
 					</h3>
 					{!!user ? (
 						<div>
-							<span>Welcome back {auth.currentUser.displayName}!</span> (
+							<span>Welcome back {auth.currentUser.displayName}!</span>
+							<img
+								src={auth.currentUser.photoURL}
+								alt="profile"
+								className="Home-profile-img"
+							/>
+							(
 							<SignOutButton />)
 							<br />
 							<span>

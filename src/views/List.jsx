@@ -132,17 +132,20 @@ export function List({
 			<div className="List">
 				<h3>Select a list or create a new one</h3>
 				<form onSubmit={handleSubmit}>
-					<label>
-						New list name:{' '}
+					<label htmlFor="shopping-list-input">
+						Enter a new list name:
 						<input
 							type="text"
 							value={shoppingListName}
-							id="shopping-list"
+							id="shopping-list-input"
+							name="shopping-list"
+							placeholder="Enter a new list name"
 							onChange={(e) => setShoppingListName(e.target.value)}
-						></input>
-					</label>{' '}
+						/>
+					</label>
 					<input type="submit" value="Create!" />
 				</form>
+
 				<ul>
 					{!!lists ? (
 						lists.map((list) => (
@@ -162,10 +165,14 @@ export function List({
 				<div className="List-share-add-search">
 					{!!data && (
 						<form>
-							<label htmlFor="searchString">
-								Search:{' '}
+							<label htmlFor="searchString" className="search-build">
+								<span class="material-symbols-outlined search-icon">
+									search
+								</span>
 								<input
 									type="text"
+									className="search-input"
+									placeholder="Search for an item..."
 									id="searchString"
 									name="searchString"
 									value={searchString}
