@@ -40,8 +40,8 @@ export function Layout() {
 				<footer className="Layout-footer">
 					<p className="Layout-footer-attribution">
 						Crafted with care{' '}
-						<span role="img" aria-label="heart">
-							❤️{' '}
+						<span role="img" aria-label="purple-heart">
+							💜{' '}
 						</span>
 						by{' '}
 						<a
