@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { SingleList, Dialog, SortedDataMap, AddItem } from '../components';
-import { createList } from '../api/firebase';
-import { addItem, shareList } from '../api';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { Dialog, SortedItemsMap, AddItem } from '../components';
+
+import { addItem } from '../api';
 import './List.css';
 import { filteredData } from '../utils';
 
@@ -15,8 +15,6 @@ export function ManageList({ data, listPath, currentUserId }) {
 	});
 
 	const listName = listPath?.split('/')[1];
-
-	const navigate = useNavigate();
 
 	const handleChange = (e) => {
 		setSearchString(e.target.value);
@@ -85,7 +83,7 @@ export function ManageList({ data, listPath, currentUserId }) {
 
 			<ul className="List-items-section">
 				{!!data ? (
-					<SortedDataMap
+					<SortedItemsMap
 						listPath={listPath}
 						filteredDataResult={filteredDataResult}
 					/>
