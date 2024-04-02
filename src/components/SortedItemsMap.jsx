@@ -1,12 +1,12 @@
 import React from 'react';
-import { sortedData, sortedItems } from '../utils';
+import { getSortedItems, getGroupedItems } from '../utils';
 import { ListItem } from './ListItem';
 
-export function SortedDataMap({ filteredDataResult, listPath }) {
-	const sortedDataResult = sortedData(filteredDataResult);
+export function SortedItemsMap({ filteredDataResult, listPath }) {
+	const sortedDataResult = getSortedItems(filteredDataResult);
 
 	const { overdue, buySoon, buyKindOfSoon, buyNotSoon, inactive } =
-		sortedItems(sortedDataResult);
+		getGroupedItems(sortedDataResult);
 	return (
 		<>
 			<h4 className="List-section-header">Overdue</h4>

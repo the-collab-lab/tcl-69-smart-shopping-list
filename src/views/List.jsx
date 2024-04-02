@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { SingleList, Dialog, SortedDataMap, AddItem } from '../components';
-import { createList } from '../api/firebase';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { addItem, shareList } from '../api';
-import './List.css';
+import { createList } from '../api/firebase';
+import { AddItem, Dialog, SingleList, SortedItemsMap } from '../components';
 import { filteredData } from '../utils';
+import './List.css';
 
 export function List({
 	user,
@@ -216,7 +216,7 @@ export function List({
 
 				<ul className="List-items-section">
 					{!!data ? (
-						<SortedDataMap
+						<SortedItemsMap
 							listPath={listPath}
 							filteredDataResult={filteredDataResult}
 						/>

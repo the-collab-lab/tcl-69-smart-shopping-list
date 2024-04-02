@@ -6,11 +6,11 @@ export function filteredData(data, searchString) {
 	);
 }
 
-export function sortedData(filteredDataResult) {
+export function getSortedItems(filteredDataResult) {
 	return comparePurchaseUrgency(filteredDataResult);
 }
 
-export function sortedItems(sortedDataResult) {
+export function getGroupedItems(sortedDataResult) {
 	const overdue = [];
 	const buySoon = [];
 	const buyKindOfSoon = [];
