@@ -11,7 +11,7 @@ export function Layout() {
 		<>
 			<div className="Layout">
 				<header className="Layout-header">
-					<h1>Smart shopping list</h1>
+					<h1>Aisle Be There</h1>
 					{!!user ? (
 						<div>
 							<span>Signed in as {auth.currentUser.displayName}</span> (
