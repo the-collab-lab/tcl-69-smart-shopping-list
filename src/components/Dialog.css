@@ -50,26 +50,11 @@
 }
 
 .Dialog--button-group :first-child {
-	background-color: #cdcdcd;
+	background-color: var(--btn-bg-color-cancel);
 }
 
 .Dialog--button-group :first-child:hover {
-	background-color: #989797;
-}
-
-c-button-cancel:hover {
-	background-color: #918f8f;
-}
-
-.c-button-confirm {
-	background-color: var(--color-branding);
-	border-radius: 8px;
-	border: 1px solid #0f0f0f;
-	color: white;
-}
-
-.c-button-confirm:hover {
-	background-color: var(--btn-confirm-hover);
+	background-color: var(--btn-bg-color-cancel-hover);
 }
 
 .Dialog--button-group > * {
