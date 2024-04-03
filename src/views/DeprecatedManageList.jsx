@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { addItem, shareList } from '../api';
 
-export function ManageListDNU({ listPath, currentUserId }) {
+/**
+ * @deprecated
+ */
+export function DeprecatedManageList({ listPath, currentUserId }) {
 	const INITIAL_DATA = {
 		itemName: '',
 		daysUntilNextPurchase: '7',
