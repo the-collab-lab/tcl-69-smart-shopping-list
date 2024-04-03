@@ -12,14 +12,20 @@ export function Layout() {
 			<div className="Layout">
 				<header className="Layout-header">
 					<h1>Aisle Be There</h1>
-					{!!user ? (
-						<div>
-							<span>Signed in as {auth.currentUser.displayName}</span> (
-							<SignOutButton />)
-						</div>
-					) : (
-						<SignInButton />
-					)}
+					<div>
+						{!!user ? (
+							<div className="Layout-header-login">
+								<img
+									src={auth.currentUser.photoURL}
+									alt="user"
+									className="Layout-header-profile"
+								/>
+								<SignOutButton />
+							</div>
+						) : (
+							<SignInButton />
+						)}
+					</div>
 				</header>
 				<nav className="Nav">
 					<div className="Nav-container">
