@@ -9,19 +9,24 @@
 	--color-pastel-blue: hsla(215, 100%, 73%, 1);
 	--color-red: hsl(0, 68%, 42%);
 
+	--color-branding: #5a23b3;
 	--color-accent: var(--color-pastel-blue);
 	--color-bg: var(--color-black);
 	--color-border: hsla(220, 13%, 32%, 1);
 	--color-error: var(--color-red);
 	--color-text: var(--color-white);
+	--color-btn-bg-cancel: #cdcdcd;
+	--color-btn-bg-confirm-hover: #3f0f7f;
+	--color-btn-bg-cancel-hover: #989797;
+	--color-btn-bg-delete-hover: #a80000;
 
-	--color-branding: #5a23b3;
+	/* Button Styling Variables */
 	--btn-bg-color-confirm: var(--color-branding);
-	--btn-bg-color-confirm-hover: #3f0f7f;
-	--btn-bg-color-cancel: #cdcdcd;
-	--btn-bg-color-cancel-hover: #989797;
-	--btn-bg-color-delete: var(--color-error);
-	--btn-bg-color-delete-hover: #a80000;
+	--btn-bg-color-confirm-hover: var(--color-btn-bg-confirm-hover);
+	--btn-bg-color-cancel: var(--color-btn-bg-cancel);
+	--btn-bg-color-cancel-hover: var(--color-btn-bg-cancel-hover);
+	--btn-bg-color-delete: var(--color-red);
+	--btn-bg-color-delete-hover: var(--color-btn-bg-delete-hover);
 }
 
 @media screen and (prefers-color-scheme: light) {
