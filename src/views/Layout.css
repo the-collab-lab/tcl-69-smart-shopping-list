@@ -18,14 +18,41 @@
 }
 
 .Layout-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	background-color: var(--color-bg);
 	padding-bottom: 0.5rem;
 	padding-top: max(env(safe-area-inset-top), 1rem);
 	text-align: center;
+	background: white;
 }
 
 .Layout-header > h1 {
 	margin: 0;
+	color: #5a23b3;
+	font-size: 3rem;
+}
+
+.Layout-header-login {
+	display: flex;
+	background-color: #5a23b3;
+	border-radius: 2rem;
+}
+
+.Layout-header-profile {
+	border-radius: 1rem;
+	border: 3px solid #5a23b3;
+	width: 4rem;
+}
+
+.Layout-header button {
+	background: #5a23b3;
+	border: none;
+	border-radius: 1rem;
+	padding: 7px 10px;
+	font-size: 1.8rem;
+	cursor: pointer;
 }
 
 .Layout-main {
@@ -39,26 +66,25 @@
 	background-color: var(--color-bg);
 	border-top: 1px solid var(--color-border);
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	padding-bottom: max(env(safe-area-inset-bottom), 1rem);
 	padding-top: 1rem;
 	place-content: center;
-	position: fixed;
-	width: 100%;
+	background: #5a23b3;
 }
 
 .Nav-container {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-evenly;
-	width: min(72ch, 100%);
+	justify-content: space-between;
+	/* width: min(72ch, 100%); */
 }
 
 .Nav-link {
 	--color-text: var(--color-accent);
 
-	color: var(--color-text);
-	font-size: 1.4em;
+	color: white;
+	font-size: 2rem;
 	flex: 0 1 auto;
 	line-height: 1;
 	padding: 0.8rem;
