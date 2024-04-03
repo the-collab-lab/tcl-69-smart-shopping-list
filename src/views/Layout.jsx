@@ -24,13 +24,13 @@ export function Layout() {
 				<nav className="Nav">
 					<div className="Nav-container">
 						<NavLink to="/" className="Nav-link">
-							Home
+							home
 						</NavLink>
 						<NavLink to="/list" className="Nav-link">
-							List
+							lists
 						</NavLink>
 						<NavLink to="/about" className="Nav-link">
-							About
+							about
 						</NavLink>
 					</div>
 				</nav>
