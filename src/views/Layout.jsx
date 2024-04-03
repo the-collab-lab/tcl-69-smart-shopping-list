@@ -40,7 +40,7 @@ export function Layout() {
 				<footer className="Layout-footer">
 					<p className="Layout-footer-attribution">
 						Crafted with care <Emoji label="purple-heart">💜</Emoji>
-						by{' '}
+						{' '}by{' '}
 						<a
 							className="Layout-footer-link"
 							href="https://github.com/amalyam"
