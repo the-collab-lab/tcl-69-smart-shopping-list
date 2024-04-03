@@ -1,125 +1,198 @@
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import { addItem, shareList } from '../api';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { Dialog, SortedItemsMap, AddItem } from '../components';
 
-export function ManageList({ listPath, currentUserId }) {
-	const INITIAL_DATA = {
+import { addItem, shareList } from '../api';
+import './List.css';
+import { filteredData } from '../utils';
+
+export function ManageList({ data, listPath, currentUserId }) {
+	const [searchString, setSearchString] = useState('');
+	const [recipientEmail, setRecipientEmail] = useState('');
+	const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
+	const [isAddItemDialogOpen, setIsAddItemDialogOpen] = useState(false);
+	const [formData, setFormData] = useState({
 		itemName: '',
 		daysUntilNextPurchase: '7',
+	});
+
+	const listName = listPath?.split('/')[1];
+
+	// ** SEARCH STRING HANDLERS ***//
+
+	const handleChange = (e) => {
+		setSearchString(e.target.value);
 	};
 
-	const [formData, setFormData] = useState(INITIAL_DATA);
-	const [recipientEmail, setRecipientEmail] = useState('');
+	const handleClick = (e) => {
+		e.preventDefault();
+		setSearchString('');
+	};
 
-	function handleChange(e) {
-		const { name, value } = e.target;
-		setFormData((data) => ({ ...data, [name]: value }));
-	}
+	// ** SORTING DATA LOGIC ***//
+
+	const filteredDataResult = filteredData(data, searchString);
+
+	//** SHARE LIST HANDLERS ***//
 
 	function handleInviteChange(e) {
 		const { value } = e.target;
-		setRecipientEmail(value);
+		setRecipientEmail(value.toLowerCase());
 	}
 
-	//Enter key also submits the form as long as user is on one of the input field
-	async function handleSubmit(e) {
-		e.preventDefault();
-
-		formData.daysUntilNextPurchase = +formData.daysUntilNextPurchase;
-		let result = await addItem(listPath, formData);
-		if (result && result.success) {
-			setFormData(INITIAL_DATA);
-			alert('Item saved!');
-		} else if (result && result.error) {
-			alert(result.error);
-		} else {
-			alert('Item cannot be saved to database, please try again.');
-		}
+	async function handleShareList() {
+		setIsShareDialogOpen(true);
+		setRecipientEmail('');
 	}
 
-	async function handleInviteSubmit(e) {
+	function handleShareCancelClick() {
+		setIsShareDialogOpen(false);
+	}
+
+	async function handleShareConfirmClick(e) {
 		e.preventDefault();
+
 		let shareResult = await shareList(listPath, currentUserId, recipientEmail);
-
 		// provide an alert confirming that list was shared, or error
-		if (shareResult) {
-			alert(shareResult);
+		if (shareResult.status === 200) {
+			alert(shareResult.message);
+			setIsShareDialogOpen(false);
+		} else {
+			alert(shareResult.message);
+			setRecipientEmail('');
+			setIsShareDialogOpen(true);
 		}
 	}
+	//** ADD ITEM HANDLERS ***//
 
-	if (!currentUserId) {
-		return <Navigate to="/" replace={true} />;
+	function handleAddItem() {
+		setIsAddItemDialogOpen(true);
+		// reset form data
+		setFormData({ itemName: '', daysUntilNextPurchase: '7' });
+		// set default radio button to 'soon'
+		document.getElementById('soon').checked = true;
+	}
+
+	function handleAddItemCancelClick() {
+		setIsAddItemDialogOpen(false);
+	}
+
+	async function handleAddItemConfirmClick(e) {
+		e.preventDefault();
+
+		let addItemResult = await addItem(listPath, formData);
+		// provide an alert confirming that list was shared, or error
+		if (addItemResult.status === 201) {
+			alert(addItemResult.message);
+			setIsAddItemDialogOpen(false);
+		} else {
+			alert(addItemResult.error);
+			setIsAddItemDialogOpen(true);
+		}
 	}
 
 	return (
-		<>
-			<p>
-				Hello from the <code>/manage-list</code> page!
-			</p>
-			<form onSubmit={handleSubmit}>
-				<label htmlFor="itemName">
-					Item Name:
-					<input
-						type="text"
-						id="itemName"
-						name="itemName"
-						value={formData.itemName}
-						onChange={handleChange}
-						required
-					></input>
-				</label>
-				<br />
-				<p>Buy again?</p>
-				<label htmlFor="soon">
-					Soon:
-					<input
-						type="radio"
-						id="soon"
-						name="daysUntilNextPurchase"
-						value="7"
-						onChange={handleChange}
-						defaultChecked
-					></input>
-				</label>
-				<br />
-				<label htmlFor="kind-of-soon">
-					Kind of soon:
-					<input
-						type="radio"
-						id="kind-of-soon"
-						name="daysUntilNextPurchase"
-						value="14"
-						onChange={handleChange}
-					></input>
-				</label>
-				<br />
-				<label htmlFor="not-soon">
-					Not soon:
-					<input
-						type="radio"
-						id="not-soon"
-						name="daysUntilNextPurchase"
-						value="30"
-						onChange={handleChange}
-					></input>
-				</label>
-				<br />
-				<button type="submit">Submit</button>
-			</form>
-			<form onSubmit={handleInviteSubmit}>
-				<br />
-				<label htmlFor="invite-to-list">
-					Enter email:
-					<input
-						type="email"
-						id="invite-to-list"
-						name="inviteToList"
-						onChange={handleInviteChange}
+		<div>
+			<div>
+				<h3>Welcome to your "{listName}" list. </h3>
+				<div>
+					<button onClick={handleShareList}>Share List</button>
+					<button className="add-item-button" onClick={handleAddItem}>
+						Add Item
+					</button>
+				</div>
+			</div>
+			{!!data && (
+				<form>
+					<label htmlFor="searchString">
+						Search:{' '}
+						<input
+							type="text"
+							id="searchString"
+							name="searchString"
+							value={searchString}
+							onChange={handleChange}
+						/>
+					</label>
+					{searchString ? <button onClick={handleClick}>x</button> : ''}
+				</form>
+			)}
+
+			<ul className="List-items-section">
+				{data.length ? (
+					<SortedItemsMap
+						listPath={listPath}
+						filteredDataResult={filteredDataResult}
 					/>
-				</label>
-				<br />
-				<button type="submit">Invite User</button>
-			</form>
-		</>
+				) : (
+					<>
+						<h2 className="no-items-text">You have no items in your list!</h2>
+						<br />
+						<h3 className="add-item-helper-text">
+							Click the "Add Item" button above to get started
+						</h3>
+					</>
+				)}
+			</ul>
+			<Dialog
+				open={isShareDialogOpen}
+				onCancel={() => setIsShareDialogOpen(false)}
+				onSubmit={handleShareConfirmClick}
+			>
+				<h2>Who are you sharing this list with?</h2>
+				<div className="List-share-email-dialog-container">
+					<label htmlFor="invite-to-list">
+						Enter email:
+						<input
+							type="email"
+							id="invite-to-list"
+							name="inviteToList"
+							value={recipientEmail}
+							onChange={handleInviteChange}
+						/>
+					</label>
+					<div className="Dialog--button-group">
+						<button
+							className="c-button c-button-cancel"
+							onClick={handleShareCancelClick}
+						>
+							Cancel
+						</button>
+						<button
+							className="c-button c-button-confirm"
+							onClick={handleShareConfirmClick}
+						>
+							Confirm
+						</button>
+					</div>
+				</div>
+			</Dialog>
+
+			<Dialog
+				open={isAddItemDialogOpen}
+				onCancel={() => setIsAddItemDialogOpen(false)}
+				onSubmit={handleAddItemConfirmClick}
+			>
+				<div className="List-modal-container">
+					<div className="List-modal-inner">
+						<AddItem formData={formData} setFormData={setFormData} />
+						<div className="Dialog--button-group">
+							<button
+								className="c-button c-button-cancel"
+								onClick={handleAddItemCancelClick}
+							>
+								Cancel
+							</button>
+							<button
+								className="c-button c-button-confirm"
+								onClick={handleAddItemConfirmClick}
+							>
+								Add Item
+							</button>
+						</div>
+					</div>
+				</div>
+			</Dialog>
+		</div>
 	);
 }
