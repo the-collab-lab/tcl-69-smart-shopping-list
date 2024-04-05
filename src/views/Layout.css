@@ -24,20 +24,24 @@
 	background-color: var(--color-bg);
 	padding-bottom: 0.5rem;
 	padding-top: max(env(safe-area-inset-top), 1rem);
-	text-align: center;
 	background: white;
+	height: 55px;
 }
 
-.Layout-header > h1 {
+.Layout-header-name {
 	margin: 0;
 	color: #5a23b3;
-	font-size: 3rem;
+	font-size: 2rem;
+	font-family: 'Righteous', sans-serif;
+	text-decoration: none;
 }
 
 .Layout-header-login {
 	display: flex;
+	align-items: center;
 	background-color: #5a23b3;
 	border-radius: 2rem;
+	width: 135px;
 }
 
 .Layout-header-profile {
@@ -50,9 +54,9 @@
 	background: #5a23b3;
 	border: none;
 	border-radius: 1rem;
-	padding: 7px 10px;
 	font-size: 1.8rem;
 	cursor: pointer;
+	font-family: 'Righteous', sans-serif;
 }
 
 .Layout-main {
@@ -71,18 +75,18 @@
 	padding-top: 1rem;
 	place-content: center;
 	background: #5a23b3;
+	max-height: 42px;
 }
 
 .Nav-container {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	/* width: min(72ch, 100%); */
 }
 
 .Nav-link {
 	--color-text: var(--color-accent);
-
+	font-family: 'Righteous', sans-serif;
 	color: white;
 	font-size: 2rem;
 	flex: 0 1 auto;
@@ -123,4 +127,30 @@
 
 .Layout-footer-link:hover {
 	color: var(--color-accent);
+}
+
+@media only screen and (max-width: 500px) {
+	.Layout-header {
+		max-height: 200px;
+	}
+	.Layout-header-name {
+		display: inline-flex;
+		font-size: 1.5rem;
+	}
+
+	.Layout-header-login {
+		max-width: 115px;
+	}
+
+	.Layout-header-profile {
+		max-width: 30px;
+	}
+
+	.Layout-header button {
+		font-size: 1.6rem;
+	}
+
+	.Nav-link {
+		font-size: 1.8rem;
+	}
 }
