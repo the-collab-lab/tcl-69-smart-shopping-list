@@ -4,14 +4,7 @@ import { createList } from '../api/firebase';
 import { SingleList } from '../components';
 import './List.css';
 
-export function List({
-	user,
-	data,
-	lists,
-	listPath,
-	setListPath,
-	currentUserId,
-}) {
+export function List({ user, lists, setListPath, currentUserId }) {
 	const [shoppingListName, setShoppingListName] = useState('');
 
 	const navigate = useNavigate(); // useNavigate doc suggests using redirect
