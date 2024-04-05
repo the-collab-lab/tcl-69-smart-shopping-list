@@ -31,16 +31,16 @@ export function SingleList({ name, path, setListPath }) {
 		<li className="SingleList">
 			<Link to="/manage-list">
 				<button onClick={handleClick}>{name}</button>
-				<button
-					type="button"
-					id={name}
-					name={name}
-					onClick={handleDeleteList}
-					aria-label={`delete ${name}`}
-				>
-					X
-				</button>
 			</Link>
+			<button
+				type="button"
+				id={name}
+				name={name}
+				onClick={handleDeleteList}
+				aria-label={`delete ${name}`}
+			>
+				X
+			</button>
 		</li>
 	);
 }
