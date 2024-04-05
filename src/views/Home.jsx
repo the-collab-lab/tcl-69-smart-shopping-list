@@ -1,7 +1,6 @@
-import './Home.css';
-import { useAuth, SignInButton, SignOutButton } from '../api/useAuth.jsx';
-import { auth } from '../api/config.js';
 import { Link } from 'react-router-dom';
+import { auth, useAuth, SignInButton, SignOutButton } from '../api';
+import './Home.css';
 
 export function Home() {
 	const { user } = useAuth();

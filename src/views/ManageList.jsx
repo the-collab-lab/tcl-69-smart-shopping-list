@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { addItem, shareList } from '../api';
 import { AddItem, Dialog, SortedItemsMap } from '../components';
+import { addItem, shareList } from '../api';
 import { filteredData } from '../utils';
 import './ManageList.css';
 

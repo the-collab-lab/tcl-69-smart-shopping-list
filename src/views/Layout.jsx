@@ -1,8 +1,7 @@
 import { Outlet, NavLink, Link } from 'react-router-dom';
-import { useAuth, SignInButton, SignOutButton } from '../api/useAuth.jsx';
+import { auth, useAuth, SignInButton, SignOutButton } from '../api';
 import { Emoji } from '../components';
 import './Layout.css';
-import { auth } from '../api/config.js';
 
 export function Layout() {
 	const { user } = useAuth();

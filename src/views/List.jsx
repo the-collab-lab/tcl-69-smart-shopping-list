@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { createList } from '../api/firebase';
 import { SingleList } from '../components';
+import { createList } from '../api';
 import './List.css';
 
 export function List({ user, lists, setListPath, currentUserId }) {
