@@ -21,16 +21,16 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background-color: var(--color-bg);
+	background: var(--color-white);
 	padding-bottom: 0.5rem;
 	padding-top: max(env(safe-area-inset-top), 1rem);
-	background: white;
+	text-align: center;
 	height: 55px;
 }
 
 .Layout-header-name {
 	margin: 0;
-	color: #5a23b3;
+	color: var(--color-branding);
 	font-size: 2rem;
 	font-family: 'Righteous', sans-serif;
 	text-decoration: none;
@@ -38,25 +38,28 @@
 
 .Layout-header-login {
 	display: flex;
-	align-items: center;
-	background-color: #5a23b3;
+	background-color: var(--btn-bg-color-confirm);
 	border-radius: 2rem;
-	width: 135px;
+	width: 145px;
+	padding: 2px;
+}
+
+.Layout-header-login:hover {
+	background: var(--btn-bg-color-confirm-hover);
 }
 
 .Layout-header-profile {
-	border-radius: 1rem;
-	border: 3px solid #5a23b3;
-	width: 4rem;
+	border-radius: 50%;
+	width: 40px;
 }
 
 .Layout-header button {
-	background: #5a23b3;
+	background: transparent;
+	color: var(--color-text);
 	border: none;
 	border-radius: 1rem;
-	font-size: 1.8rem;
+	margin: 0;
 	cursor: pointer;
-	font-family: 'Righteous', sans-serif;
 }
 
 .Layout-main {
@@ -74,7 +77,7 @@
 	padding-bottom: max(env(safe-area-inset-bottom), 1rem);
 	padding-top: 1rem;
 	place-content: center;
-	background: #5a23b3;
+	background: var(--color-branding);
 	max-height: 42px;
 }
 
@@ -131,7 +134,7 @@
 
 @media only screen and (max-width: 500px) {
 	.Layout-header {
-		max-height: 200px;
+		height: 75px;
 	}
 	.Layout-header-name {
 		display: inline-flex;
@@ -139,15 +142,18 @@
 	}
 
 	.Layout-header-login {
-		max-width: 115px;
+		width: 110px;
+		display: flex;
+		gap: 6px;
 	}
 
 	.Layout-header-profile {
-		max-width: 30px;
+		width: 32px;
 	}
 
 	.Layout-header button {
-		font-size: 1.6rem;
+		font-size: 1.4rem;
+		padding: 0;
 	}
 
 	.Nav-link {
