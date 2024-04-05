@@ -29,7 +29,7 @@ export function SingleList({ name, path, setListPath }) {
 
 	return (
 		<li className="SingleList">
-			<Link to="/list">
+			<Link to="/manage-list">
 				<button onClick={handleClick}>{name}</button>
 				<button
 					type="button"
