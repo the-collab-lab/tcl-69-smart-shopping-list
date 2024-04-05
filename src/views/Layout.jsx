@@ -1,4 +1,4 @@
-import { Outlet, NavLink } from 'react-router-dom';
+import { Outlet, NavLink, Link } from 'react-router-dom';
 import { useAuth, SignInButton, SignOutButton } from '../api/useAuth.jsx';
 
 import './Layout.css';
@@ -11,7 +11,9 @@ export function Layout() {
 		<>
 			<div className="Layout">
 				<header className="Layout-header">
-					<h1>Aisle Be There</h1>
+					<Link to="/" className="Layout-header-name">
+						<h1>Aisle Be There</h1>
+					</Link>
 					<div>
 						{!!user ? (
 							<div className="Layout-header-login">
