@@ -40,7 +40,7 @@
 	display: flex;
 	background-color: var(--btn-bg-color-confirm);
 	border-radius: 2rem;
-	width: 145px;
+	max-width: 145px;
 	padding: 2px;
 }
 
@@ -48,8 +48,15 @@
 	background: var(--btn-bg-color-confirm-hover);
 }
 
+.Layout-header-signed-in {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 .Layout-header-profile {
 	border-radius: 50%;
+	border: 1px solid transparent;
 	width: 40px;
 }
 
@@ -57,9 +64,12 @@
 	background: transparent;
 	color: var(--color-text);
 	border: none;
-	border-radius: 1rem;
 	margin: 0;
 	cursor: pointer;
+}
+
+.Layout-header button:hover {
+	background: var(--btn-bg-color-confirm-hover);
 }
 
 .Layout-main {
@@ -136,17 +146,15 @@
 
 @media only screen and (max-width: 500px) {
 	.Layout-header {
-		height: 75px;
+		height: 70px;
 	}
 	.Layout-header-name {
 		display: inline-flex;
-		font-size: 1.5rem;
+		font-size: 1.45rem;
 	}
 
 	.Layout-header-login {
 		width: 110px;
-		display: flex;
-		gap: 6px;
 	}
 
 	.Layout-header-profile {
@@ -156,6 +164,10 @@
 	.Layout-header button {
 		font-size: 1.4rem;
 		padding: 0;
+	}
+
+	.Layout-header-signed-in {
+		gap: 6px;
 	}
 
 	.Nav-link {
