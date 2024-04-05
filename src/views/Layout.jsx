@@ -1,6 +1,6 @@
 import { Outlet, NavLink } from 'react-router-dom';
 import { useAuth, SignInButton, SignOutButton } from '../api/useAuth.jsx';
-
+import { Emoji } from '../components';
 import './Layout.css';
 import { auth } from '../api/config.js';
 
@@ -39,11 +39,7 @@ export function Layout() {
 				</main>
 				<footer className="Layout-footer">
 					<p className="Layout-footer-attribution">
-						Crafted with care{' '}
-						<span role="img" aria-label="heart">
-							❤️{' '}
-						</span>
-						by{' '}
+						Crafted with care <Emoji label="purple-heart">💜</Emoji> by{' '}
 						<a
 							className="Layout-footer-link"
 							href="https://github.com/amalyam"

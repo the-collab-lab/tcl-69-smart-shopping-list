@@ -1,14 +1,7 @@
+import { Emoji } from '../components';
 import './About.css';
 
 export function About() {
-	function Emoji({ children, label }) {
-		return (
-			<span role="img" aria-label={label}>
-				{children}
-			</span>
-		);
-	}
-
 	return (
 		<>
 			<main className="About-main">
