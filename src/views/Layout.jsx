@@ -14,9 +14,9 @@ export function Layout() {
 					<Link to="/" className="Layout-header-name">
 						<h1>Aisle Be There</h1>
 					</Link>
-					<div>
+					<div className="Layout-header-login">
 						{!!user ? (
-							<div className="Layout-header-login">
+							<div className="Layout-header-signed-in">
 								<img
 									src={auth.currentUser.photoURL}
 									alt="user"
@@ -47,8 +47,7 @@ export function Layout() {
 				</main>
 				<footer className="Layout-footer">
 					<p className="Layout-footer-attribution">
-						Crafted with care <Emoji label="purple-heart">💜</Emoji>
-						{' '}by{' '}
+						Crafted with care <Emoji label="purple-heart">💜</Emoji> by{' '}
 						<a
 							className="Layout-footer-link"
 							href="https://github.com/amalyam"
