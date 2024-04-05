@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { Dialog, SortedItemsMap, AddItem } from '../components';
-
 import { addItem, shareList } from '../api';
-import './List.css';
+import { AddItem, Dialog, SortedItemsMap } from '../components';
 import { filteredData } from '../utils';
+import './List.css';
 
 export function ManageList({ data, listPath, currentUserId }) {
 	const [searchString, setSearchString] = useState('');
@@ -152,18 +150,8 @@ export function ManageList({ data, listPath, currentUserId }) {
 						/>
 					</label>
 					<div className="Dialog--button-group">
-						<button
-							className="c-button c-button-cancel"
-							onClick={handleShareCancelClick}
-						>
-							Cancel
-						</button>
-						<button
-							className="c-button c-button-confirm"
-							onClick={handleShareConfirmClick}
-						>
-							Confirm
-						</button>
+						<button onClick={handleShareCancelClick}>Cancel</button>
+						<button onClick={handleShareConfirmClick}>Confirm</button>
 					</div>
 				</div>
 			</Dialog>
@@ -177,18 +165,8 @@ export function ManageList({ data, listPath, currentUserId }) {
 					<div className="List-modal-inner">
 						<AddItem formData={formData} setFormData={setFormData} />
 						<div className="Dialog--button-group">
-							<button
-								className="c-button c-button-cancel"
-								onClick={handleAddItemCancelClick}
-							>
-								Cancel
-							</button>
-							<button
-								className="c-button c-button-confirm"
-								onClick={handleAddItemConfirmClick}
-							>
-								Add Item
-							</button>
+							<button onClick={handleAddItemCancelClick}>Cancel</button>
+							<button onClick={handleAddItemConfirmClick}>Add Item</button>
 						</div>
 					</div>
 				</div>
