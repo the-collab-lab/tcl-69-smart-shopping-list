@@ -10,30 +10,54 @@ export function SortedItemsMap({ filteredDataResult, listPath }) {
 		getGroupedItems(sortedDataResult);
 	return (
 		<>
-			<h4 className="SortedItems-section-header">Overdue</h4>
-			{overdue.map((item) => (
-				<ListItem key={item.id} item={item} listPath={listPath} />
-			))}
-			<hr className="SortedItems-section-divider" />
-			<h4 className="SortedItems-section-header">Soon</h4>
-			{buySoon.map((item) => (
-				<ListItem key={item.id} item={item} listPath={listPath} />
-			))}
-			<hr className="SortedItems-section-divider" />
-			<h4 className="SortedItems-section-header">Kind of soon</h4>
-			{buyKindOfSoon.map((item) => (
-				<ListItem key={item.id} item={item} listPath={listPath} />
-			))}
-			<hr className="SortedItems-section-divider" />
-			<h4 className="SortedItems-section-header">Not soon</h4>
-			{buyNotSoon.map((item) => (
-				<ListItem key={item.id} item={item} listPath={listPath} />
-			))}
-			<hr className="SortedItems-section-divider" />
-			<h4 className="SortedItems-section-header">Inactive</h4>
-			{inactive.map((item) => (
-				<ListItem key={item.id} item={item} listPath={listPath} />
-			))}
+			{overdue.length > 0 && (
+				<>
+					<h4 className="SortedItems-section-header">Overdue</h4>
+					{overdue.map((item) => (
+						<ListItem key={item.id} item={item} listPath={listPath} />
+					))}
+					<hr className="SortedItems-section-divider" />
+				</>
+			)}
+
+			{buySoon.length > 0 && (
+				<>
+					<h4 className="SortedItems-section-header">Soon</h4>
+					{buySoon.map((item) => (
+						<ListItem key={item.id} item={item} listPath={listPath} />
+					))}
+					<hr className="SortedItems-section-divider" />
+				</>
+			)}
+
+			{buyKindOfSoon.length > 0 && (
+				<>
+					<h4 className="SortedItems-section-header">Kind of soon</h4>
+					{buyKindOfSoon.map((item) => (
+						<ListItem key={item.id} item={item} listPath={listPath} />
+					))}
+					<hr className="SortedItems-section-divider" />
+				</>
+			)}
+
+			{buyNotSoon.length > 0 && (
+				<>
+					<h4 className="SortedItems-section-header">Not soon</h4>
+					{buyNotSoon.map((item) => (
+						<ListItem key={item.id} item={item} listPath={listPath} />
+					))}
+					<hr className="SortedItems-section-divider" />
+				</>
+			)}
+
+			{inactive.length > 0 && (
+				<>
+					<h4 className="SortedItems-section-header">Inactive</h4>
+					{inactive.map((item) => (
+						<ListItem key={item.id} item={item} listPath={listPath} />
+					))}
+				</>
+			)}
 		</>
 	);
 }

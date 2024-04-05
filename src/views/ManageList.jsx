@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { addItem, shareList } from '../api';
 import { AddItem, Dialog, SortedItemsMap } from '../components';
 import { filteredData } from '../utils';
-import './List.css';
+import './ManageList.css';
 
 export function ManageList({ data, listPath, currentUserId }) {
 	const [searchString, setSearchString] = useState('');
@@ -102,10 +102,12 @@ export function ManageList({ data, listPath, currentUserId }) {
 			</div>
 			{!!data && (
 				<form>
-					<label htmlFor="searchString">
-						Search:{' '}
+					<label htmlFor="searchString" className="search-build">
+						<span class="material-symbols-outlined search-icon">search</span>
 						<input
 							type="text"
+							className="search-input"
+							placeholder="Search for an item..."
 							id="searchString"
 							name="searchString"
 							value={searchString}

@@ -1,0 +1,55 @@
+/* https://www.youtube.com/watch?v=f6ocDCkCmhM */
+
+.search-build {
+	--padding: 14px;
+
+	width: max-content;
+	display: flex;
+	align-items: center;
+	padding: var(--padding);
+	border-radius: 28px;
+	background-color: #f5f5f5;
+	transition: background-color 0.3s;
+	width: 600px;
+}
+
+.search-build:focus-within {
+	background: rgb(238, 238, 238);
+}
+
+.search-input {
+	font-size: 16px;
+	font-family: 'Lexend', sans-serif;
+	color: #333;
+	margin-left: var(--padding);
+	outline: none;
+	background-color: transparent;
+	border: none;
+	flex: 1;
+}
+
+.search-input::placeholder,
+.search-icon {
+	color: #c2c2c2;
+}
+
+.new-list {
+	display: none;
+}
+
+#shopping-list-input {
+	/* Your styles for shopping-list-input */
+	padding: 0.5em 1em;
+	margin: 0.5em 0;
+	border-radius: 15px 0px 0px 15px;
+	height: 38px;
+	width: 300px;
+}
+
+.create-list-btn {
+	font-size: 1.6rem;
+	padding: 0.5em 1em;
+	margin: 0.5em 0;
+	min-height: 38px !important;
+	border-radius: 0px 15px 15px 0px !important;
+}
