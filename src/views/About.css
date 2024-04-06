@@ -29,6 +29,11 @@
 	font-size: 1.5rem;
 }
 
+.About-credits {
+	text-align: center;
+	margin-left: 250px;
+}
+
 @media only screen and (max-width: 900px) {
 	.About-main {
 		max-width: 600px;
@@ -37,5 +42,9 @@
 	.About-section {
 		flex-direction: column;
 		text-align: center;
+	}
+
+	.About-credits {
+		margin-left: 0;
 	}
 }

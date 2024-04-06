@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Emoji } from '../components';
 import './About.css';
 
@@ -59,6 +60,17 @@ export function About() {
 							When you share your lists, your friends and family can collaborate
 							and be there for you, too! <Emoji label="purple-heart">💜</Emoji>
 						</p>
+					</div>
+				</section>
+				<section className="About-section">
+					<div className="About-section-text">
+						<div className="About-credits">
+							<h2>Credits</h2>
+							<p>
+								Home page illustration by{' '}
+								<Link to="https://storyset.com/web">Storyset</Link>
+							</p>
+						</div>
 					</div>
 				</section>
 			</main>
