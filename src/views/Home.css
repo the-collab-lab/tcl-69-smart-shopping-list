@@ -31,6 +31,7 @@
 .Home-app-name {
 	color: #5a23b3;
 	font-size: 45px;
+	text-shadow: 1px 0.5px 0 white;
 }
 
 .Home-intro-text {
