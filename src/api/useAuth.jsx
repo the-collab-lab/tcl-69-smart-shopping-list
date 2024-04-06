@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { auth } from './config.js';
+import { useNavigate } from 'react-router-dom';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from './config.js';
 import { addUserToDatabase } from './firebase.js';
 import './useAuth.css';
 
@@ -9,15 +10,27 @@ import './useAuth.css';
  * the button redirects the user to the Google OAuth sign-in page.
  * After the user signs in, they are redirected back to the app.
  */
-export const SignInButton = ({ largeSize }) => (
-	<button
-		type="button"
-		onClick={() => signInWithPopup(auth, new GoogleAuthProvider())}
-		className={largeSize ? 'large-size' : ''}
-	>
-		Sign In
-	</button>
-);
+export const SignInButton = ({ largeSize }) => {
+	let navigate = useNavigate();
+
+	const handleSignIn = async () => {
+		const provider = new GoogleAuthProvider();
+		try {
+			const result = await signInWithPopup(auth, provider);
+			const user = result.user;
+			console.log('User signed in:', user);
+			navigate('/list');
+		} catch (e) {
+			console.error('Error signing in:', e);
+		}
+	};
+
+	return (
+		<button type="button" onClick={handleSignIn} className={largeSize ? 'large-size' : ''}>
+			Sign In
+		</button>
+	);
+};
 
 /**
  * A button that signs the user out of the app using Firebase Auth.

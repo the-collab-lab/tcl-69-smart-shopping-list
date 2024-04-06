@@ -1,0 +1,10 @@
+.SortedItems-section-divider {
+	margin-top: 3px;
+	width: 100%;
+	display: flex;
+	margin-left: 0;
+}
+
+.SortedItems-section-header {
+	margin: 0px;
+}

@@ -10,6 +10,7 @@
 	--color-red: hsl(0, 68%, 42%);
 
 	--color-branding: #5a23b3;
+	--color-branding-dark-mode: #6e3dbd;
 	--color-accent: var(--color-pastel-blue);
 	--color-bg: var(--color-black);
 	--color-border: hsla(220, 13%, 32%, 1);
@@ -18,7 +19,9 @@
 	--color-btn-bg-cancel: #cdcdcd;
 	--color-btn-bg-confirm-hover: #3f0f7f;
 	--color-btn-bg-cancel-hover: #989797;
-	--color-btn-bg-delete-hover: #a80000;
+	--color-btn-bg-delete-hover: #f14f4f;
+	--color-btn-font-dark: var(--color-white);
+	--color-clip-path: var(--color-branding);
 
 	/* Button Styling Variables */
 	--btn-bg-color-confirm: var(--color-branding);
@@ -33,6 +36,8 @@
 	:root {
 		--color-accent: var(--color-cobalt-blue);
 		--color-bg: var(--color-white);
+		--color-input-bg: var(--color-white);
+		--color-clip-path: var(--color-branding);
 		--color-border: hsla(220, 13%, 78%, 1);
 		--color-text: var(--color-black);
 	}
@@ -126,6 +131,12 @@ h1 {
 	font-family: 'Righteous', sans-serif;
 }
 
+h4,
+h5 {
+	font-family: 'Righteous', sans-serif;
+	font-weight: 400;
+}
+
 h2,
 h3 {
 	font-family: 'Reddit Mono', monospace;
@@ -146,7 +157,7 @@ button {
 	background-color: var(--btn-bg-color-confirm);
 	border: 0;
 	border-radius: 20px;
-	color: var(--color-white);
+	color: var(--color-btn-font-dark);
 	cursor: pointer;
 	font-size: 1.6rem;
 	font-family: 'Righteous', sans-serif;
@@ -155,6 +166,70 @@ button {
 	margin: 0.5em 0;
 }
 
-button:hover {
+button:hover,
+.create-list-btn:hover {
 	background-color: var(--btn-bg-color-confirm-hover);
+}
+
+/* Styling Section for search Input */
+/* https://www.youtube.com/watch?v=f6ocDCkCmhM */
+
+.search-build {
+	--padding: 8px;
+	min-height: 50px;
+	display: flex;
+	align-items: center;
+	padding: 0 8px;
+	border-radius: 28px;
+	background-color: var(--color-gray-light);
+	transition: background-color 0.3s;
+}
+
+.search-build:focus-within {
+	background: rgb(238, 238, 238);
+}
+
+.search-input {
+	/* font-size: 16px; */
+	font-family: 'Lexend', sans-serif;
+	color: #333;
+	margin-left: var(--padding);
+	outline: none;
+	background-color: transparent;
+	border: none;
+	flex: 1;
+	padding: 0;
+}
+
+.search-input::placeholder,
+.search-icon {
+	color: #c2c2c2;
+}
+
+.new-list {
+	display: none;
+}
+
+#shopping-list-input {
+	/* Your styles for shopping-list-input */
+	padding: 0.5em 1em;
+	margin: 0.5em 0;
+	border-radius: 15px 0px 0px 15px;
+	height: 38px;
+	width: 300px;
+}
+
+.create-list-btn {
+	font-size: 1.6rem;
+	font-family: 'Righteous', sans-serif;
+	min-height: 38px !important;
+	cursor: pointer;
+	background-color: var(--btn-bg-color-confirm);
+	border: 0;
+	border-radius: 20px;
+	color: var(--color-btn-font-dark);
+	cursor: pointer;
+	font-weight: 700;
+	padding: 0.5em 1em;
+	margin: 0.5em 0;
 }

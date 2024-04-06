@@ -11,7 +11,7 @@ export function AddItem({ formData, setFormData }) {
 
 	return (
 		<>
-			<div>Enter item</div>
+			<h2>Enter item</h2>
 			<label htmlFor="itemName">
 				Item Name:
 				<input

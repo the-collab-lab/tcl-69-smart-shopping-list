@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { addItem, shareList } from '../api';
 import { AddItem, Dialog, SortedItemsMap } from '../components';
+import { addItem, shareList } from '../api';
 import { filteredData } from '../utils';
-import './List.css';
+import './ManageList.css';
 
 export function ManageList({ data, listPath, currentUserId }) {
 	const [searchString, setSearchString] = useState('');
@@ -102,17 +102,24 @@ export function ManageList({ data, listPath, currentUserId }) {
 			</div>
 			{!!data && (
 				<form>
-					<label htmlFor="searchString">
-						Search:{' '}
+					<label
+						htmlFor="searchString"
+						className="search-build List-items-section"
+					>
+						<span className="material-symbols-outlined search-icon">
+							search
+						</span>
 						<input
 							type="text"
+							className="search-input"
+							placeholder="Search for an item..."
 							id="searchString"
 							name="searchString"
 							value={searchString}
 							onChange={handleChange}
 						/>
+						{searchString ? <button onClick={handleClick}>clear</button> : ''}
 					</label>
-					{searchString ? <button onClick={handleClick}>x</button> : ''}
 				</form>
 			)}
 
@@ -138,7 +145,7 @@ export function ManageList({ data, listPath, currentUserId }) {
 				onSubmit={handleShareConfirmClick}
 			>
 				<h2>Who are you sharing this list with?</h2>
-				<div className="List-share-email-dialog-container">
+				<div className="ManageList-share-email-dialog-container">
 					<label htmlFor="invite-to-list">
 						Enter email:
 						<input

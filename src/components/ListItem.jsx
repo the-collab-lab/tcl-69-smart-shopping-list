@@ -1,8 +1,10 @@
-import './ListItem.css';
-import { updateItem, deleteItem } from '../api';
 import { useState, useEffect } from 'react';
+import { updateItem, deleteItem } from '../api';
+import './ListItem.css';
 
 export function ListItem({ item, listPath }) {
+	const [isChecked, setIsChecked] = useState(false);
+
 	const {
 		id,
 		name,
@@ -24,7 +26,6 @@ export function ListItem({ item, listPath }) {
 		: 0;
 	const timeDiff = currentDate - lastPurchasedDate; //milliseconds
 	const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
-	const [isChecked, setIsChecked] = useState(false);
 
 	useEffect(() => {
 		if (timeDiff < oneDayInMilliseconds) {
@@ -56,6 +57,9 @@ export function ListItem({ item, listPath }) {
 		} else {
 			setIsChecked(e.target.checked);
 			if (e.target.checked) {
+				// For testing this is turned on/off
+				// const result = console.log('checked');
+
 				const result = await updateItem(
 					listPath,
 					id,
@@ -92,8 +96,8 @@ export function ListItem({ item, listPath }) {
 	}
 
 	return (
-		<li>
-			<label htmlFor={name} className="ListItem">
+		<li className="ListItem">
+			<label htmlFor={name} className="ListItem-label">
 				<input
 					type="checkbox"
 					id={name}
@@ -101,7 +105,7 @@ export function ListItem({ item, listPath }) {
 					name={name}
 					checked={isChecked}
 				/>
-				<h5 className="item-name">{name}</h5>
+				<p className="ListItem-buy-next">{name}</p>
 				<button
 					type="button"
 					id={name}
@@ -109,10 +113,10 @@ export function ListItem({ item, listPath }) {
 					onClick={handleDelete}
 					aria-label={`delete ${name}`}
 				>
-					X
+					delete
 				</button>
-				<h5 className="buy-next">Buy Next: {nextPurchasedDate}</h5>
 			</label>
+			<p className="ListItem-buy-next">Buy Next: {nextPurchasedDate}</p>
 		</li>
 	);
 }
