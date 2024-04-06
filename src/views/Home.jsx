@@ -27,14 +27,11 @@ export function Home() {
 							<span>Welcome back {auth.currentUser.displayName}!</span> (
 							<SignOutButton />)
 							<br />
-							<span>
-								View your lists <Link to="/list">here</Link>
-							</span>
+							<SignOutButton largeSize />
 						</div>
 					) : (
 						<div>
-							<span>Click 'Sign In' to register and get started: </span>
-							<SignInButton />
+							<SignInButton largeSize />
 						</div>
 					)}
 				</header>
