@@ -22,8 +22,8 @@ export function About() {
 					<div className="About-section-text">
 						<h2>Before you go down the Aisle</h2>
 						<p>
-							Inside your list, tap the big 'Add' button to add a new item.
-							Aisle Be There for you, asking when you might need to restock your
+							Inside your list, tap the 'Add' button to add a new item. Aisle Be
+							There for you, asking when you might need to restock your
 							aisle-ments! <Emoji label="coffee">☕</Emoji>
 						</p>
 					</div>
