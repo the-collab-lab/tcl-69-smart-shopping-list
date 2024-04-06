@@ -30,7 +30,7 @@
 }
 
 .Home-app-name {
-	color: #5a23b3;
+	color: var(--color-branding);
 	font-size: 45px;
 	text-shadow: 1px 0.5px 0 white;
 }
@@ -64,11 +64,4 @@
 
 img.Home-welcome {
 	height: 400px;
-}
-
-.Home-profile-img {
-	border-radius: 50%;
-	height: 100px;
-	margin: auto;
-	width: 100px;
 }
