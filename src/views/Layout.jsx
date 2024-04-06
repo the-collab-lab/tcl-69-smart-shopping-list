@@ -1,4 +1,4 @@
-import { Outlet, NavLink } from 'react-router-dom';
+import { Outlet, NavLink, Link } from 'react-router-dom';
 import { useAuth, SignInButton, SignOutButton } from '../api/useAuth.jsx';
 import { Emoji } from '../components';
 import './Layout.css';
@@ -11,26 +11,34 @@ export function Layout() {
 		<>
 			<div className="Layout">
 				<header className="Layout-header">
-					<h1>Smart shopping list</h1>
-					{!!user ? (
-						<div>
-							<span>Signed in as {auth.currentUser.displayName}</span> (
-							<SignOutButton />)
-						</div>
-					) : (
-						<SignInButton />
-					)}
+					<Link to="/" className="Layout-header-name">
+						<h1>Aisle Be There</h1>
+					</Link>
+					<div className="Layout-header-login">
+						{!!user ? (
+							<div className="Layout-header-signed-in">
+								<img
+									src={auth.currentUser.photoURL}
+									alt="user"
+									className="Layout-header-profile"
+								/>
+								<SignOutButton />
+							</div>
+						) : (
+							<SignInButton />
+						)}
+					</div>
 				</header>
 				<nav className="Nav">
 					<div className="Nav-container">
 						<NavLink to="/" className="Nav-link">
-							Home
+							home
 						</NavLink>
 						<NavLink to="/list" className="Nav-link">
-							List
+							lists
 						</NavLink>
 						<NavLink to="/about" className="Nav-link">
-							About
+							about
 						</NavLink>
 					</div>
 				</nav>
@@ -39,8 +47,7 @@ export function Layout() {
 				</main>
 				<footer className="Layout-footer">
 					<p className="Layout-footer-attribution">
-						Crafted with care <Emoji label="purple-heart">💜</Emoji>
-						{' '}by{' '}
+						Crafted with care <Emoji label="purple-heart">💜</Emoji> by{' '}
 						<a
 							className="Layout-footer-link"
 							href="https://github.com/amalyam"
