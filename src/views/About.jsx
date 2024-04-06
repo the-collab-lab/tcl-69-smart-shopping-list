@@ -64,11 +64,13 @@ export function About() {
 				</section>
 				<section className="About-section">
 					<div className="About-section-text">
-						<h2>Credits</h2>
-						<p>
-							Home page illustration by{' '}
-							<Link to="https://storyset.com/web">Storyset</Link>
-						</p>
+						<div className="About-credits">
+							<h2>Credits</h2>
+							<p>
+								Home page illustration by{' '}
+								<Link to="https://storyset.com/web">Storyset</Link>
+							</p>
+						</div>
 					</div>
 				</section>
 			</main>
