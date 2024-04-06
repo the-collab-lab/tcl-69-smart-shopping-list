@@ -22,7 +22,7 @@
 
 .ListItem button {
 	background-color: var(--color-branding-dark-mode);
-	outline: 1px solid var(--color-gray-dark);
+	/* outline: 1px solid var(--color-gray-dark); */
 }
 
 .ListItem button:hover {

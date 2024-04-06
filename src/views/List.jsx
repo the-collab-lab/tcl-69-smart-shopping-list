@@ -63,7 +63,10 @@ export function List({ user, lists, setListPath, currentUserId }) {
 							/>
 						))
 					) : (
-						<h1>You have no Lists!</h1>
+						<>
+							<h1>You have no Lists!</h1>
+							<h3>Enter a name for your list and click "Create!"</h3>
+						</>
 					)}
 				</ul>
 			</div>

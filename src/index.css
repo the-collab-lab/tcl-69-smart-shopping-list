@@ -21,7 +21,7 @@
 	--color-btn-bg-cancel-hover: #989797;
 	--color-btn-bg-delete-hover: #f14f4f;
 	--color-btn-font-dark: var(--color-white);
-	--color-clip-path: var(--color-accent);
+	--color-clip-path: var(--color-branding);
 
 	/* Button Styling Variables */
 	--btn-bg-color-confirm: var(--color-branding);

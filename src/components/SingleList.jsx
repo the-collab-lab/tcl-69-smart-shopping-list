@@ -36,10 +36,11 @@ export function SingleList({ name, path, setListPath }) {
 				type="button"
 				id={name}
 				name={name}
+				className="SingleList-delete-btn"
 				onClick={handleDeleteList}
 				aria-label={`delete ${name}`}
 			>
-				X
+				remove
 			</button>
 		</li>
 	);
