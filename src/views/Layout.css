@@ -62,7 +62,6 @@
 
 .Layout-header button {
 	background: transparent;
-	color: var(--color-text);
 	border: none;
 	margin: 0;
 	cursor: pointer;
