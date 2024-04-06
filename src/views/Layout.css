@@ -18,14 +18,57 @@
 }
 
 .Layout-header {
-	background-color: var(--color-bg);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: var(--color-white);
 	padding-bottom: 0.5rem;
 	padding-top: max(env(safe-area-inset-top), 1rem);
 	text-align: center;
+	height: 55px;
 }
 
-.Layout-header > h1 {
+.Layout-header-name {
 	margin: 0;
+	color: var(--color-branding);
+	font-size: 2rem;
+	font-family: 'Righteous', sans-serif;
+	text-decoration: none;
+}
+
+.Layout-header-login {
+	display: flex;
+	background-color: var(--btn-bg-color-confirm);
+	border-radius: 2rem;
+	max-width: 145px;
+	padding: 2px;
+}
+
+.Layout-header-login:hover {
+	background: var(--btn-bg-color-confirm-hover);
+}
+
+.Layout-header-signed-in {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.Layout-header-profile {
+	border-radius: 50%;
+	border: 1px solid transparent;
+	width: 40px;
+}
+
+.Layout-header button {
+	background: transparent;
+	border: none;
+	margin: 0;
+	cursor: pointer;
+}
+
+.Layout-header button:hover {
+	background: var(--btn-bg-color-confirm-hover);
 }
 
 .Layout-main {
@@ -39,26 +82,26 @@
 	background-color: var(--color-bg);
 	border-top: 1px solid var(--color-border);
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	padding-bottom: max(env(safe-area-inset-bottom), 1rem);
 	padding-top: 1rem;
 	place-content: center;
-	position: fixed;
-	width: 100%;
+	background: var(--color-branding);
+	max-height: 42px;
 }
 
 .Nav-container {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-evenly;
-	width: min(72ch, 100%);
+	justify-content: space-between;
 }
 
 .Nav-link {
-	--color-text: var(--color-accent);
-
-	color: var(--color-text);
-	font-size: 1.4em;
+	color: var(--color-accent);
+	text-decoration: none;
+	font-family: 'Righteous', sans-serif;
+	color: white;
+	font-size: 2rem;
 	flex: 0 1 auto;
 	line-height: 1;
 	padding: 0.8rem;
@@ -67,6 +110,7 @@
 }
 
 .Nav-link.active {
+	text-decoration: underline;
 	text-decoration-thickness: 0.22em;
 	text-underline-offset: 0.1em;
 }
@@ -97,4 +141,35 @@
 
 .Layout-footer-link:hover {
 	color: var(--color-accent);
+}
+
+@media only screen and (max-width: 500px) {
+	.Layout-header {
+		height: 70px;
+	}
+	.Layout-header-name {
+		display: inline-flex;
+		font-size: 1.45rem;
+	}
+
+	.Layout-header-login {
+		width: 110px;
+	}
+
+	.Layout-header-profile {
+		width: 32px;
+	}
+
+	.Layout-header button {
+		font-size: 1.4rem;
+		padding: 0;
+	}
+
+	.Layout-header-signed-in {
+		gap: 6px;
+	}
+
+	.Nav-link {
+		font-size: 1.8rem;
+	}
 }
