@@ -29,14 +29,41 @@
 	margin: 0;
 }
 
-.intro-text {
-	width: 400px;
-	margin: auto;
-	padding-bottom: 20px;
+.Home-app-name {
+	color: #5a23b3;
+	font-size: 45px;
+	text-shadow: 1px 0.5px 0 white;
 }
 
-img.Landing-check {
-	height: 200px;
+.Home-intro-text {
+	display: flex;
+	justify-content: center;
+	width: 400px;
+	margin: auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.Home-welcome-to {
+	font-size: 30px;
+	margin: auto;
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+
+.Home-register-here {
+	margin-top: 40px;
+}
+
+.Home-button {
+	font-size: 35px;
+	margin: auto;
+	height: 80px;
+	width: 270px;
+}
+
+img.Home-welcome {
+	height: 400px;
 }
 
 .Home-profile-img {

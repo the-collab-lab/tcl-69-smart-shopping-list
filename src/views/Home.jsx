@@ -8,38 +8,38 @@ export function Home() {
 		<>
 			<div className="Home">
 				<header className="Home-header">
-					<h2>Welcome to Aisle Be There!</h2>
-					<h3 className="intro-text">
+					<h2 className="Home-welcome-to">welcome to</h2>
+					<h1 className="Home-app-name">Aisle Be There!</h1>
+					<h3 className="Home-intro-text">
 						The app for making smart shopping lists. Create lists to manage any
-						type of shopping, and mark items by how soon you'll need them again.
+						type of shopping and mark items by how soon you'll need them again.
 					</h3>
 					<img
-						className="Landing-check"
-						src="img/checkbox.png"
-						alt="black checkbox with green check"
+						className="Home-welcome"
+						src="img/home-welcome-image.svg"
+						alt="two people standing in front of a large list with a floating hand checking an item off"
 					/>
-					<h3>
-						New to the app? Click <Link to="/about">here</Link> to learn more!
-					</h3>
 					{!!user ? (
 						<div>
-							<span>Welcome back {auth.currentUser.displayName}!</span>
-							<img
-								src={auth.currentUser.photoURL}
-								alt="profile"
-								className="Home-profile-img"
-							/>
-							(
-							<SignOutButton />)
+							<h2>Welcome back</h2>
+							<h2>{auth.currentUser.displayName}!</h2>
 							<br />
-							<span>
-								View your lists <Link to="/list">here</Link>
-							</span>
+							<Link to="/list">
+								<button className="Home-button">View Lists</button>
+							</Link>
+							<br />
+							<br />
+							<br />
+							<SignOutButton largeSize />
 						</div>
 					) : (
 						<div>
-							<span>Click 'Sign In' to register and get started: </span>
-							<SignInButton />
+							<h3>New to the app?</h3>
+							<Link to="/about">
+								<button className="Home-button">Learn More</button>
+							</Link>
+							<h3 className="Home-register-here">Register here:</h3>
+							<SignInButton largeSize />
 						</div>
 					)}
 				</header>

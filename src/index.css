@@ -131,11 +131,15 @@ h1 {
 	font-family: 'Righteous', sans-serif;
 }
 
-h3,
+
 h4,
 h5 {
 	font-family: 'Righteous', sans-serif;
 	font-weight: 400;
+
+h2,
+h3 {
+	font-family: 'Reddit Mono', monospace;
 }
 
 h5,

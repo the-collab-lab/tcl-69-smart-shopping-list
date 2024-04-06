@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from './config.js';
 import { addUserToDatabase } from './firebase.js';
+import './useAuth.css';
 
 /**
  * A button that signs the user in using Google OAuth. When clicked,
  * the button redirects the user to the Google OAuth sign-in page.
  * After the user signs in, they are redirected back to the app.
  */
-export const SignInButton = () => {
+export const SignInButton = ({ largeSize }) => {
 	let navigate = useNavigate();
 
 	const handleSignIn = async () => {
@@ -25,7 +26,7 @@ export const SignInButton = () => {
 	};
 
 	return (
-		<button type="button" onClick={handleSignIn}>
+		<button type="button" onClick={handleSignIn} className={largeSize ? 'large-size' : ''}>
 			Sign In
 		</button>
 	);
@@ -45,8 +46,12 @@ async function handleSignOut() {
 	}
 }
 
-export const SignOutButton = () => (
-	<button type="button" onClick={() => handleSignOut()}>
+export const SignOutButton = ({ largeSize }) => (
+	<button
+		type="button"
+		onClick={() => handleSignOut()}
+		className={largeSize ? 'large-size' : ''}
+	>
 		Sign Out
 	</button>
 );

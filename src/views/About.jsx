@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Emoji } from '../components';
 import './About.css';
 
@@ -7,7 +8,7 @@ export function About() {
 			<main className="About-main">
 				<h1 className="About-title">How It Works</h1>
 				<section className="About-section">
-					<img width="250px" alt="phone screenshot" src="../img/phone.png" />
+					<img width="250px" alt="phone screenshot" src="../img/phone1.png" />
 					<div className="About-section-text">
 						<h2>Lending a list-ening ear</h2>
 						<p>
@@ -18,18 +19,18 @@ export function About() {
 					</div>
 				</section>
 				<section className="About-section">
-					<img width="250px" alt="phone screenshot" src="../img/phone.png" />
+					<img width="250px" alt="phone screenshot" src="../img/phone2.png" />
 					<div className="About-section-text">
 						<h2>Before you go down the Aisle</h2>
 						<p>
-							Inside your list, tap the big 'Add' button to add a new item.
-							Aisle Be There for you, asking when you might need to restock your
+							Inside your list, tap the 'Add' button to add a new item. Aisle Be
+							There for you, asking when you might need to restock your
 							aisle-ments! <Emoji label="coffee">☕</Emoji>
 						</p>
 					</div>
 				</section>
 				<section className="About-section">
-					<img width="250px" alt="phone screenshot" src="../img/phone.png" />
+					<img width="250px" alt="phone screenshot" src="../img/phone3.png" />
 					<div className="About-section-text">
 						<h2>Aisle check on you</h2>
 						<p>
@@ -41,7 +42,7 @@ export function About() {
 					</div>
 				</section>
 				<section className="About-section">
-					<img width="250px" alt="phone screenshot" src="../img/phone.png" />
+					<img width="250px" alt="phone screenshot" src="../img/phone4.png" />
 					<div className="About-section-text">
 						<h2>Aisle Be There to guide you</h2>
 						<p>
@@ -52,13 +53,24 @@ export function About() {
 					</div>
 				</section>
 				<section className="About-section">
-					<img width="250px" alt="phone screenshot" src="../img/phone.png" />
+					<img width="250px" alt="phone screenshot" src="../img/phone5.png" />
 					<div className="About-section-text">
 						<h2>Aisle Be your community</h2>
 						<p>
 							When you share your lists, your friends and family can collaborate
 							and be there for you, too! <Emoji label="purple-heart">💜</Emoji>
 						</p>
+					</div>
+				</section>
+				<section className="About-section">
+					<div className="About-section-text">
+						<div className="About-credits">
+							<h2>Credits</h2>
+							<p>
+								Home page illustration by{' '}
+								<Link to="https://storyset.com/web">Storyset</Link>
+							</p>
+						</div>
 					</div>
 				</section>
 			</main>
