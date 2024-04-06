@@ -13,7 +13,7 @@ export function Home() {
 					<h1 className="Home-app-name">Aisle Be There!</h1>
 					<h3 className="Home-intro-text">
 						The app for making smart shopping lists. Create lists to manage any
-						type of shopping, and mark items by how soon you'll need them again.
+						type of shopping and mark items by how soon you'll need them again.
 					</h3>
 					<img
 						className="Home-welcome"
