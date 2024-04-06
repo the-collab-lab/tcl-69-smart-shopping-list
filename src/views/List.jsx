@@ -36,19 +36,20 @@ export function List({ user, lists, setListPath, currentUserId }) {
 				<form onSubmit={handleSubmit}>
 					<label
 						htmlFor="shopping-list-input"
-						className="create-list-container"
+						className="search-build List-items-section"
 					>
-						<span class="new-list">search</span>
+						<span className="new-list">search</span>
 						<input
 							type="text"
 							value={shoppingListName}
 							id="shopping-list-input"
 							name="shopping-list"
+							className="search-input"
 							placeholder="Enter a new list name"
 							onChange={(e) => setShoppingListName(e.target.value)}
 						/>
+						<input type="submit" value="Create!" className="create-list-btn" />
 					</label>
-					<input type="submit" value="Create!" className="create-list-btn" />
 				</form>
 
 				<ul>

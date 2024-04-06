@@ -10,7 +10,6 @@
 .ListItem-label {
 	display: flex;
 	flex-grow: inherit;
-	/* flex-direction: row; */
 	align-items: center;
 	justify-content: space-between;
 	width: 100%;
@@ -22,12 +21,12 @@
 }
 
 .ListItem button {
-	background-color: grey;
+	background-color: var(--color-branding-dark-mode);
 	outline: 1px solid var(--color-gray-dark);
 }
 
 .ListItem button:hover {
-	background-color: var(--btn-danger-hover);
+	background-color: var(--btn-bg-color-delete-hover);
 }
 
 /* Handling checkbox styling */

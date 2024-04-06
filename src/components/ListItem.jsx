@@ -113,7 +113,7 @@ export function ListItem({ item, listPath }) {
 					onClick={handleDelete}
 					aria-label={`delete ${name}`}
 				>
-					-
+					delete
 				</button>
 			</label>
 			<p className="ListItem-buy-next">Buy Next: {nextPurchasedDate}</p>
