@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-	addUserToDatabase,
-	GoogleAuthProvider,
-	signInWithPopup,
-} from 'firebase';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from './config.js';
+import { addUserToDatabase } from './firebase.js';
 
 /**
  * A button that signs the user in using Google OAuth. When clicked,
