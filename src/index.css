@@ -127,6 +127,11 @@ h1 {
 	font-family: 'Righteous', sans-serif;
 }
 
+h2,
+h3 {
+	font-family: 'Reddit Mono', monospace;
+}
+
 h5,
 p {
 	margin: 0;
