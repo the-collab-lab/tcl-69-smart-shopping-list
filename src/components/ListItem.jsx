@@ -57,22 +57,22 @@ export function ListItem({ item, listPath }) {
 		} else {
 			setIsChecked(e.target.checked);
 			if (e.target.checked) {
-				// For testing this is turned off
+				// For testing this is turned on/off
+				// const result = console.log('checked');
 
-				const result = console.log('checked');
-				// const result = await updateItem(
-				// 	listPath,
-				// 	id,
-				// 	dateLastPurchased,
-				// 	totalPurchases,
-				// 	dateNextPurchased,
-				// 	dateCreated,
-				// );
-				// if (result.success) {
-				// 	alert('Item purchased');
-				// } else {
-				// 	alert('Error: item not updated');
-				// }
+				const result = await updateItem(
+					listPath,
+					id,
+					dateLastPurchased,
+					totalPurchases,
+					dateNextPurchased,
+					dateCreated,
+				);
+				if (result.success) {
+					alert('Item purchased');
+				} else {
+					alert('Error: item not updated');
+				}
 			}
 		}
 	}
